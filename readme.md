@@ -27,3 +27,4 @@ Konfiguracja:
 
 # Jak uruchomiæ FE?
 Napisze jak przygotuje szkielet aplikacji Reactowej.
+
