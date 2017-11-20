@@ -1,7 +1,7 @@
-package com.i4m1s1.specmed.Service;
+package com.i4m1s1.specmed.service;
 
-import com.i4m1s1.specmed.Model.Employee;
-import com.i4m1s1.specmed.Repository.EmployeeRepository;
+import com.i4m1s1.specmed.persistence.Employee;
+import com.i4m1s1.specmed.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

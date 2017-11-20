@@ -1,7 +1,7 @@
-package com.i4m1s1.specmed.Controller;
+package com.i4m1s1.specmed.controller;
 
-import com.i4m1s1.specmed.Model.Employee;
-import com.i4m1s1.specmed.Service.EmployeeService;
+import com.i4m1s1.specmed.persistence.Employee;
+import com.i4m1s1.specmed.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,4 +19,5 @@ public class EmployeeController {
     public Collection<Employee> getAllEmployees() {
         return employeeService.getAllEmployees();
     }
+
 }
