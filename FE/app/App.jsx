@@ -1,7 +1,6 @@
 import React from 'react';
 import {Component} from 'react';
 import {Layout} from './components/Layout.jsx';
-import {Layout2} from './components/Layout2.jsx';
 import {Switch, Route} from 'react-router-dom';
 
 export class App extends Component {
