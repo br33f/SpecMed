@@ -1,15 +1,24 @@
 import React from 'react';
 import {Component} from 'react';
-import {Layout} from './components/Layout.jsx';
+import {Navigation} from './components/Navigation.jsx';
+import {Jumbotron} from 'reactstrap';
 import {Switch, Route} from 'react-router-dom';
+
+import {Main} from './modules/main/Main.jsx';
+import {EmployeeList} from './modules/employee/List.jsx'
 
 export class App extends Component {
     render() {
         return (
-          <Switch>
-              <Route exact path='/' component={Layout}/>
-              <Route exact path='/test' component={Layout}/>
-          </Switch>
-        );
+            <div>
+                <Navigation/>
+                <Jumbotron>
+                    <Switch>
+                        <Route exact path='/' component={Main}/>
+                        <Route exact path='/employee/list' component={EmployeeList}/>
+                    </Switch>
+                </Jumbotron>
+            </div>
+    );
     }
-}
+    }

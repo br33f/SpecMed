@@ -10,6 +10,7 @@
   "author": "br33f",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.17.1",
     "bootstrap": "^4.0.0-beta.2",
     "node-sass": "^4.6.1",
     "react": "^16.1.1",
