@@ -1,7 +1,7 @@
 # SpecMed
 
 BE - kod backend (Spring Boot)  
-FE - kod frontend (React) - wkrótce zrobie szkielet aplikacji.  
+FE - kod frontend (React)  
 
 Póki co mo¿ecie ogarniaæ sobie czê¶æ BE.  
 
@@ -26,5 +26,24 @@ Konfiguracja:
 
 
 # Jak uruchomiæ FE?
-Napisze jak przygotuje szkielet aplikacji Reactowej.  
 
+Przy pierwszym uruchomieniu lub zmianach w zale¿no¶ciach nale¿y wywo³aæ `npm install`.  
+
+Mo¿na to zrobiæ z poziomu IntelliJ:  
+
+![npminstall](https://iv.pl/images/76798878694807189413.png)
+
+lub z poziomu konsoli, je¿eli z poziomu IntelliJ bêdzie krzyczeæ b³êdami zwi±zanymi z uprawieniami:  
+
+1. W konsoli dajemy cd PROJEKT/FE  
+2. `npm install`   
+
+
+Aby uruchomiæ sam± aplikacjê wywo³ujemy `npm start`.  
+
+To ju¿ powinno dzia³aæ z poziomu IntelliJ:  
+
+![npmstart](https://iv.pl/images/39830204733889582183.png)
+
+
+W razie gdyby co¶ nie dzia³a³o dawajcie znaæ to pomogê :)
