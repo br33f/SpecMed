@@ -6,7 +6,6 @@ import com.i4m1s1.specmed.initmodules.OnStartInsertData;
 import com.i4m1s1.specmed.persistence.MedicalEmployee;
 import com.i4m1s1.specmed.persistence.Visit;
 import com.i4m1s1.specmed.repository.MedicalEmployeeRepository;
-import com.sun.org.apache.xalan.internal.xsltc.compiler.util.ErrorMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +15,7 @@ import java.util.List;
  * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
  */
 @Service
-public class ProviderVisitsByDoctorService implements ServiceSM<List<Visit>, String> {
+public class ProviderVisitsByDoctorService extends ServiceCatch<List<Visit>, String> {
 
     @Autowired
     private MedicalEmployeeRepository repository;
@@ -24,7 +23,7 @@ public class ProviderVisitsByDoctorService implements ServiceSM<List<Visit>, Str
     private OnStartInsertData initMod;
 
     @Override
-    public List<Visit> provide(String id) throws SMException{
+    public List<Visit> provide(String id) throws SMException {
 //        initMod.srajLekarzami();
 
         MedicalEmployee me = repository.findById(id);

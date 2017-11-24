@@ -25,11 +25,6 @@ public class VisitController {
     @CrossOrigin
     @RequestMapping(method = RequestMethod.GET, path = "/list")
     public ResponseSM getVisitByDoctor(@RequestParam(value = "id") String id) {
-        try {
-            List<Visit> result = service.provide(id);
-            return ResponseSM.wrap(result, null);
-        } catch (SMException sme) {
-            return ResponseSM.wrap("ERR", sme.getMessage());
-        }
+        return service.serve(id);
     }
 }

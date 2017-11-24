@@ -28,10 +28,6 @@ public class CommonController {
     @CrossOrigin
     @RequestMapping(method = RequestMethod.GET, path = "/dict")
     public ResponseSM getDictByName(@RequestParam("name") String name) {
-        try{
-            return ResponseSM.wrap(service.provide(name), null);
-        }catch (SMException sme) {
-            return ResponseSM.wrap("ERR", sme.getMessage());
-        }
+        return service.serve(name);
     }
 }

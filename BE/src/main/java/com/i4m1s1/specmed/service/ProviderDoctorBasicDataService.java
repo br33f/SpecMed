@@ -14,12 +14,12 @@ import java.util.List;
  * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
  */
 @Service
-public class ProviderDoctorBasicDataService implements ServiceSimpleSM<List<DoctorBasicDataDTO>> {
+public class ProviderDoctorBasicDataService  extends ServiceCatchBasic<List<DoctorBasicDataDTO>> {
 
     @Autowired
     private MedicalEmployeeRepository repository;
 
-    public List<DoctorBasicDataDTO> provide() throws SMException {
+    public List<DoctorBasicDataDTO> provide() {
 
         List<MedicalEmployee> medicalEmployeeList = repository.findAll();
         List<DoctorBasicDataDTO> result = new ArrayList<>();

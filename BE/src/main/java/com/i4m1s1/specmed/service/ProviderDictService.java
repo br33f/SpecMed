@@ -15,7 +15,7 @@ import java.util.Map;
  * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
  */
 @Service
-public class ProviderDictService implements ServiceSM<Map<Integer, String>, String> {
+public class ProviderDictService extends ServiceCatch<Map<Integer, String>, String> {
     @Autowired
     private DictionaryRepository repository;
     @Autowired

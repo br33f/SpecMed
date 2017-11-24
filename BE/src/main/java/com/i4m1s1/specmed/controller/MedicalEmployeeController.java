@@ -25,11 +25,6 @@ public class MedicalEmployeeController {
     @CrossOrigin
     @RequestMapping(method = RequestMethod.GET, path = "/list/basic")
     public ResponseSM getBasicData() {
-        try {
-            List<DoctorBasicDataDTO> result = service.provide();
-            return ResponseSM.wrap(result, null);
-        } catch (SMException sme) {
-            return ResponseSM.wrap("ERR", sme.getMessage());
-        }
+           return service.serve();
     }
 }
