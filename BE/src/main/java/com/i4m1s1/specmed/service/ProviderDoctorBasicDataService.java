@@ -1,24 +1,19 @@
 package com.i4m1s1.specmed.service;
 
-import com.i4m1s1.specmed.core.PersonalData;
 import com.i4m1s1.specmed.core.dto.DoctorBasicDataDTO;
-import com.i4m1s1.specmed.core.enums.Gender;
-import com.i4m1s1.specmed.core.enums.Specialization;
 import com.i4m1s1.specmed.persistence.MedicalEmployee;
 import com.i4m1s1.specmed.repository.MedicalEmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
  * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
  */
 @Service
-public class ProviderDoctorBasicDataService {
+public class ProviderDoctorBasicDataService implements ServiceSimpleSM<List<DoctorBasicDataDTO>> {
 
     @Autowired
     private MedicalEmployeeRepository repository;

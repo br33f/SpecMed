@@ -13,13 +13,14 @@ import java.util.List;
  * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
  */
 @Service
-public class ProviderVisitsByDoctorService {
+public class ProviderVisitsByDoctorService implements ServiceSM<List<Visit>, String> {
 
     @Autowired
     private MedicalEmployeeRepository repository;
     @Autowired
     private OnStartInsertData initMod;
 
+    @Override
     public List<Visit> provide(String id) {
 //        initMod.srajLekarzami();
 
