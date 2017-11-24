@@ -35,5 +35,4 @@ public class PersistedEnumFacade {
         Map<Integer, String> map = getDictByNameMap(name);
         return new ArrayList<>(map.values());
     }
-
 }

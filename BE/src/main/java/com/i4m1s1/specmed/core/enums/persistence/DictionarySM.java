@@ -15,7 +15,7 @@ public class DictionarySM {
     private DictionaryNames dictionaryName;
     private Map<Integer, String> dictMap;
 
-    DictionarySM(){}
+    public DictionarySM(){}
 
     public String getId() {
         return id;

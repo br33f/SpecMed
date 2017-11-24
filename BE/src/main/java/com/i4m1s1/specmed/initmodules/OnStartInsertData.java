@@ -1,23 +1,25 @@
 package com.i4m1s1.specmed.initmodules;
 
 import com.i4m1s1.specmed.core.PersonalData;
+import com.i4m1s1.specmed.core.enums.DictionaryNames;
 import com.i4m1s1.specmed.core.enums.Gender;
 import com.i4m1s1.specmed.core.enums.Specialization;
-import com.i4m1s1.specmed.persistence.Employee;
+import com.i4m1s1.specmed.core.enums.persistence.DictionarySM;
 import com.i4m1s1.specmed.persistence.MedicalEmployee;
 import com.i4m1s1.specmed.persistence.Visit;
+import com.i4m1s1.specmed.repository.DictionaryRepository;
 import com.i4m1s1.specmed.repository.EmployeeRepository;
 import com.i4m1s1.specmed.repository.MedicalEmployeeRepository;
 import com.i4m1s1.specmed.repository.VisitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
@@ -31,6 +33,8 @@ public class OnStartInsertData {
     private EmployeeRepository employeeRepository;
     @Autowired
     private VisitRepository visitRepository;
+    @Autowired
+    private DictionaryRepository dictionaryRepository;
 
 
     //repo lekarzy
@@ -82,5 +86,31 @@ public class OnStartInsertData {
 
             medicalEmployeeRepository.save(me);
         }
+    }
+
+    public void zapelnijSlowniki() {
+        //SPECIALIZACJE
+        Map<Integer, String> map = new HashMap<>();
+        map.put(1, "ONKOLOG");
+        map.put(2, "PEDIATRA");
+        map.put(3, "KARDIOLOG");
+
+        DictionarySM dict = new DictionarySM();
+        dict.setDictionaryName(DictionaryNames.SPECIALIZATION);
+        dict.setDictMap(map);
+
+        //STATUS WIZYTY
+        Map<Integer, String> mapv = new HashMap<>();
+        mapv.put(1, "WOLNA");
+        mapv.put(2, "ZAJETA");
+        mapv.put(3, "OPLACONA");
+
+        DictionarySM dictv = new DictionarySM();
+        dictv.setDictionaryName(DictionaryNames.VISIT_STATUS);
+        dictv.setDictMap(mapv);
+
+        dictionaryRepository.save(dictv);
+        dictionaryRepository.save(dict);
+
     }
 }
