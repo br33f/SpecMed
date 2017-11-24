@@ -1,7 +1,5 @@
 package com.i4m1s1.specmed.core.helper;
 
-import org.hibernate.validator.spi.time.TimeProvider;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;

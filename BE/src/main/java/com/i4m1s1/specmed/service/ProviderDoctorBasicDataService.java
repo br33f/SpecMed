@@ -31,22 +31,4 @@ public class ProviderDoctorBasicDataService {
         }
         return result;
     }
-
-//    @PostConstruct
-    private void prepareShit() {
-        //INIT
-        MedicalEmployee me = new MedicalEmployee();
-        PersonalData pe = new PersonalData();
-        pe.setSurname("sm");
-        pe.setBirthday(new Date());
-        pe.setPesel("99999912345");
-        pe.setName("name");
-        pe.setGender(Gender.MALE);
-        List<Specialization> spec = new ArrayList<>();
-        spec.add(Specialization.PEDIATRA);
-
-        me.setPersonalData(pe);
-        me.setSpecializationList(spec);
-        repository.save(me);
-    }
 }

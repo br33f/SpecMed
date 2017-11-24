@@ -10,6 +10,7 @@ import java.util.List;
  * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
  */
 public class DoctorBasicDataDTO {
+    private String id;
     private String name;
     private String surname;
     private List<Specialization> specializations;
@@ -21,6 +22,7 @@ public class DoctorBasicDataDTO {
         setSurname(pd.getSurname());
         setGender(pd.getGender().code());
         setSpecializations(me.getSpecializationList());
+        setId(me.getId());
     }
 
     public String getName() {
@@ -53,5 +55,13 @@ public class DoctorBasicDataDTO {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
