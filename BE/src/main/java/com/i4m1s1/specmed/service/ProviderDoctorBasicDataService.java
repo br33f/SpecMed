@@ -1,5 +1,6 @@
 package com.i4m1s1.specmed.service;
 
+import com.i4m1s1.specmed.core.SMException;
 import com.i4m1s1.specmed.core.dto.DoctorBasicDataDTO;
 import com.i4m1s1.specmed.persistence.MedicalEmployee;
 import com.i4m1s1.specmed.repository.MedicalEmployeeRepository;
@@ -18,7 +19,8 @@ public class ProviderDoctorBasicDataService implements ServiceSimpleSM<List<Doct
     @Autowired
     private MedicalEmployeeRepository repository;
 
-    public List<DoctorBasicDataDTO> provide() {
+    public List<DoctorBasicDataDTO> provide() throws SMException {
+
         List<MedicalEmployee> medicalEmployeeList = repository.findAll();
         List<DoctorBasicDataDTO> result = new ArrayList<>();
         for (MedicalEmployee me : medicalEmployeeList) {

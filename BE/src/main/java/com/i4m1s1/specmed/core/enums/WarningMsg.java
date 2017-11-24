@@ -6,7 +6,8 @@ package com.i4m1s1.specmed.core.enums;
 //todo przydaloby sie gdzies tego uzywac w appce :/
 public enum WarningMsg {
     DB_SAVE_ERROR(1, "Błąd zapisu do bazy danych"),
-    AUTH_ERROR(2, "Błąd autoryzacji");
+    AUTH_ERROR(2, "Błąd autoryzacji"),
+    DB_NO_RESULTS(3, "Brak wynikow zapytania");
 
     private final int id;
     private final String message;

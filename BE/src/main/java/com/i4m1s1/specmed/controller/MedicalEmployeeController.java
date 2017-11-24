@@ -1,7 +1,9 @@
 package com.i4m1s1.specmed.controller;
 
 import com.i4m1s1.specmed.core.ResponseSM;
+import com.i4m1s1.specmed.core.SMException;
 import com.i4m1s1.specmed.core.dto.DoctorBasicDataDTO;
+import com.i4m1s1.specmed.persistence.Visit;
 import com.i4m1s1.specmed.service.ProviderDoctorBasicDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,7 +25,11 @@ public class MedicalEmployeeController {
     @CrossOrigin
     @RequestMapping(method = RequestMethod.GET, path = "/list/basic")
     public ResponseSM getBasicData() {
-        List<DoctorBasicDataDTO> result = service.provide();
-        return ResponseSM.wrap(result, Arrays.asList("T1", "T2"));
+        try {
+            List<DoctorBasicDataDTO> result = service.provide();
+            return ResponseSM.wrap(result, null);
+        } catch (SMException sme) {
+            return ResponseSM.wrap("ERR", sme.getMessage());
+        }
     }
 }

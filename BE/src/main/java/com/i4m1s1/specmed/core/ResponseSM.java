@@ -8,31 +8,31 @@ import java.util.List;
  * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
  */
 public class ResponseSM {
-    private List<String> errors;
+    private String error;
     private String time; //kwestia jak wysylac date. String/Date? TODO
     private Object JSONContent;
 
-    private ResponseSM(List<String> errors, String time, Object JSONContent) {
-        this.errors = errors;
+    private ResponseSM(String error, String time, Object JSONContent) {
+        this.error = error;
         this.time = time;
         this.JSONContent = JSONContent;
     }
 
-    public static ResponseSM wrap(Object content, List<String> errors, String time) {
-        return new ResponseSM(errors, time, content);
+    public static ResponseSM wrap(Object content, String error, String time) {
+        return new ResponseSM(error, time, content);
     }
 
-    public static ResponseSM wrap(Object content, List<String> errors) {
+    public static ResponseSM wrap(Object content, String errors) {
         String time = DateHelper.getCurrentDateAsString("yyyy.MM.dd.HH.mm.ss");
         return new ResponseSM(errors, time, content);
     }
 
-    public List<String> getErrors() {
-        return errors;
+    public String getErrors() {
+        return error;
     }
 
-    public void setErrors(List<String> errors) {
-        this.errors = errors;
+    public void setErrors(String errors) {
+        this.error = error;
     }
 
     public String getTime() {
