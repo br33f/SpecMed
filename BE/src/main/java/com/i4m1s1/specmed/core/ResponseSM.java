@@ -7,13 +7,13 @@ import com.i4m1s1.specmed.core.helper.DateHelper;
  */
 public class ResponseSM {
     private String error;
-    private long time; //kwestia jak wysylac date. String/Date? TODO
-    private Object JSONContent;
+    private long time;
+    private Object content;
 
-    private ResponseSM(String error, long time, Object JSONContent) {
+    private ResponseSM(String error, long time, Object content) {
         this.error = error;
         this.time = time;
-        this.JSONContent = JSONContent;
+        this.content = content;
     }
 
     public static ResponseSM wrap(Object content, String error, long time) {
@@ -41,11 +41,11 @@ public class ResponseSM {
         this.time = time;
     }
 
-    public Object getJSONContent() {
-        return JSONContent;
+    public Object getContent() {
+        return content;
     }
 
-    public void setJSONContent(Object JSONContent) {
-        this.JSONContent = JSONContent;
+    public void setContent(Object content) {
+        this.content = content;
     }
 }

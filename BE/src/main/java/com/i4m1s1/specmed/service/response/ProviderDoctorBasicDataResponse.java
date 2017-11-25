@@ -1,6 +1,6 @@
 package com.i4m1s1.specmed.service.response;
 
-import com.i4m1s1.specmed.core.dto.DoctorBasicDataDTO;
+import com.i4m1s1.specmed.dto.DoctorBasicDataDTO;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.i4m1s1.specmed.core.dto;
+package com.i4m1s1.specmed.dto;
 
 import com.i4m1s1.specmed.core.PersonalData;
 import com.i4m1s1.specmed.persistence.MedicalEmployee;
