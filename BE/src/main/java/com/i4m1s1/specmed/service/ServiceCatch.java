@@ -2,6 +2,7 @@ package com.i4m1s1.specmed.service;
 
 import com.i4m1s1.specmed.core.ResponseSM;
 import com.i4m1s1.specmed.core.SMException;
+import com.i4m1s1.specmed.service.response.ServiceResponse;
 
 /**
  * Klasa abstrakcyjna dla Servise z requestem i responsem.
@@ -11,7 +12,7 @@ import com.i4m1s1.specmed.core.SMException;
  *
  * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
  */
-public abstract class ServiceCatch <Response, Request> {
+public abstract class ServiceCatch <Response extends ServiceResponse, Request> {
 
     public abstract Response provide(Request request) throws SMException;
 
