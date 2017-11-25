@@ -1,6 +1,7 @@
 package com.i4m1s1.specmed.persistence;
 
-import com.i4m1s1.specmed.core.enums.VisitStatus;
+import com.i4m1s1.specmed.core.annotation.Dictionary;
+import com.i4m1s1.specmed.core.dict.DictionaryNames;
 import org.springframework.data.annotation.Id;
 
 
@@ -28,11 +29,13 @@ public class Visit {
     @Id
     private String id;
     private String price;
-    private VisitStatus status; //wolna, zamowiona, odbyta, zaplacona(?)
+    @Dictionary(DictionaryNames.VISIT_STATUS)
+    private String status; //wolna, zamowiona, odbyta, zaplacona(?)
     private String day; //format 20171124 - najprostsze w impl. inne(?)
+
     private String hourStart;
     private String hourEnd;
-    private String place; //zmienic na slownik todo?
+    private String place; //zmienic na slownik czy co tu ma w ogole byc todo?
 
     public String getId() {
         return id;
@@ -50,11 +53,11 @@ public class Visit {
         this.price = price;
     }
 
-    public VisitStatus getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(VisitStatus status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

@@ -1,6 +1,7 @@
 package com.i4m1s1.specmed.core;
 
-import com.i4m1s1.specmed.core.enums.Gender;
+import com.i4m1s1.specmed.core.annotation.Dictionary;
+import com.i4m1s1.specmed.core.dict.DictionaryNames;
 
 import java.util.Date;
 
@@ -11,7 +12,8 @@ public class PersonalData {
     private String pesel;
     private String name;
     private String surname;
-    private Gender gender;
+    @Dictionary(DictionaryNames.GENDER)
+    private String gender;
     private Date birthday;
 
     public String getPesel() {
@@ -38,11 +40,11 @@ public class PersonalData {
         this.surname = surname;
     }
 
-    public Gender getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(Gender gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 

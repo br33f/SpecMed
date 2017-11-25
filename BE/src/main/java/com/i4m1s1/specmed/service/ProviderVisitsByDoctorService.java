@@ -1,8 +1,7 @@
 package com.i4m1s1.specmed.service;
 
 import com.i4m1s1.specmed.core.SMException;
-import com.i4m1s1.specmed.core.enums.WarningMsg;
-import com.i4m1s1.specmed.initmodules.OnStartInsertData;
+import com.i4m1s1.specmed.core.dict.WarningMsg;
 import com.i4m1s1.specmed.persistence.MedicalEmployee;
 import com.i4m1s1.specmed.repository.MedicalEmployeeRepository;
 import com.i4m1s1.specmed.service.response.ProviderVisitsByDoctorResponse;
@@ -17,14 +16,11 @@ public class ProviderVisitsByDoctorService extends ServiceCatch<ProviderVisitsBy
 
     @Autowired
     private MedicalEmployeeRepository repository;
-    @Autowired
-    private OnStartInsertData initMod;
 
     @Override
-    public ProviderVisitsByDoctorResponse provide(String id) throws SMException {
-//        initMod.srajLekarzami();
+    public ProviderVisitsByDoctorResponse provide(String doctorId) throws SMException {
 
-        MedicalEmployee me = repository.findById(id);
+        MedicalEmployee me = repository.findById(doctorId);
         if (me == null || me.getVisits() == null) {
             throw new SMException("20171124044256", WarningMsg.DB_NO_RESULTS);
         }

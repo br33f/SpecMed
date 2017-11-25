@@ -12,16 +12,20 @@ import com.i4m1s1.specmed.service.response.ServiceResponse;
  *
  * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
  */
-public abstract class ServiceCatch <Response extends ServiceResponse, Request> {
+public abstract class ServiceCatch<Response extends ServiceResponse, Request> {
 
     public abstract Response provide(Request request) throws SMException;
 
     public ResponseSM serve(Request request) {
+        //TODO dodac autoryzacje i logi w audycie jak bedzie czas
         try {
             Response result = this.provide(request);
             return ResponseSM.wrap(result, null);
         } catch (SMException sme) {
             return ResponseSM.wrap("ERR", sme.getMessage());
+        } catch (Exception e) {
+            //osobny catch bo moze sie jszcze cos zmieni
+            return ResponseSM.wrap("ERR", e.getMessage());
         }
     }
 }

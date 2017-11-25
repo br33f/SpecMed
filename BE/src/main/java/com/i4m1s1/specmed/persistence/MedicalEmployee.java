@@ -1,7 +1,8 @@
 package com.i4m1s1.specmed.persistence;
 
+import com.i4m1s1.specmed.core.annotation.Dictionary;
 import com.i4m1s1.specmed.core.PersonalData;
-import com.i4m1s1.specmed.core.enums.Specialization;
+import com.i4m1s1.specmed.core.dict.DictionaryNames;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
@@ -15,7 +16,8 @@ public class MedicalEmployee {
     @Id
     private String id;
     private PersonalData personalData;
-    private List<Specialization> specializationList;
+    @Dictionary(DictionaryNames.SPECIALIZATION)
+    private List<String> specializationList;
     /**
      * One-To-Many
      * https://docs.spring.io/spring-data/mongodb/docs/1.3.3.RELEASE/reference/html/mapping-chapter.html
@@ -34,11 +36,11 @@ public class MedicalEmployee {
         this.personalData = personalData;
     }
 
-    public List<Specialization> getSpecializationList() {
+    public List<String> getSpecializationList() {
         return specializationList;
     }
 
-    public void setSpecializationList(List<Specialization> specializationList) {
+    public void setSpecializationList(List<String> specializationList) {
         this.specializationList = specializationList;
     }
 

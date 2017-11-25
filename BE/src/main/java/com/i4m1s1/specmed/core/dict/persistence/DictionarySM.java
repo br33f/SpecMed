@@ -1,11 +1,12 @@
-package com.i4m1s1.specmed.core.enums.persistence;
+package com.i4m1s1.specmed.core.dict.persistence;
 
-import com.i4m1s1.specmed.core.enums.DictionaryNames;
+import com.i4m1s1.specmed.core.dict.DictionaryNames;
 import org.springframework.data.annotation.Id;
 
 import java.util.Map;
 
 /**
+ * Klasa reprezentujaca pojedynczy enum
  * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
  */
 public class DictionarySM {

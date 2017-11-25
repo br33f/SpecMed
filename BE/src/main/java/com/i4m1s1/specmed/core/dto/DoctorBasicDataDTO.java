@@ -1,7 +1,6 @@
 package com.i4m1s1.specmed.core.dto;
 
 import com.i4m1s1.specmed.core.PersonalData;
-import com.i4m1s1.specmed.core.enums.Specialization;
 import com.i4m1s1.specmed.persistence.MedicalEmployee;
 
 import java.util.List;
@@ -13,14 +12,14 @@ public class DoctorBasicDataDTO {
     private String id;
     private String name;
     private String surname;
-    private List<Specialization> specializations;
+    private List<String> specializations;
     private String gender;
 
     public DoctorBasicDataDTO(MedicalEmployee me) {
         PersonalData pd = me.getPersonalData();
         setName(pd.getName());
         setSurname(pd.getSurname());
-        setGender(pd.getGender().code());
+        setGender(pd.getGender());
         setSpecializations(me.getSpecializationList());
         setId(me.getId());
     }
@@ -41,11 +40,11 @@ public class DoctorBasicDataDTO {
         this.surname = surname;
     }
 
-    public List<Specialization> getSpecializations() {
+    public List<String> getSpecializations() {
         return specializations;
     }
 
-    public void setSpecializations(List<Specialization> specializations) {
+    public void setSpecializations(List<String> specializations) {
         this.specializations = specializations;
     }
 

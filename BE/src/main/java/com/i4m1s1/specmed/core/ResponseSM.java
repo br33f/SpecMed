@@ -2,28 +2,26 @@ package com.i4m1s1.specmed.core;
 
 import com.i4m1s1.specmed.core.helper.DateHelper;
 
-import java.util.List;
-
 /**
  * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
  */
 public class ResponseSM {
     private String error;
-    private String time; //kwestia jak wysylac date. String/Date? TODO
+    private long time; //kwestia jak wysylac date. String/Date? TODO
     private Object JSONContent;
 
-    private ResponseSM(String error, String time, Object JSONContent) {
+    private ResponseSM(String error, long time, Object JSONContent) {
         this.error = error;
         this.time = time;
         this.JSONContent = JSONContent;
     }
 
-    public static ResponseSM wrap(Object content, String error, String time) {
+    public static ResponseSM wrap(Object content, String error, long time) {
         return new ResponseSM(error, time, content);
     }
 
     public static ResponseSM wrap(Object content, String errors) {
-        String time = DateHelper.getCurrentDateAsString("yyyy.MM.dd.HH.mm.ss");
+        long time = DateHelper.getCurrentDateAsLong();
         return new ResponseSM(errors, time, content);
     }
 
@@ -35,11 +33,11 @@ public class ResponseSM {
         this.error = error;
     }
 
-    public String getTime() {
+    public long getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(long time) {
         this.time = time;
     }
 

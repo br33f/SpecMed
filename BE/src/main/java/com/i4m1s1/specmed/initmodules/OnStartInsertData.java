@@ -1,10 +1,8 @@
 package com.i4m1s1.specmed.initmodules;
 
 import com.i4m1s1.specmed.core.PersonalData;
-import com.i4m1s1.specmed.core.enums.DictionaryNames;
-import com.i4m1s1.specmed.core.enums.Gender;
-import com.i4m1s1.specmed.core.enums.Specialization;
-import com.i4m1s1.specmed.core.enums.persistence.DictionarySM;
+import com.i4m1s1.specmed.core.dict.DictionaryNames;
+import com.i4m1s1.specmed.core.dict.persistence.DictionarySM;
 import com.i4m1s1.specmed.persistence.MedicalEmployee;
 import com.i4m1s1.specmed.persistence.Visit;
 import com.i4m1s1.specmed.repository.DictionaryRepository;
@@ -38,15 +36,15 @@ public class OnStartInsertData {
 
 
     //repo lekarzy
-    public void srajLekarzami() {
+    public void initMedicalEmpoyeeAndVisit() {
         List<String> names = Arrays.asList("Roman", "Tomasz", "Zbigniew", "Mateusz");
         List<String> surnames = Arrays.asList("Abacki", "Babacki", "Cabacki", "Pawulonik");
         List<String> pesels = Arrays.asList("98765556777", "12312312312", "98765456788", "87773747273");
-        List<List<Specialization>> specs = Arrays.asList(
-                Arrays.asList(Specialization.ONKOLOG, Specialization.PEDIATRA),
-                Arrays.asList(Specialization.ONKOLOG),
-                Arrays.asList(Specialization.PEDIATRA),
-                Arrays.asList(Specialization.PEDIATRA)
+        List<List<String>> specs = Arrays.asList(
+                Arrays.asList("ONKOLOG"),
+                Arrays.asList("ONKOLOG", "GINEKOLOG"),
+                Arrays.asList("PEDIATRA","ONKOLOG"),
+                Arrays.asList("PEDIATRA")
         );
         List<PersonalData> pd = new ArrayList<>(4);
 
@@ -75,7 +73,7 @@ public class OnStartInsertData {
             personalData.setPesel(pesels.get(pd.indexOf(personalData)));
             personalData.setSurname(surnames.get(pd.indexOf(personalData)));
             personalData.setName(names.get(pd.indexOf(personalData)));
-            personalData.setGender(Gender.MALE);
+            personalData.setGender("FEMALE");
 
             MedicalEmployee me = new MedicalEmployee();
             me.setPersonalData(personalData);
@@ -109,8 +107,18 @@ public class OnStartInsertData {
         dictv.setDictionaryName(DictionaryNames.VISIT_STATUS);
         dictv.setDictMap(mapv);
 
-        dictionaryRepository.save(dictv);
-        dictionaryRepository.save(dict);
+        //PLCIE
+        Map<Integer, String> mapg = new HashMap<>();
+        mapg.put(1, "MALE");
+        mapg.put(2, "FEMALE");
+        mapg.put(3, "UNSPECIFIED");
 
+        DictionarySM dictg = new DictionarySM();
+        dictg.setDictionaryName(DictionaryNames.GENDER);
+        dictg.setDictMap(mapv);
+
+        dictionaryRepository.save(dictg);
+        dictionaryRepository.save(dict);
+        dictionaryRepository.save(dictv);
     }
 }
