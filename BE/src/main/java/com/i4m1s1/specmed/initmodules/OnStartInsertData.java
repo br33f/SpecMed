@@ -3,6 +3,7 @@ package com.i4m1s1.specmed.initmodules;
 import com.i4m1s1.specmed.core.PersonalData;
 import com.i4m1s1.specmed.core.dict.DictionaryNames;
 import com.i4m1s1.specmed.core.dict.persistence.DictionarySM;
+import com.i4m1s1.specmed.persistence.Employee;
 import com.i4m1s1.specmed.persistence.MedicalEmployee;
 import com.i4m1s1.specmed.persistence.Visit;
 import com.i4m1s1.specmed.repository.DictionaryRepository;
@@ -12,12 +13,7 @@ import com.i4m1s1.specmed.repository.VisitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
@@ -43,7 +39,7 @@ public class OnStartInsertData {
         List<List<String>> specs = Arrays.asList(
                 Arrays.asList("ONKOLOG"),
                 Arrays.asList("ONKOLOG", "GINEKOLOG"),
-                Arrays.asList("PEDIATRA","ONKOLOG"),
+                Arrays.asList("PEDIATRA", "ONKOLOG"),
                 Arrays.asList("PEDIATRA")
         );
         List<PersonalData> pd = new ArrayList<>(4);
@@ -66,7 +62,7 @@ public class OnStartInsertData {
 
         visitRepository.save(visits);
 
-        for (int i = 0; i<4 ; i++) {
+        for (int i = 0; i < 4; i++) {
             pd.add(new PersonalData());
             PersonalData personalData = pd.get(i);
             personalData.setBirthday(new Date());
@@ -83,6 +79,34 @@ public class OnStartInsertData {
             }
 
             medicalEmployeeRepository.save(me);
+        }
+    }
+
+    //repo pracownikow
+    public void initEmployees() {
+        List<String> names = Arrays.asList("Janusz", "Bogdan", "Zbigniew", "Mateusz");
+        List<String> surnames = Arrays.asList("Tracz", "Babacki", "Grzymała", "Przybeusz");
+        List<String> pesels = Arrays.asList("98765556777", "12312312312", "98765456788", "87773747273");
+        List<PersonalData> pd = new ArrayList<>(4);
+
+
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                for (int u = 0; u < 4; u++ ) {
+                    pd.add(new PersonalData());
+                    PersonalData personalData = pd.get(i);
+                    personalData.setBirthday(new Date());
+                    personalData.setPesel(pesels.get(i));
+                    personalData.setSurname(surnames.get(j));
+                    personalData.setName(names.get(u));
+                    personalData.setGender("MALE");
+
+                    Employee employee = new Employee();
+                    employee.setPersonalData(personalData);
+
+                    employeeRepository.save(employee);
+                }
+            }
         }
     }
 

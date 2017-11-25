@@ -1,28 +1,34 @@
 package com.i4m1s1.specmed.persistence;
 
+import com.i4m1s1.specmed.core.PersonalData;
 import org.springframework.data.annotation.Id;
 
 public class Employee {
     @Id
-    public String id;
+    private String id;
 
-    public String firstName;
-    public String lastName;
+    private PersonalData personalData;
 
     public Employee() {
     }
 
-    public Employee(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public Employee(PersonalData personalData) {
+        this.personalData = personalData;
     }
 
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "id='" + id + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                '}';
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public PersonalData getPersonalData() {
+        return personalData;
+    }
+
+    public void setPersonalData(PersonalData personalData) {
+        this.personalData = personalData;
     }
 }

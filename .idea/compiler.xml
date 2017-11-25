@@ -6,10 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="BE" />
         <module name="SPECMED" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="BE" target="1.8" />
       <module name="SPECMED" target="1.8" />
     </bytecodeTargetLevel>
   </component>

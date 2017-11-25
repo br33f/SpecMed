@@ -33,6 +33,7 @@ public class CommonController {
     public ResponseSM initModuleStart() {
         initModule.zapelnijSlowniki();
         initModule.initMedicalEmpoyeeAndVisit();
+        initModule.initEmployees();
         return ResponseSM.wrap("OK!", null);
     }
 
