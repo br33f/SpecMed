@@ -21,7 +21,7 @@ public class ProviderVisitsByDoctorService extends ServiceCatch<ProviderVisitsBy
     public ProviderVisitsByDoctorResponse provide(String doctorId) throws SMException {
 
         MedicalEmployee me = repository.findById(doctorId);
-        if (me == null || me.getVisits() == null) {
+        if (me == null) {
             throw new SMException("20171124044256", WarningMsg.DB_NO_RESULTS);
         }
         return new ProviderVisitsByDoctorResponse(me.getVisits());
