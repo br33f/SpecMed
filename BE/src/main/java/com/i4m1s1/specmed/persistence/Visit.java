@@ -1,8 +1,10 @@
 package com.i4m1s1.specmed.persistence;
 
 import com.i4m1s1.specmed.core.annotation.Dictionary;
+import com.i4m1s1.specmed.core.annotation.Related;
 import com.i4m1s1.specmed.core.dict.DictionaryNames;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 
 /**
@@ -28,14 +30,15 @@ public class Visit {
 
     @Id
     private String id;
+    @Related
+    private MedicalEmployee medicalEmpoyee; //w jpa tak sie robi. ulatwia selecty
+    @Related
+    private Customer customer;
     private String price;
     @Dictionary(DictionaryNames.VISIT_STATUS)
     private String status; //wolna, zamowiona, odbyta, zaplacona(?)
-    private String day; //format 20171124 - najprostsze w impl. inne(?)
-
-    private String hourStart;
-    private String hourEnd;
     private String place; //zmienic na slownik czy co tu ma w ogole byc todo?
+    private long date;
 
     public String getId() {
         return id;
@@ -61,28 +64,12 @@ public class Visit {
         this.status = status;
     }
 
-    public String getDay() {
-        return day;
+    public long getDate() {
+        return date;
     }
 
-    public void setDay(String day) {
-        this.day = day;
-    }
-
-    public String getHourStart() {
-        return hourStart;
-    }
-
-    public void setHourStart(String hourStart) {
-        this.hourStart = hourStart;
-    }
-
-    public String getHourEnd() {
-        return hourEnd;
-    }
-
-    public void setHourEnd(String hourEnd) {
-        this.hourEnd = hourEnd;
+    public void setDate(long date) {
+        this.date = date;
     }
 
     public String getPlace() {
@@ -91,5 +78,21 @@ public class Visit {
 
     public void setPlace(String place) {
         this.place = place;
+    }
+
+    public MedicalEmployee getMedicalEmpoyee() {
+        return medicalEmpoyee;
+    }
+
+    public void setMedicalEmpoyee(MedicalEmployee medicalEmpoyee) {
+        this.medicalEmpoyee = medicalEmpoyee;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }

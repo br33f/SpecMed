@@ -27,15 +27,22 @@ public class CommonController {
         return service.serve(name);
     }
 
-    //DO ODPALANIA INIT MODULOW
+    //DO GASZENIA INIT MODULOW
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.DELETE, path = "/destroy-module")
+    public ResponseSM initModuleStop() {
+        initModule.destroyAllModules();
+        return ResponseSM.wrap("OK - delete!", null);
+    }
+
+    //DO ODPALENIA INIT MODULOW
     @CrossOrigin
     @RequestMapping(method = RequestMethod.PUT, path = "/init-module")
     public ResponseSM initModuleStart() {
         initModule.zapelnijSlowniki();
         initModule.initMedicalEmpoyeeAndVisit();
         initModule.initEmployees();
-        return ResponseSM.wrap("OK!", null);
+        return ResponseSM.wrap("OK - init!", null);
     }
-
 
 }

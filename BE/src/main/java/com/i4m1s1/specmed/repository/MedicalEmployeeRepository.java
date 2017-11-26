@@ -9,6 +9,7 @@ import java.util.List;
  * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
  */
 public interface MedicalEmployeeRepository extends MongoRepository<MedicalEmployee, String> {
-    public List<MedicalEmployee> findBySpecializationListContains(String spec);
-    public MedicalEmployee findById(String id);
+    List<MedicalEmployee> findBySpecializationListContains(String spec);
+    MedicalEmployee findById(String id);
+
 }
