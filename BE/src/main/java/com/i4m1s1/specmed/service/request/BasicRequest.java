@@ -1,18 +1,17 @@
 package com.i4m1s1.specmed.service.request;
 
-import com.fasterxml.jackson.databind.JsonNode;
-
 /**
  * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
  */
-public class BasicRequest {
-    private JsonNode chunkData;
+public class BasicRequest<T> extends ApiRequest {
 
-    public JsonNode getChunkData() {
+    protected T chunkData;
+
+    public T getChunkData() {
         return chunkData;
     }
 
-    public void setChunkData(JsonNode chunkData) {
+    public void setChunkData(T chunkData) {
         this.chunkData = chunkData;
     }
 }

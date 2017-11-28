@@ -1,16 +1,13 @@
-package com.i4m1s1.specmed.service.response.common;
+package com.i4m1s1.specmed.service.response;
 
-import com.i4m1s1.specmed.service.response.ServiceResponse;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 /**
- * Generycznie bo latwiej lapac bledy jak ktos pomyli klasy (czasami wywala blad juz w IDE) ~TF
- * Poza tym klasa Page tego wymaga
  * Created by br33 on 25.11.2017.
  */
-public class ListResponse<T> implements ServiceResponse {
+public class ListResponse<T> extends ApiResponse {
     private long totalCount;
     private long totalPages;
     private List<T> data;
