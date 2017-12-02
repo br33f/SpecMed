@@ -15,33 +15,20 @@ export class PostPageableTable extends Component {
     }
 
     componentDidMount() {
-        axios.post('http://localhost:8080/employee/list', {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            }
-        }).then(res => {
-            this.setState({employeeList: res.data});
+        axios.post('http://localhost:8080/employee/list').then(res => {
+            this.setState({employeeList: res.content});
         });
     }
 
     render() {
         if (this.state.employeeList && this.state.employeeList.length > 0) {
-            let columnDefinition = this.props.columnDefinition;
-
             return (
                 <Table striped>
-                    <thead>
-                        <tr>
-                            {columnDefinition.map(column =>
-                                <th key={"column-" + column.key}>{column.label}</th>
-                            )}
-                        </tr>
-                    </thead>
+                    <TableHeader headerDefinition={this.props.headerDefintion} />
                     <tbody>
                     {this.state.employeeList.map(employee =>
                         <tr key={employee.id}>
-                            {columnDefinition.map(column =>
+                            {this.props.headerDefinition.map(column =>
                                 <td>{employee[column.key]}</td>
                             )}
                         </tr>
