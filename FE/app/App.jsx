@@ -19,6 +19,6 @@ export class App extends Component {
                     </Switch>
                 </Jumbotron>
             </div>
-    );
+        );
     }
-    }
+}
