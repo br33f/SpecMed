@@ -58,9 +58,9 @@ export class PostPageableTable extends Component {
             searchCriteria: {}
         }).then(res => {
             this.setState({
-                employeeList: res.data.content.data,
-                totalCount: res.data.content.totalCount,
-                totalPages: res.data.content.totalPages
+                employeeList: res.data.data,
+                totalCount: res.data.totalCount,
+                totalPages: res.data.totalPages
             });
         });
     }

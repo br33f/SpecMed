@@ -2,8 +2,10 @@ import axios from 'axios';
 
 export default {
     getDict: function(dictionaryName) {
-        return axios.get(`/common/dict?name=${dictionaryName}`).then(dict => {
-           return dict.data.content.dict;
+        return axios.post(`/common/dict`, {
+            chunkData: dictionaryName
+        }).then(dict => {
+           return dict.data.data;
         });
     },
 
