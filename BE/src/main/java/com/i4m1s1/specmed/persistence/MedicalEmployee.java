@@ -25,9 +25,6 @@ public class MedicalEmployee {
      * KAZDY OBIEKT OZNACZONY DBREF MUSI POSIADAC WLASNE REPOSITORY I DO NIEGO SAVEUJEMY DANE!
      * OBIEKTY OZNACZONE DBREF NIE PODPADAJĄ POD CASCADE
      */
-    @DBRef
-    private List<Visit> visits;
-
     public PersonalData getPersonalData() {
         return personalData;
     }
@@ -52,11 +49,4 @@ public class MedicalEmployee {
         this.id = id;
     }
 
-    public List<Visit> getVisits() {
-        return visits;
-    }
-
-    public void setVisits(List<Visit> visits) {
-        this.visits = visits;
-    }
 }

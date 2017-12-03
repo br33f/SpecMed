@@ -1,25 +1,26 @@
-package com.i4m1s1.specmed.service.response.common;
+package com.i4m1s1.specmed.service.response;
 
-import com.i4m1s1.specmed.service.response.ServiceResponse;
 import org.springframework.data.domain.Page;
+
+import java.util.List;
 
 /**
  * Created by br33 on 25.11.2017.
  */
-public class ListResponse implements ServiceResponse {
+public class ListResponse<T> extends ApiResponse {
     private long totalCount;
     private long totalPages;
-    private Object data;
+    private List<T> data;
 
     public ListResponse() {
     }
 
-    public ListResponse(int totalCount, int totalPages, Object data) {
+    public ListResponse(long totalCount, long totalPages, List<T> data) {
         this.totalCount = totalCount;
         this.data = data;
     }
 
-    public ListResponse(Page page) {
+    public ListResponse(Page<T> page) {
         this.totalCount = page.getTotalElements();
         this.totalPages = page.getTotalPages();
         this.data = page.getContent();
@@ -41,11 +42,11 @@ public class ListResponse implements ServiceResponse {
         this.totalPages = totalPages;
     }
 
-    public Object getData() {
+    public List<T> getData() {
         return data;
     }
 
-    public void setData(Object data) {
+    public void setData(List<T> data) {
         this.data = data;
     }
 }

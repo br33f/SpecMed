@@ -1,8 +1,9 @@
 package com.i4m1s1.specmed.controller;
 
-import com.i4m1s1.specmed.core.ResponseSM;
+import com.i4m1s1.specmed.persistence.Employee;
 import com.i4m1s1.specmed.service.ProviderEmployeeBasicDataService;
 import com.i4m1s1.specmed.service.request.ListRequest;
+import com.i4m1s1.specmed.service.response.ListResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +34,7 @@ public class EmployeeController {
      */
     @CrossOrigin
     @RequestMapping(method = RequestMethod.POST, path = "/list")
-    public ResponseSM getBasicDataList(@RequestBody ListRequest request) {
+    public ListResponse<Employee> getBasicDataList(@RequestBody ListRequest<Employee> request) {
         return providerEmployeeBasicDataService.serve(request);
     }
 

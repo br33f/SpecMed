@@ -3,6 +3,7 @@ package com.i4m1s1.specmed.initmodules;
 import com.i4m1s1.specmed.core.PersonalData;
 import com.i4m1s1.specmed.core.dict.DictionaryNames;
 import com.i4m1s1.specmed.core.dict.persistence.DictionarySM;
+import com.i4m1s1.specmed.core.helper.DateHelper;
 import com.i4m1s1.specmed.persistence.Employee;
 import com.i4m1s1.specmed.persistence.MedicalEmployee;
 import com.i4m1s1.specmed.persistence.Visit;
@@ -13,7 +14,12 @@ import com.i4m1s1.specmed.repository.VisitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
@@ -30,9 +36,22 @@ public class OnStartInsertData {
     @Autowired
     private DictionaryRepository dictionaryRepository;
 
+    /**
+     * Czysci baze zeby odpalic ponownie inity.
+     * Potrzebne czasami bo mamy referencje w bazie i kilkukrotne odpalenie initow bez czyszczenia
+     * mogloby referencje zdewaluowac.
+     */
+    public void destroyAllModules() {
+        visitRepository.deleteAll();
+        employeeRepository.deleteAll();
+        dictionaryRepository.deleteAll();
+        medicalEmployeeRepository.deleteAll();
+    }
 
     //repo lekarzy
     public void initMedicalEmpoyeeAndVisit() {
+        //todo ZROBIC TO JAK CZLOWIEK NIE JAK ZWIERZE
+        //todo zadanie dla kogos ambitnego
         List<String> names = Arrays.asList("Roman", "Tomasz", "Zbigniew", "Mateusz");
         List<String> surnames = Arrays.asList("Abacki", "Babacki", "Cabacki", "Pawulonik");
         List<String> pesels = Arrays.asList("98765556777", "12312312312", "98765456788", "87773747273");
@@ -47,20 +66,23 @@ public class OnStartInsertData {
 
         //wizyty
         Visit v1 = new Visit();
-        v1.setDay("20171122");
-        v1.setHourEnd("8");
-        v1.setHourStart("7");
+        v1.setDate(DateHelper.getCurrentDateAsLong());
         v1.setPlace("222");
         v1.setPrice("219");
         Visit v2 = new Visit();
-        v2.setDay("20171123");
-        v2.setHourStart("10");
-        v2.setHourEnd("12");
+        v2.setDate(DateHelper.getCurrentDateAsLong());
         v2.setPlace("11A");
         v2.setPrice("99");
-        List<Visit> visits = Arrays.asList(v1, v2);
+        Visit v3 = new Visit();
+        v3.setDate(DateHelper.getCurrentDateAsLong());
+        v3.setPlace("121A");
+        v3.setPrice("52");
+        List<Visit> vl1 = Arrays.asList(v1, v2);
+        List<Visit> vl2 = Arrays.asList(v3);
 
-        visitRepository.save(visits);
+
+//        visitRepository.save(vl1);
+//        visitRepository.save(vl2);
 
         for (int i = 0; i < 4; i++) {
             pd.add(new PersonalData());
@@ -74,12 +96,24 @@ public class OnStartInsertData {
             MedicalEmployee me = new MedicalEmployee();
             me.setPersonalData(personalData);
             me.setSpecializationList(specs.get(pd.indexOf(personalData)));
-            if (pd.indexOf(personalData) == 0) {
-                me.setVisits(visits);
-            }
 
+            //xD wow wow
+            if(i == 1){
+//                me.setVisits(vl1);
+                for(Visit v : vl1) {
+                    v.setMedicalEmpoyee(me);
+                }
+            }
+            if(i ==2 ){
+//                me.setVisits(vl2);
+                for(Visit v : vl2) {
+                    v.setMedicalEmpoyee(me);
+                }
+            }
             medicalEmployeeRepository.save(me);
         }
+        visitRepository.save(vl1);//PONOWNIE BO EDYTOWALISMY COS.
+        visitRepository.save(vl2);
     }
 
     //repo pracownikow
