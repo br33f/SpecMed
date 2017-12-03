@@ -1,6 +1,8 @@
+@import "~bootstrap/scss/bootstrap.scss";
+
 .specJumbo {
   @media screen and (min-width: map-get($grid-breakpoints, sm)){
-    background-image: url('../images/medical-team.png');
+    background-image: url('../../assets/images/medical-team.png');
     background-position: top right;
     background-size: auto;
     background-repeat: no-repeat;

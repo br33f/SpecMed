@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
@@ -20,7 +21,7 @@ public class ProviderDictService extends ServiceCatch<ProviderDictResponse, Stri
     @Override
     public ProviderDictResponse provide(String s) throws SMException {
 
-        List<String> dictList = facade.getDictByNameList(s);
-        return new ProviderDictResponse(dictList);
+        Map<Integer, String> dictMap = facade.getDictByNameMap(s);
+        return new ProviderDictResponse(dictMap);
     }
 }

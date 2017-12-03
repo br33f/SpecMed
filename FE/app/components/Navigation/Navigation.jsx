@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import './navigation.scss';
 
 export class Navigation extends React.Component {
     constructor(props) {
@@ -20,7 +21,7 @@ export class Navigation extends React.Component {
         return (
             <div>
                 <Navbar color="faded" light className="navbar-expand-md">
-                    <img className="navbarLogo" src={require('../assets/images/logo.png')} alt={this.props.appTitle} />
+                    <img className="navbarLogo" src={require('../../assets/images/logo.png')} alt={this.props.appTitle} />
                     <NavbarBrand tag={Link} to="/">
                         <span>{this.props.appTitle}</span>
                     </NavbarBrand>

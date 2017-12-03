@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import _ from 'lodash';
 import {Component} from 'react';
+
 import {TableHeader} from './TableHeader.jsx';
+import {TableContent} from './TableContent.jsx';
+
 import {Table, Pagination, PaginationItem, PaginationLink} from 'reactstrap';
 import './postpageablettable.scss';
 
@@ -23,23 +26,36 @@ export class PostPageableTable extends Component {
             totalCount: 0,
             totalPages: 0,
             employeeList: [],
+            dictionaries: {}
         };
     }
 
     componentDidMount() {
         this.fetchData();
+        this.fetchDictionaries();
+    }
+
+    fetchDictionaries() {
+        let dictionariesToFetch = this.props.headerDefinition
+            .filter(column => column.format && column.format.type === 'dictionary')
+            .map(column => column.format.dictionaryName);
+
+        SM.DictionaryManager.getDicts(...dictionariesToFetch).then(dicts => {
+           this.setState({
+               dictionaries: dicts
+            });
+        });
     }
 
     fetchData() {
-        axios.post('http://localhost:8080/employee/list', {
+        axios.post(this.props.dataUrl, {
             pageCriteria: {
                 currentPage: this.currentPage,
                 pageSize: this.pageSize,
                 sortKey: this.sortKey,
                 sortDirection: this.sortDirection
             },
-            searchCriteria: {
-            }
+            searchCriteria: {}
         }).then(res => {
             this.setState({
                 employeeList: res.data.content.data,
@@ -62,38 +78,33 @@ export class PostPageableTable extends Component {
 
     render() {
         const currentPage = this.currentPage;
-        const headerDefinition = this.props.headerDefintion;
+        const headerDefinition = this.props.headerDefinition;
 
         if (this.state.employeeList && this.state.employeeList.length > 0) {
             return (
                 <div className="postPageableTable">
                     <Table striped>
-                        <TableHeader headerDefinition={headerDefinition} sortingHandler={this.setSorting.bind(this)} />
-                        <tbody>
-                        {
-                            this.state.employeeList.map(employee =>
-                                <tr key={employee.id}>
-                                    {headerDefinition.map(column =>
-                                        <td key={employee.id + '-' + column.key}>{_.get(employee, column.key)}</td>
-                                    )}
-                                </tr>
-                            )
-                        }
-                        </tbody>
+                        <TableHeader headerDefinition={headerDefinition} sortingHandler={this.setSorting.bind(this)}/>
+                        <TableContent headerDefinition={headerDefinition} employeeList={this.state.employeeList}
+                                      dictionaries={this.state.dictionaries}/>
                     </Table>
                     <Pagination className="mx-auto">
                         <PaginationItem disabled={currentPage <= 0}>
-                            <PaginationLink previous onClick={currentPage > 0 ? this.setPage.bind(this, currentPage - 1) : () => {}} />
+                            <PaginationLink previous
+                                            onClick={currentPage > 0 ? this.setPage.bind(this, currentPage - 1) : () => {
+                                            }}/>
                         </PaginationItem>
                         {
                             Array.apply(0, Array(this.state.totalPages)).map((x, i) =>
-                                <PaginationItem key={i} active={ currentPage === i }>
+                                <PaginationItem key={i} active={currentPage === i}>
                                     <PaginationLink onClick={this.setPage.bind(this, i)}>{i + 1}</PaginationLink>
                                 </PaginationItem>
                             )
                         }
                         <PaginationItem disabled={currentPage >= this.state.totalPages - 1}>
-                            <PaginationLink next onClick={currentPage < this.state.totalPages - 1 ? this.setPage.bind(this, currentPage + 1) : () => {}} />
+                            <PaginationLink next
+                                            onClick={currentPage < this.state.totalPages - 1 ? this.setPage.bind(this, currentPage + 1) : () => {
+                                            }}/>
                         </PaginationItem>
                     </Pagination>
                 </div>
@@ -110,7 +121,8 @@ export class PostPageableTable extends Component {
         currentPage: PropTypes.number,
         sortKey: PropTypes.string,
         sortDirection: PropTypes.string,
-        headerDefintion: PropTypes.array.isRequired
+        headerDefinition: PropTypes.array.isRequired,
+        dataUrl: PropTypes.string.isRequired
     };
 
     static defaultProps = {
