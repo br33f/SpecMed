@@ -1,0 +1,17 @@
+@import "~bootstrap/scss/bootstrap.scss";
+
+.specJumbo {
+  @media screen and (min-width: map-get($grid-breakpoints, sm)){
+    background-image: url('../../assets/images/medical-team.png');
+    background-position: top right;
+    background-size: auto;
+    background-repeat: no-repeat;
+  }
+
+  .headingTile {
+    display: inline-block;
+    padding-right: 2%;
+    border-radius: 3%;
+    background: $jumbotron-bg;
+  }
+}

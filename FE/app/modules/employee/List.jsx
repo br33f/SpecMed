@@ -1,18 +1,33 @@
 import React from 'react';
 import {Component} from 'react';
-import {PostPageableTable} from '../../components/PostPageableTable.jsx';
+import {Container} from 'reactstrap';
+import {PostPageableTable} from '../../components/PostPageableTable/PostPageableTable.jsx';
 
 export class EmployeeList extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    getHeaderDefinition() {
+        return [
+            {key: 'personalData.name', label: 'Imię pracownika', sortable: true},
+            {key: 'personalData.surname', label: 'Nazwisko pracownika', sortable: true},
+            {key: 'personalData.pesel', label: 'PESEL'},
+            {key: 'personalData.birthday', label: 'Urodziny', format: 'date'},
+            {key: 'personalData.gender', label: 'Płeć', format: {type: 'dictionary', dictionaryName: "GENDER"}},
+        ];
+    }
+
     render() {
         return (
-            <div>
-                <h1 className="display-3">SpecMed</h1>
-                <p className="lead">Lista pracowników</p>
-                <PostPageableTable columnDefinition={[
-                    {key: 'firstName', label: 'Imię pracownika'},
-                    {key: 'lastName', label: 'Nazwisko pracownika'}
-                    ]}/>
-            </div>
+            <Container fluid={true}>
+                <p className="contentTitle">Lista pracowników</p>
+                <PostPageableTable
+                    headerDefinition={this.getHeaderDefinition()}
+                    dataUrl="/employee/list"
+                />
+
+            </Container>
         );
     }
 }

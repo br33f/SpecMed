@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = "/common")
@@ -24,8 +25,8 @@ public class CommonController {
     private OnStartInsertData initModule;
 
     @CrossOrigin
-    @RequestMapping(method = RequestMethod.GET, path = "/dict")
-    public BasicResponse<List<String>> getDictByName(@RequestBody BasicRequest<String> request) {
+    @RequestMapping(method = RequestMethod.POST, path = "/dict")
+    public BasicResponse<Map<Integer, String>> getDictByName(@RequestBody BasicRequest<String> request) {
         return service.serve(request);
     }
 

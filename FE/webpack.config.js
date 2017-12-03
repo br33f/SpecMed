@@ -28,6 +28,21 @@ const webpackCommon = {
                     {loader: 'css-loader'},
                     {loader: 'sass-loader'}
                 ]
+            },
+            {
+                test: /\.(gif|png|jpe?g|svg)$/i,
+                use: {
+                    loader: 'file-loader',
+                    options: {
+                        name: "[path][name].[hash].[ext]",
+                    },
+                }
+            },
+            {
+                test: /\.(woff2?|ttf|svg|eot)(\?v=\d+\.\d+\.\d+)?$/,
+                use: {
+                    loader: 'file-loader'
+                }
             }
         ]
     },
@@ -52,7 +67,7 @@ const webpackCommon = {
 switch (process.env.npm_lifecycle_event) {
     case 'start':
     case 'dev':
-        module.exports = merge (webpackCommon, {
+        module.exports = merge(webpackCommon, {
             devtool: '#inline-source-map',
             devServer: {
                 contentBase: path.join(__dirname, 'public'),
