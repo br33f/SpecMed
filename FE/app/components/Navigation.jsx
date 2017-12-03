@@ -19,8 +19,11 @@ export class Navigation extends React.Component {
     render() {
         return (
             <div>
-                <Navbar color="faded" light expand="md">
-                    <NavbarBrand tag={Link} to="/">SpecMed</NavbarBrand>
+                <Navbar color="faded" light className="navbar-expand-md">
+                    <img className="navbarLogo" src={require('../assets/images/logo.png')} alt={this.props.appTitle} />
+                    <NavbarBrand tag={Link} to="/">
+                        <span>{this.props.appTitle}</span>
+                    </NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
