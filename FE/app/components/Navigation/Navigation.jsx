@@ -34,6 +34,9 @@ export class Navigation extends React.Component {
                             <NavItem>
                                 <NavLink tag={Link} to="/employee/list">Lista lekarzy</NavLink>
                             </NavItem>
+                            <NavItem>
+                                <NavLink tag={Link} to="/employee/add">+Pracownik</NavLink>
+                            </NavItem>
                         </Nav>
                     </Collapse>
                 </Navbar>

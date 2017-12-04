@@ -11,6 +11,7 @@ import {Switch, Route} from 'react-router-dom';
 
 import {Main} from './modules/main/Main.jsx';
 import {EmployeeList} from './modules/employee/List.jsx'
+import {EmployeeAdd} from "./modules/employee/EmployeeAdd.jsx";
 
 export class App extends Component {
    constructor() {
@@ -41,6 +42,7 @@ export class App extends Component {
                 <Switch>
                     <Route exact path='/' component={Main}/>
                     <Route exact path='/employee/list' component={EmployeeList}/>
+                    <Route exact path='/employee/add' component={EmployeeAdd}/>
                 </Switch>
             </div>
         );
