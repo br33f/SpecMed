@@ -22,7 +22,7 @@ Has³o: specmed1
 # Jak uruchomiæ BE?
 
 Konfiguracja:  
-![logo](https://iv.pl/images/52306054938260661262.png)
+![logo](http://vps-1035027-7321.homecloud.pl/images/be_config.PNG)
 
 
 # Jak uruchomiæ FE?
@@ -31,7 +31,7 @@ Przy pierwszym uruchomieniu lub zmianach w zale¿no¶ciach nale¿y wywo³aæ `npm ins
 
 Mo¿na to zrobiæ z poziomu IntelliJ:  
 
-![npminstall](https://iv.pl/images/76798878694807189413.png)
+![npminstall](http://vps-1035027-7321.homecloud.pl/images/npminstall.PNG)
 
 lub z poziomu konsoli, je¿eli z poziomu IntelliJ bêdzie krzyczeæ b³êdami zwi±zanymi z uprawieniami:  
 
@@ -43,7 +43,7 @@ Aby uruchomiæ sam± aplikacjê wywo³ujemy `npm start`.
 
 To ju¿ powinno dzia³aæ z poziomu IntelliJ:  
 
-![npmstart](https://iv.pl/images/39830204733889582183.png)
+![npmstart](http://vps-1035027-7321.homecloud.pl/images/npmstart.PNG)
 
 
 W razie gdyby co¶ nie dzia³a³o dawajcie znaæ to pomogê :)
