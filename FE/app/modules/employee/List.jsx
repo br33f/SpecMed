@@ -1,7 +1,7 @@
 import React from 'react';
 import {Component} from 'react';
 import {Container} from 'reactstrap';
-import {PostPageableTable} from '../../components/PostPageableTable/PostPageableTable.jsx';
+import {PostPageableTable} from '../../components/post-pageable-collection/PostPageableTable.jsx';
 
 export class EmployeeList extends Component {
     constructor(props) {

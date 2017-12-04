@@ -1,16 +1,17 @@
 import React from 'react';
 import axios from 'axios';
 import {Component} from 'react';
-import {Navigation} from './components/Navigation/Navigation.jsx';
-import {Jumbo} from './components/Jumbo/Jumbo.jsx';
+import {Navigation} from './components/navigation/Navigation.jsx';
+import {Jumbo} from './components/jumbo/Jumbo.jsx';
 
-import Utils from './components/Helpers/Utils';
-import DictionaryManager from './components/Helpers/DictionaryManager';
+import Utils from './components/helpers/Utils';
+import DictionaryManager from './components/helpers/DictionaryManager';
 
 import {Switch, Route} from 'react-router-dom';
 
 import {Main} from './modules/main/Main.jsx';
 import {EmployeeList} from './modules/employee/List.jsx'
+import {EmployeeEdit} from './modules/employee/Edit.jsx'
 
 export class App extends Component {
    constructor() {
@@ -41,6 +42,7 @@ export class App extends Component {
                 <Switch>
                     <Route exact path='/' component={Main}/>
                     <Route exact path='/employee/list' component={EmployeeList}/>
+                    <Route exact path='/employee/edit' component={EmployeeEdit}/>
                 </Switch>
             </div>
         );
