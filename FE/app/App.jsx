@@ -13,6 +13,7 @@ import {Main} from './modules/main/Main.jsx';
 import {EmployeeList} from './modules/employee/List.jsx'
 import {EmployeeEdit} from './modules/employee/Edit.jsx'
 import {PrescriptionNew} from './modules/prescription/New.jsx'
+import {MedicalPacketNew} from './modules/medicalPacket/New.jsx'
 
 export class App extends Component {
    constructor() {
@@ -46,6 +47,7 @@ export class App extends Component {
                     <Route exact path='/employee/new' component={EmployeeEdit}/>
                     <Route exact path='/employee/edit/:employeeId' component={EmployeeEdit}/>
                     <Route exact path='/prescription/new' component={PrescriptionNew}/>
+                    <Route exact path='/medicalPacket/new' component={MedicalPacketNew}/>
                 </Switch>
             </div>
         );
