@@ -48,6 +48,19 @@ export class Navigation extends React.Component {
                                     </DropdownItem>
                                 </DropdownMenu>
                             </UncontrolledDropdown>
+                            <UncontrolledDropdown>
+                                <DropdownToggle nav caret>
+                                    Ubezpieczenie
+                                </DropdownToggle>
+                                <DropdownMenu right={true}>
+                                    <DropdownItem tag={Link} to="/insurance/list">
+                                        Lista ubezpieczeń
+                                    </DropdownItem>
+                                    <DropdownItem tag={Link} to="/insurance/new">
+                                        Dodaj ubezpieczenie
+                                    </DropdownItem>
+                                </DropdownMenu>
+                            </UncontrolledDropdown>
                         </Nav>
                     </Collapse>
                 </Navbar>

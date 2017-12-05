@@ -1,8 +1,10 @@
-package com.i4m1s1.specmed.service;
+package com.i4m1s1.specmed.service.insurance;
 
 import com.i4m1s1.specmed.core.SMException;
 import com.i4m1s1.specmed.persistence.Employee;
+import com.i4m1s1.specmed.persistence.Insurance;
 import com.i4m1s1.specmed.repository.EmployeeRepository;
+import com.i4m1s1.specmed.repository.InsuranceRepository;
 import com.i4m1s1.specmed.service.catchs.BasicServiceCatch;
 import com.i4m1s1.specmed.service.request.BasicRequest;
 import com.i4m1s1.specmed.service.response.BasicResponse;
@@ -13,18 +15,16 @@ import org.springframework.stereotype.Service;
  * Created by br33 on 05.12.2017.
  */
 @Service
-public class ProviderSaveEmployeeService extends BasicServiceCatch<Employee, Employee> {
+public class ProviderSaveInsuranceService extends BasicServiceCatch<Insurance, Insurance> {
 
     @Autowired
-    private EmployeeRepository repository;
+    private InsuranceRepository repository;
 
     @Override
-    protected BasicResponse<Employee> provide(BasicRequest<Employee> request) throws SMException {
-        Employee savedEmployee = repository.save(request.getChunkData());
+    protected BasicResponse<Insurance> provide(BasicRequest<Insurance> request) throws SMException {
+        BasicResponse<Insurance> response = new BasicResponse<>();
+        response.setContent(repository.save(request.getChunkData()));
 
-        BasicResponse<Employee> response = new BasicResponse<>();
-        response.setContent(savedEmployee);
         return response;
     }
-
 }
