@@ -14,11 +14,6 @@ import {EmployeeList} from './modules/employee/List.jsx'
 import {EmployeeEdit} from './modules/employee/Edit.jsx'
 import {VisitEdit} from './modules/visit/Edit.jsx'
 import {MedicalPacakgeBuy} from './modules/medicalPackage/Buy.jsx'
-import {InsuranceList} from './modules/insurance/List.jsx'
-import {InsuranceEdit} from './modules/insurance/Edit.jsx'
-import {PrescriptionNew} from './modules/prescription/New.jsx'
-import {MedicalPacketNew} from './modules/medicalPacket/New.jsx'
-import {PatientNew} from './modules/patient/New.jsx'
 
 export class App extends Component {
    constructor() {
@@ -52,6 +47,7 @@ export class App extends Component {
                     <Route exact path='/employee/new' component={EmployeeEdit}/>
                     <Route exact path='/employee/edit/:employeeId' component={EmployeeEdit}/>
                     <Route exact path='/visit/edit/:visitId' component={VisitEdit}/>
+                    <Route exact path='/employee/edit' component={EmployeeEdit}/>
                     <Route exact path='/visit' component={VisitEdit}/>
                     <Route exact path='/medicalPackage' component={MedicalPacakgeBuy}/>
                     <Route exact path='/insurance/list' component={InsuranceList}/>
@@ -61,7 +57,6 @@ export class App extends Component {
                     <Route exact path='/medicalPacket/new' component={MedicalPacketNew}/>
                     <Route exact path='/patient/new' component={PatientNew}/>
                 </Switch>
-                <br />
             </div>
         );
     }
