@@ -98,7 +98,7 @@ export class    PrescriptionEdit extends FormComponent {
                                 <Input type="text" name="prescriptionData.drugList" id="prescriptionDrugList" placeholder="Lista leków"
                                        value={this.state.model.get('personalData.pesel')}
                                        onChange={this.bindValueToModel}/>
-                            </FormGroup>
+                            </FormGroup> 
 
                             <div className="pull-right">
                                 <Button outline type="button" className="mr-1"
