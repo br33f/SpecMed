@@ -35,6 +35,15 @@ export class Navigation extends React.Component {
                             <NavItem>
                                 <NavLink tag={Link} to="/">Strona główna</NavLink>
                             </NavItem>
+                            <NavItem>
+                                <NavLink tag={Link} to="/visit">Wizyta</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink tag={Link} to="/medicalPackage">Pakiet medyczny</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink tag={Link} to="/medicalOrder">Zlecenie badania</NavLink>
+                            </NavItem>
                             <UncontrolledDropdown>
                                 <DropdownToggle nav caret>
                                     Pracownik
