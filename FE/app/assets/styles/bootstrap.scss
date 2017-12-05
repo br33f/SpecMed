@@ -1,2 +1,4 @@
-$blue: #3FC2FB;
+@import "../styles/colors.scss";
+
+$blue: $sm-blue;
 @import "~bootstrap/scss/bootstrap.scss";
