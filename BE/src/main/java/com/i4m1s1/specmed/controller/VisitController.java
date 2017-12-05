@@ -2,8 +2,12 @@ package com.i4m1s1.specmed.controller;
 
 import com.i4m1s1.specmed.dto.VisitBasicDataDTO;
 import com.i4m1s1.specmed.persistence.Visit;
+import com.i4m1s1.specmed.service.ProviderSaveEmployeeService;
+import com.i4m1s1.specmed.service.ProviderSaveVisitService;
 import com.i4m1s1.specmed.service.ProviderVisitsByDoctorService;
+import com.i4m1s1.specmed.service.request.BasicRequest;
 import com.i4m1s1.specmed.service.request.ListRequest;
+import com.i4m1s1.specmed.service.response.BasicResponse;
 import com.i4m1s1.specmed.service.response.ListResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,9 +23,18 @@ public class VisitController {
     @Autowired
     private ProviderVisitsByDoctorService service;
 
+    @Autowired
+    private ProviderSaveVisitService providerSavevisitService;
+
     @CrossOrigin
     @RequestMapping(method = RequestMethod.POST, path = "/list")
     public ListResponse<VisitBasicDataDTO> getVisitByDoctor(@RequestBody ListRequest<Visit> request) {
         return service.serve(request);
+    }
+
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.PUT, path = "/save")
+    public BasicResponse<Visit> getBasicDataList(@RequestBody BasicRequest<Visit> request) {
+        return providerSavevisitService.serve(request);
     }
 }
