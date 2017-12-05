@@ -12,6 +12,8 @@ import {Switch, Route} from 'react-router-dom';
 import {Main} from './modules/main/Main.jsx';
 import {EmployeeList} from './modules/employee/List.jsx'
 import {EmployeeEdit} from './modules/employee/Edit.jsx'
+import {VisitEdit} from './modules/visit/Edit.jsx'
+import {MedicalPacakgeBuy} from './modules/medicalPackage/Buy.jsx'
 
 export class App extends Component {
    constructor() {
@@ -42,8 +44,9 @@ export class App extends Component {
                 <Switch>
                     <Route exact path='/' component={Main}/>
                     <Route exact path='/employee/list' component={EmployeeList}/>
-                    <Route exact path='/employee/new' component={EmployeeEdit}/>
-                    <Route exact path='/employee/edit/:employeeId' component={EmployeeEdit}/>
+                    <Route exact path='/employee/edit' component={EmployeeEdit}/>
+                    <Route exact path='/visit' component={VisitEdit}/>
+                    <Route exact path='/medicalPackage' component={MedicalPacakgeBuy}/>
                 </Switch>
             </div>
         );
