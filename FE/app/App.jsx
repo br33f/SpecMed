@@ -61,6 +61,7 @@ export class App extends Component {
                     <Route exact path='/medicalPacket/new' component={MedicalPacketNew}/>
                     <Route exact path='/patient/new' component={PatientNew}/>
                 </Switch>
+                <br />
             </div>
         );
     }
