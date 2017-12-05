@@ -44,9 +44,18 @@ export class App extends Component {
                 <Switch>
                     <Route exact path='/' component={Main}/>
                     <Route exact path='/employee/list' component={EmployeeList}/>
+                    <Route exact path='/employee/new' component={EmployeeEdit}/>
+                    <Route exact path='/employee/edit/:employeeId' component={EmployeeEdit}/>
+                    <Route exact path='/visit/edit/:visitId' component={VisitEdit}/>
                     <Route exact path='/employee/edit' component={EmployeeEdit}/>
                     <Route exact path='/visit' component={VisitEdit}/>
                     <Route exact path='/medicalPackage' component={MedicalPacakgeBuy}/>
+                    <Route exact path='/insurance/list' component={InsuranceList}/>
+                    <Route exact path='/insurance/new' component={InsuranceEdit}/>
+                    <Route exact path='/insurance/edit/:insuranceId' component={InsuranceEdit}/>
+                    <Route exact path='/prescription/new' component={PrescriptionNew}/>
+                    <Route exact path='/medicalPacket/new' component={MedicalPacketNew}/>
+                    <Route exact path='/patient/new' component={PatientNew}/>
                 </Switch>
             </div>
         );
