@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(path = "/prescription")
 public class PrescriptionController {
-@Autowired
-private ProviderSavePrescriptionService providerSavePrescriptionService;
+    @Autowired
+    private ProviderSavePrescriptionService providerSavePrescriptionService;
+
     @CrossOrigin
     @RequestMapping(method = RequestMethod.PUT, path = "/save")
     public BasicResponse<Prescription> getBasicDataList(@RequestBody BasicRequest<Prescription> request) {

@@ -11,7 +11,7 @@ const BaseModelConfigured = BaseModel.extend({
         price: "",
         description: ""
     },
-    saveUrl: 'medicalPacket/save'
+    saveUrl: 'medical-packet/save'
 });
 
 export class MedicalPacketNew extends FormComponent {
