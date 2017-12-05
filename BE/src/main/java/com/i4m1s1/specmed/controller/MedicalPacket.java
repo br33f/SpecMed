@@ -1,7 +1,8 @@
 package com.i4m1s1.specmed.controller;
 
-import com.i4m1s1.specmed.persistence.Employee;
+
 import com.i4m1s1.specmed.persistence.Prescription;
+import com.i4m1s1.specmed.service.ProviderSaveMedicalPacketService;
 import com.i4m1s1.specmed.service.ProviderSavePrescriptionService;
 import com.i4m1s1.specmed.service.request.BasicRequest;
 import com.i4m1s1.specmed.service.response.BasicResponse;
@@ -9,14 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "/prescription")
-public class PrescriptionController {
+@RequestMapping(path ="/medical-packet")
+public class MedicalPacket {
     @Autowired
-    private ProviderSavePrescriptionService providerSavePrescriptionService;
-
+    private ProviderSaveMedicalPacketService providerSaveMedicalPacketService;
     @CrossOrigin
     @RequestMapping(method = RequestMethod.PUT, path = "/save")
-    public BasicResponse<Prescription> getBasicDataList(@RequestBody BasicRequest<Prescription> request) {
-        return providerSavePrescriptionService.serve(request);
+    public BasicResponse<MedicalPacket> getBasicDataList(@RequestBody BasicRequest<MedicalPacket> request) {
+        return providerSaveMedicalPacketService.serve(request);
     }
 }
+
