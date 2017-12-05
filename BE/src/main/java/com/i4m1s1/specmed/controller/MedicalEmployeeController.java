@@ -3,6 +3,7 @@ package com.i4m1s1.specmed.controller;
 import com.i4m1s1.specmed.dto.DoctorBasicDataDTO;
 import com.i4m1s1.specmed.persistence.MedicalEmployee;
 import com.i4m1s1.specmed.service.ProviderDoctorBasicDataService;
+import com.i4m1s1.specmed.service.ProviderMedicalEmployeeDataService;
 import com.i4m1s1.specmed.service.request.ListRequest;
 import com.i4m1s1.specmed.service.response.ListResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +18,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class MedicalEmployeeController {
 
     @Autowired
-    private ProviderDoctorBasicDataService service;
+    private ProviderDoctorBasicDataService providerDoctorBasicDataService;
+    @Autowired
+    private ProviderMedicalEmployeeDataService providerMedicalEmployeeDataService;
 
     @CrossOrigin
     @RequestMapping(method = RequestMethod.POST, path = "/list/basic")
     public ListResponse<DoctorBasicDataDTO> getBasicData(@RequestBody ListRequest<MedicalEmployee> request) {
-        return service.serve(request);
+        return providerDoctorBasicDataService.serve(request);
+    }
+
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.POST, path = "/list")
+    public ListResponse<MedicalEmployee> getMedicalEmployeeList(@RequestBody ListRequest<MedicalEmployee> request) {
+        return providerMedicalEmployeeDataService.serve(request);
     }
 }

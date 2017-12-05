@@ -10,7 +10,8 @@ export class MedicalEmployeeList extends Component {
     }
 
     generateEditLink(employeeId) {
-        let editUrl = `/employee/Mededit/${employeeId}`;
+        //to nizej jeszcze nie jest w controlerze
+        let editUrl = `/employee/medical-employee/${employeeId}`;
         return (
             <Link to={editUrl}>
                 <i className="fa fa-pencil-square fa-lg" aria-hidden="true"></i>
@@ -36,7 +37,7 @@ export class MedicalEmployeeList extends Component {
                 <p className="contentTitle">Lista pracowników medycznych</p>
                 <PostPageableTable
                     headerDefinition={this.getHeaderDefinition()}
-                    dataUrl="/employee/Medlist"
+                    dataUrl="/medical-employee/list"
                 />
 
             </Container>
