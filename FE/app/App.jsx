@@ -14,6 +14,11 @@ import {EmployeeList} from './modules/employee/List.jsx'
 import {EmployeeEdit} from './modules/employee/Edit.jsx'
 import {VisitEdit} from './modules/visit/Edit.jsx'
 import {MedicalPacakgeBuy} from './modules/medicalPackage/Buy.jsx'
+import {InsuranceList} from './modules/insurance/List.jsx'
+import {InsuranceEdit} from './modules/insurance/Edit.jsx'
+import {PrescriptionNew} from './modules/prescription/New.jsx'
+import {MedicalPacketNew} from './modules/medicalPacket/New.jsx'
+import {PatientNew} from './modules/patient/New.jsx'
 
 export class App extends Component {
    constructor() {

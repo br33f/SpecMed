@@ -18,7 +18,7 @@ export class PrescriptionNew extends FormComponent {
         // Utworz model i przekaż go w konstruktorze do rodzica
         let localModel = new BaseModelConfigured();
         super(props, localModel);
-
+e
 
 
         this.state = {
