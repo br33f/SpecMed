@@ -15,6 +15,7 @@ import {EmployeeEdit} from './modules/employee/Edit.jsx'
 import {VisitEdit} from './modules/visit/Edit.jsx'
 import {MedicalPacakgeBuy} from './modules/medicalPackage/Buy.jsx'
 import {OrderAdd} from './modules/medicalOrder/Add.jsx'
+import {MedicalEmployeeEdit} from './modules/medicalEmployee/Edit.jsx'
 
 export class App extends Component {
    constructor() {
@@ -49,6 +50,7 @@ export class App extends Component {
                     <Route exact path='/visit' component={VisitEdit}/>
                     <Route exact path='/medicalPackage' component={MedicalPacakgeBuy}/>
                     <Route exact path='/medicalOrder' component={OrderAdd}/>
+                    <Route exact path='/medicalEmployee/edit' component={MedicalEmployeeEdit}/>
                 </Switch>
             </div>
         );
