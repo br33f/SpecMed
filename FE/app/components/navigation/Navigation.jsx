@@ -1,6 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import {Popper} from 'react-popper';
+import {
+    Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink, UncontrolledDropdown,
+    DropdownToggle, DropdownMenu, DropdownItem
+} from 'reactstrap';
 import './navigation.scss';
 
 export class Navigation extends React.Component {
@@ -31,9 +35,19 @@ export class Navigation extends React.Component {
                             <NavItem>
                                 <NavLink tag={Link} to="/">Strona główna</NavLink>
                             </NavItem>
-                            <NavItem>
-                                <NavLink tag={Link} to="/employee/list">Lista lekarzy</NavLink>
-                            </NavItem>
+                            <UncontrolledDropdown>
+                                <DropdownToggle nav caret>
+                                    Pracownik
+                                </DropdownToggle>
+                                <DropdownMenu right={true}>
+                                    <DropdownItem tag={Link} to="/employee/list">
+                                        Lista pracowników
+                                    </DropdownItem>
+                                    <DropdownItem tag={Link} to="/employee/new">
+                                        Dodaj pracownika
+                                    </DropdownItem>
+                                </DropdownMenu>
+                            </UncontrolledDropdown>
                         </Nav>
                     </Collapse>
                 </Navbar>
