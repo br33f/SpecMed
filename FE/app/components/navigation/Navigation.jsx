@@ -53,6 +53,10 @@ export class Navigation extends React.Component {
                                         Dodaj pracownika medycznego
                                     </DropdownItem>
                                 </DropdownMenu>
+
+                                <NavItem>
+                                    <NavLink tag={Link} to="/prescription/new">Recepta</NavLink>
+                                </NavItem>
                             </UncontrolledDropdown>
                         </Nav>
                     </Collapse>
