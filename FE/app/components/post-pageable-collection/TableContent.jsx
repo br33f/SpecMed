@@ -49,10 +49,10 @@ export class TableContent extends Component {
                 return SM.Utils.formatDateTime(value);
                 break;
             case "dictionary":
-                if (Object.keys(this.props.dictionaries).length > 0 ) {
-                    console.log(this.props.dictionaries);
-                }
                 return this.props.dictionaries[format.dictionaryName] && this.props.dictionaries[format.dictionaryName][value];
+                break;
+            case "custom":
+                return format.fn(value);
                 break;
             default:
                 return value;

@@ -23,4 +23,5 @@ export class FormComponent extends Component {
 
         this.model.set(name, value);
     }
+
 }
