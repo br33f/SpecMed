@@ -58,7 +58,7 @@ export class PostPageableTable extends Component {
             searchCriteria: {}
         }).then(res => {
             this.setState({
-                employeeList: res.data.data,
+                employeeList: res.data.content,
                 totalCount: res.data.totalCount,
                 totalPages: res.data.totalPages
             });

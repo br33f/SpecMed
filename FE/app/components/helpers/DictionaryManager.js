@@ -5,7 +5,7 @@ export default {
         return axios.post(`/common/dict`, {
             chunkData: dictionaryName
         }).then(dict => {
-           return dict.data.data;
+           return dict.data.content;
         });
     },
 
