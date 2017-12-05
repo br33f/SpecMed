@@ -40,6 +40,7 @@ public class Visit {
     private String place; //zmienic na slownik czy co tu ma w ogole byc todo?
     private long date;
 
+
     public String getId() {
         return id;
     }

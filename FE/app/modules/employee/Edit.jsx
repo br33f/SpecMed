@@ -4,6 +4,7 @@ import {Container, Row, Col} from 'reactstrap';
 import BaseModel from 'components/models/BaseModel';
 import {Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import {FormComponent} from "components/form-component/FormComponent.jsx";
+import {Loader} from "components/controls/Loader.jsx";
 
 const BaseModelConfigured = BaseModel.extend({
     defaults: {
@@ -30,7 +31,9 @@ export class EmployeeEdit extends FormComponent {
 
         this.state = {
             genderDictionary: [],
-            model: this.model
+            model: this.model,
+            isLoading: false,
+            isSaved: false
         };
     }
 
@@ -48,8 +51,15 @@ export class EmployeeEdit extends FormComponent {
     }
 
     onFormSave() {
-        console.log("Wohooo!");
-        this.model.save();
+        this.setState({
+            isLoading: true
+        });
+        this.model.save().then(() => {
+            this.setState({
+                isLoading: false,
+                isSaved: true
+            });
+        });
     }
 
     onFormClear() {
@@ -61,9 +71,15 @@ export class EmployeeEdit extends FormComponent {
         console.log("render");
         return (
             <Container fluid={true}>
-                <p className="contentTitle">Edycja/Dodawanie nowego pracownika</p>
+                <p className="contentTitle">
+                    {this.employeeId ? 'Edycja' : 'Dodawanie'} nowego pracownika
+                    <Loader isEnabled={this.state.isLoading}/>
+                </p>
                 <Row>
                     <Col md={6}>
+                        <div className="alert alert-success" hidden={!this.state.isSaved} role="alert">
+                            Pomyślnie zapisano pracownika.
+                        </div>
                         <Form>
                             <FormGroup>
                                 <Label for="employeeName">Imię</Label>
@@ -108,7 +124,6 @@ export class EmployeeEdit extends FormComponent {
                                 <Button outline color="primary" type="button"
                                         onClick={this.onFormSave.bind(this)}>Zapisz pracownika</Button>
                             </div>
-
                         </Form>
                     </Col>
                 </Row>

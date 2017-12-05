@@ -4,13 +4,13 @@ import {Link} from 'react-router-dom';
 import {Container} from 'reactstrap';
 import {PostPageableTable} from '../../components/post-pageable-collection/PostPageableTable.jsx';
 
-export class EmployeeList extends Component {
+export class InsuranceList extends Component {
     constructor(props) {
         super(props);
     }
 
-    generateEditLink(employeeId) {
-        let editUrl = `/employee/edit/${employeeId}`;
+    generateEditLink(insuranceId) {
+        let editUrl = `/insurance/edit/${insuranceId}`;
         return (
             <Link to={editUrl}>
                 <i className="fa fa-pencil-square fa-lg" aria-hidden="true"></i>
@@ -20,11 +20,10 @@ export class EmployeeList extends Component {
 
     getHeaderDefinition() {
         return [
-            {key: 'personalData.name', label: 'Imię pracownika', sortable: true},
-            {key: 'personalData.surname', label: 'Nazwisko pracownika', sortable: true},
-            {key: 'personalData.pesel', label: 'PESEL'},
-            {key: 'personalData.birthday', label: 'Urodziny', format: 'date'},
-            {key: 'personalData.gender', label: 'Płeć', format: {type: 'dictionary', dictionaryName: "GENDER"}},
+            {key: 'name', label: 'Nazwa ubezpieczenia', sortable: true},
+            {key: 'price', label: 'Cena ubezpieczenia', sortable: true},
+            {key: 'notes', label: 'Opis'},
+            {key: 'insurancePolicyNumber', label: 'Numer polisy ubezpieczeniowej', sortable: true},
             {key: 'id', label: 'Edycja', format: {type: 'custom', fn: this.generateEditLink}}
         ];
     }
@@ -33,10 +32,10 @@ export class EmployeeList extends Component {
         {
             return (
                 <Container fluid={true}>
-                    <p className="contentTitle">Lista pracowników</p>
+                    <p className="contentTitle">Lista ubezpieczeń</p>
                     <PostPageableTable
                         headerDefinition={this.getHeaderDefinition()}
-                        dataUrl="/employee/list"
+                        dataUrl="/insurance/list"
                     />
 
                 </Container>

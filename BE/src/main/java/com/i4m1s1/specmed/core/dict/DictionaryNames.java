@@ -6,7 +6,10 @@ package com.i4m1s1.specmed.core.dict;
 public enum DictionaryNames {
     GENDER(1, "GENDER"),
     SPECIALIZATION(2, "SPECIALIZATION"),
-    VISIT_STATUS(3, "VISIT_STATUS");
+    VISIT_STATUS(3, "VISIT_STATUS"),
+    MEDICAL_SPECIALISATION(4,"MEDICAL_SPECIALISATION"),
+    PROBES(100, "PROBES"),
+    MEDICAL_PROCEDURES(101, "MEDICAL_PROCEDURES");
 
     private final int id;
     private final String code;

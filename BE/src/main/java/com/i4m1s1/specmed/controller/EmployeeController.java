@@ -1,9 +1,9 @@
 package com.i4m1s1.specmed.controller;
 
 import com.i4m1s1.specmed.persistence.Employee;
-import com.i4m1s1.specmed.service.ProviderEmployeeBasicDataService;
-import com.i4m1s1.specmed.service.ProviderGetEmployeeService;
-import com.i4m1s1.specmed.service.ProviderSaveEmployeeService;
+import com.i4m1s1.specmed.service.employee.ProviderEmployeeBasicDataService;
+import com.i4m1s1.specmed.service.employee.ProviderGetEmployeeService;
+import com.i4m1s1.specmed.service.employee.ProviderSaveEmployeeService;
 import com.i4m1s1.specmed.service.request.BasicRequest;
 import com.i4m1s1.specmed.service.request.ListRequest;
 import com.i4m1s1.specmed.service.response.BasicResponse;
