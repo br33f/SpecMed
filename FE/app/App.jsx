@@ -18,6 +18,7 @@ import {InsuranceList} from './modules/insurance/List.jsx'
 import {InsuranceEdit} from './modules/insurance/Edit.jsx'
 import {PrescriptionNew} from './modules/prescription/New.jsx'
 import {MedicalPacketNew} from './modules/medicalPacket/New.jsx'
+import {PatientNew} from './modules/patient/New.jsx'
 
 export class App extends Component {
    constructor() {
@@ -57,6 +58,7 @@ export class App extends Component {
                     <Route exact path='/insurance/edit/:insuranceId' component={InsuranceEdit}/>
                     <Route exact path='/prescription/new' component={PrescriptionNew}/>
                     <Route exact path='/medicalPacket/new' component={MedicalPacketNew}/>
+                    <Route exact path='/patient/new' component={PatientNew}/>
                 </Switch>
             </div>
         );
