@@ -15,5 +15,11 @@ export default {
 
     formatDateTime: function (timestamp) {
       return this.formatDate(timestamp) + " " + this.formatTime(timestamp);
+    },
+
+    customFormat: function (timestamp, format) {
+        let date = new Date(timestamp);
+
+        return dateFormat(date, format);
     }
 }

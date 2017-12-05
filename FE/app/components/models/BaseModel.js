@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import axios from 'axios';
 
 /* -- Definicja BaseModel -- */
 let BaseModel = function () {
@@ -43,12 +44,23 @@ BaseModel.prototype.clear = function () {
 };
 
 BaseModel.prototype.fetch = function (options) {
-    // TODO: implementacja fetch
-    this.set({name: "fetchowane", surname: "pofetchu"});
+    if (!this.fetchUrl) throw "fetchUrl must be specified";
+
+    return axios.get(this.fetchUrl, options).then(response => {
+        this.set(response.data.content);
+    });
 };
 
-BaseModel.prototype.save = function (options) {
-    // TODO: implementacja save
+BaseModel.prototype.save = function () {
+    if (!this.saveUrl) throw "saveUrl must be specified";
+
+    return axios.put(this.saveUrl, this.getSaveData());
+};
+
+BaseModel.prototype.getSaveData = function () {
+  return {
+      chunkData: this.get()
+  };
 };
 
 /* -- EXPORT --*/

@@ -42,7 +42,8 @@ export class App extends Component {
                 <Switch>
                     <Route exact path='/' component={Main}/>
                     <Route exact path='/employee/list' component={EmployeeList}/>
-                    <Route exact path='/employee/edit' component={EmployeeEdit}/>
+                    <Route exact path='/employee/new' component={EmployeeEdit}/>
+                    <Route exact path='/employee/edit/:employeeId' component={EmployeeEdit}/>
                 </Switch>
             </div>
         );

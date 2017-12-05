@@ -7,9 +7,15 @@ import {FormComponent} from "components/form-component/FormComponent.jsx";
 
 const BaseModelConfigured = BaseModel.extend({
     defaults: {
-        name: "Janusz",
-        surname: "Tracz"
-    }
+        personalData: {
+            name: "",
+            surname: "",
+            pesel: "",
+            birthday: Date.now(),
+            gender: "1"
+        }
+    },
+    saveUrl: 'employee/save'
 });
 
 export class EmployeeEdit extends FormComponent {
@@ -18,6 +24,10 @@ export class EmployeeEdit extends FormComponent {
         let localModel = new BaseModelConfigured();
         super(props, localModel);
 
+        // jeżeli przekazano employeeId w url
+        this.employeeId = props.match.params.employeeId;
+        localModel.fetchUrl = "/employee/get/" + this.employeeId;
+
         this.state = {
             genderDictionary: [],
             model: this.model
@@ -25,6 +35,7 @@ export class EmployeeEdit extends FormComponent {
     }
 
     componentDidMount() {
+        this.employeeId && this.model.fetch();
         this.fetchDictionaries();
     }
 
@@ -38,7 +49,7 @@ export class EmployeeEdit extends FormComponent {
 
     onFormSave() {
         console.log("Wohooo!");
-        this.model.fetch();
+        this.model.save();
     }
 
     onFormClear() {
@@ -56,25 +67,39 @@ export class EmployeeEdit extends FormComponent {
                         <Form>
                             <FormGroup>
                                 <Label for="employeeName">Imię</Label>
-                                <Input type="text" name="name" id="employeeName" placeholder="Imię" value={this.state.model.get('name')} onChange={this.bindValueToModel} />
+                                <Input type="text" name="personalData.name" id="employeeName" placeholder="Imię"
+                                       value={this.state.model.get('personalData.name')}
+                                       onChange={this.bindValueToModel}/>
                             </FormGroup>
                             <FormGroup>
                                 <Label for="employeeSurname">Nazwisko</Label>
-                                <Input type="text" name="surname" id="employeeSurname" placeholder="Nazwisko" value={this.state.model.get('surname')} onChange={this.bindValueToModel} />
+                                <Input type="text" name="personalData.surname" id="employeeSurname"
+                                       placeholder="Nazwisko" value={this.state.model.get('personalData.surname')}
+                                       onChange={this.bindValueToModel}/>
                             </FormGroup>
                             <FormGroup>
                                 <Label for="employeePesel">Numer PESEL</Label>
-                                <Input type="number" name="employeePesel" id="employeePesel" placeholder="PESEL"/>
+                                <Input type="number" name="personalData.pesel" id="employeePesel" placeholder="PESEL"
+                                       value={this.state.model.get('personalData.pesel')}
+                                       onChange={this.bindValueToModel}/>
                             </FormGroup>
                             <FormGroup>
                                 <Label for="employeeBirthday">Data urodzenia</Label>
-                                <Input type="date" name="employeeBirthday" id="employeeBirthday"
-                                       placeholder="Data urodzenia"/>
+                                <Input type="date" name="personalData.birthday" id="employeeBirthday"
+                                       placeholder="Data urodzenia"
+                                       value={this.state.model.get('personalData.birthday') && SM.Utils.customFormat(this.state.model.get('personalData.birthday'), "yyyy-mm-dd")}
+                                       onChange={this.bindValueToModel}/>
                             </FormGroup>
                             <FormGroup>
                                 <Label for="employeeGender">Płeć</Label>
-                                <Input type="select" name="employeeGender" id="employeeGender" onChange={() => {}}>
-                                    {this.state.genderDictionary.map(genderObj => <option key={genderObj.id} value={genderObj.id}>{genderObj.label}</option>)}
+                                <Input type="select" name="personalData.gender" id="employeeGender" value={this.state.model.get('personalData.gender')}
+                                       onChange={this.bindValueToModel}>
+                                    {this.state.genderDictionary.map(genderObj =>
+                                        <option
+                                            key={genderObj.id}
+                                            value={genderObj.id}>
+                                            {genderObj.label}
+                                        </option>)}
                                 </Input>
                             </FormGroup>
                             <div className="pull-right">
