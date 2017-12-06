@@ -21,6 +21,12 @@ import {MedicalPacketNew} from './modules/medicalPacket/New.jsx'
 import {PatientNew} from './modules/patient/New.jsx'
 import {OrderAdd} from './modules/medicalOrder/Add.jsx'
 import {UnitEdit} from "./modules/unit/Edit.jsx";
+import {MedicalEmployeeList} from "./modules/employee/MedList.jsx";
+import {MedicalEmployeeEdit} from "./modules/employee/MedEdit.jsx";
+import {PrescriptionEdit} from "./modules/prescription/Edit.jsx";
+import {MedicalEmployeeList} from "./modules/employee/MedList.jsx";
+import {MedicalEmployeeEdit} from "./modules/employee/MedEdit.jsx";
+import {PrescriptionEdit} from "./modules/prescription/Edit.jsx";
 
 export class App extends Component {
    constructor() {
@@ -66,6 +72,11 @@ export class App extends Component {
                     <Route exact path='/medicalOrder' component={OrderAdd}/>
                     <Route exact path='/unit/new' component={UnitEdit}/>
                     <Route exact path='/unit/edit/:unitId' component={UnitEdit}/>
+                    <Route exact path='/employee/Medlist' component={MedicalEmployeeList}/>
+                    <Route exact path='/employee/Mednew' component={MedicalEmployeeEdit}/>
+                    <Route exact path='/employee/Mededit/:employeeId' component={MedicalEmployeeEdit}/>
+                    <Route exact path='/prescription/new' component={PrescriptionEdit}/>
+                    <Route exact path='/prescription/edit/:prescriptionId' component={PrescriptionEdit}/>
                 </Switch>
                 <br />
             </div>

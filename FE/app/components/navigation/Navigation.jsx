@@ -58,7 +58,17 @@ export class Navigation extends React.Component {
                                     <DropdownItem tag={Link} to="/employee/new">
                                         Dodaj pracownika
                                     </DropdownItem>
+                                    <DropdownItem tag={Link} to="/employee/Medlist">
+                                        Lista pracowników medycznych
+                                    </DropdownItem>
+                                    <DropdownItem tag={Link} to="/employee/Mednew">
+                                        Dodaj pracownika medycznego
+                                    </DropdownItem>
                                 </DropdownMenu>
+
+                                <NavItem>
+                                    <NavLink tag={Link} to="/prescription/new">Recepta</NavLink>
+                                </NavItem>
                             </UncontrolledDropdown>
                             <UncontrolledDropdown>
                                 <DropdownToggle nav caret>
