@@ -1,6 +1,11 @@
 import axios from 'axios';
 
 export default {
+    /**
+     * Metoda odpowiedzialna za dopieranie katalogu
+     * @param dictionaryName nazwa katalogu
+     * @returns {Promise.<TResult>} referencja do katalogu wskazanego w parametrze
+     */
     getDict: function(dictionaryName) {
         return axios.post(`/common/dict`, {
             chunkData: dictionaryName
@@ -9,6 +14,11 @@ export default {
         });
     },
 
+    /**
+     * Funkcja odpowiedzialna za przedstawienie katalogu jako tablica elementów
+     * @param dictionaryName nazwa katalogu ktory ma zostać wylistowany
+     * @returns {Promise.<TResult>} elementy wskazanego katalogu
+     */
     getDictAsArray: function (dictionaryName) {
       return this.getDict(dictionaryName).then(dict => {
           return Object.entries(dict).map(dictEntry => {
@@ -17,6 +27,11 @@ export default {
       });
     },
 
+    /**
+     * Metoda odpowiedzialna za dopieranie katalogu
+     * @param dictionaryName nazwa katalogów
+     * @returns {Promise.<TResult>} referencja do katalogu wskazanego w parametrze
+     */
     getDicts: function (...dictionaryNames) {
         return this.getMultipleDicts(dictionaryNames, false);
     },
@@ -25,6 +40,12 @@ export default {
         return this.getMultipleDicts(dictionaryNames, true);
     },
 
+    /**
+     * Metoda odpowiedzialna za konkatenacje kilku elementow katalogu
+     * @param dictionaryNames nazwa katalogu wejsciowego
+     * @param asArray parametr odpowiezdialny ze przekazanie talbicy elementow tablicy
+     * @returns {Promise.<TResult>}
+     */
     getMultipleDicts: function (dictionaryNames, asArray) {
         let getDictFunction = asArray ? this.getDictAsArray : this.getDict;
 

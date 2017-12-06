@@ -7,6 +7,9 @@ import {
 } from 'reactstrap';
 import './navigation.scss';
 
+/**
+ * Klasa odpowiedzialana za generowanei oraz edycje menu aplikacji
+ */
 export class Navigation extends React.Component {
     constructor(props) {
         super(props);

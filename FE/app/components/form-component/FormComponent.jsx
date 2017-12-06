@@ -2,8 +2,11 @@ import React from 'react';
 import {Component} from 'react';
 import BaseModel from "components/models/BaseModel";
 
-
 export class FormComponent extends Component {
+    /**
+     * Konstruktyor powołujący FormComponent
+     * @param model instancja obiektu BaseModel
+     */
     constructor(props, model) {
         super(props);
 
@@ -16,6 +19,10 @@ export class FormComponent extends Component {
         this.bindValueToModel = this._bindValueToModel.bind(this);
     }
 
+    /**
+     *
+     * @param event obslugiwany event
+     */
     _bindValueToModel(event) {
         const target = event.target;
 
