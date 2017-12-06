@@ -11,7 +11,9 @@ const BaseModelConfigured = BaseModel.extend({
         price: "",
         place: "",
         date: Date.now(),
-        status: "1"
+        hour: "",
+        status: "1",
+        doctor: ""
     },
     saveUrl: 'employee/save'
 
@@ -33,6 +35,10 @@ export class VisitAdd extends FormComponent {
             isLoading: false,
             isSaved: false
         };
+    }
+
+    getSample() {
+        return ['Adam Abacki', 'Marcin Babacki'];
     }
 
     componentDidMount() {
@@ -66,7 +72,6 @@ export class VisitAdd extends FormComponent {
     }
 
     render() {
-        console.log("render");
         return (
             <Container fluid={true}>
                 <p className="contentTitle">
@@ -92,18 +97,16 @@ export class VisitAdd extends FormComponent {
                                        onChange={this.bindValueToModel}/>
                             </FormGroup>
                             <FormGroup>
+                                <Label for="visitHour">Godzina wizyty</Label>
+                                <Input type="time" name="visitHour" id="visitHour"
+                                       placeholder="Godzina wizyty"/>
+                            </FormGroup>
+                            <FormGroup>
                                 <Label for="visitPrice">Cena</Label>
                                 <Input type="text" name="price" id="employeePesel" placeholder="Cena"
                                        value={this.state.model.get('price')}
                                        onChange={this.bindValueToModel}/>
                             </FormGroup>
-                            {/*<FormGroup>*/}
-                                {/*<Label for="employeeBirthday">Data urodzenia</Label>*/}
-                                {/*<Input type="date" name="personalData.birthday" id="employeeBirthday"*/}
-                                       {/*placeholder="Data urodzenia"*/}
-                                       {/*value={this.state.model.get('personalData.birthday') && SM.Utils.customFormat(this.state.model.get('personalData.birthday'), "yyyy-mm-dd")}*/}
-                                       {/*onChange={this.bindValueToModel}/>*/}
-                            {/*</FormGroup>*/}
                             <FormGroup>
                                 <Label for="visitStatus">Status początkowy</Label>
                                 <Input type="select" name="status" id="visitStatus"
@@ -114,6 +117,19 @@ export class VisitAdd extends FormComponent {
                                             key={statusObj.id}
                                             value={statusObj.id}>
                                             {statusObj.label}
+                                        </option>)}
+                                </Input>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="medicalEmployee">Lekarz</Label>
+                                <Input type="select" name="medicalEmployee" id="medicalEmployee"
+                                       value={this.state.model.get('doctor')}
+                                       onChange={this.bindValueToModel}>
+                                    {this.getSample().map(doc =>
+                                        <option
+                                            key={doc}
+                                            value={doc}>
+                                            {doc}
                                         </option>)}
                                 </Input>
                             </FormGroup>
@@ -128,5 +144,6 @@ export class VisitAdd extends FormComponent {
                 </Row>
             </Container>
         );
+        console.log("render");
     }
 }
