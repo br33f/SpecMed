@@ -14,8 +14,8 @@ public class DateHelper {
     private static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Europe/Poland");
 
     /**
-     * Zwraca aktualną datę jako String zgodnie z formate
-     * @param format format Daty {@see java.text.SimpleDateFormat}
+     * Zwraca aktualną datę jako String zgodnie z formatem
+     * @param format format Daty (@see java.text.SimpleDateFormat)
      * @return
      */
     public static String getCurrentDateAsString(String format) {
@@ -26,7 +26,7 @@ public class DateHelper {
 
     /**
      * Zwraca aktualną datę jako typ Date
-     * @return {@see java.util.Date}
+     * @return (@see java.util.Date)
      */
     public static Date getCurrentDate() {
         Calendar calendar = Calendar.getInstance(TIME_ZONE);
@@ -34,7 +34,7 @@ public class DateHelper {
     }
 
     /**
-     * Zwraca aktualną datę jako {@see Long}
+     * Zwraca aktualną datę jako (@see Long)
      * @return czas jako Long
      */
     public static long getCurrentDateAsLong() {
