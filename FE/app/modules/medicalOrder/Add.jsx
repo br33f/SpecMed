@@ -21,6 +21,10 @@ const BaseModelConfigured = BaseModel.extend({
     saveUrl: 'order/save'
 });
 
+/**
+ * Klasa odpowiedzialna za dodawania nowego zlecenia badania
+ * @augments Component FormComponent
+ */
 export class OrderAdd extends FormComponent {
     constructor(props) {
         // Utworz model i przekaż go w konstruktorze do rodzica
@@ -33,15 +37,26 @@ export class OrderAdd extends FormComponent {
         };
     }
 
+    /**
+     * Funkcja obslugujaace metode zapisu zlecenia badania
+     */
     onFormSave() {
         console.log("Wohooo!");
         this.model.save();
     }
 
+    /**
+     * Funkcja odpowiedzialna za czyszczenie formualrza zlecenia badania
+     */
     onFormClear() {
         console.log("clearVisit!");
         this.model.clear();
     }
+
+    /**
+     * Funkcja odpowiedzialna za wyświetlanie widoku zlecenia badania medycznego
+     * @returns {XML}
+     */
     render() {
         console.log("render");
         return (

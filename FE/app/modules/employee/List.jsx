@@ -4,11 +4,20 @@ import {Link} from 'react-router-dom';
 import {Container} from 'reactstrap';
 import {PostPageableTable} from '../../components/post-pageable-collection/PostPageableTable.jsx';
 
+/**
+ * Klasa odpowiedzialna za wyswietlanie listy pracowników.
+ * @augments Component
+ */
 export class EmployeeList extends Component {
     constructor(props) {
         super(props);
     }
 
+    /**
+     * Generowanie linku do edycji
+     * @param employeeId identyfikator pracownika
+     * @returns {XML} zwrocony link do generowania
+     */
     generateEditLink(employeeId) {
         let editUrl = `/employee/edit/${employeeId}`;
         return (
@@ -18,6 +27,11 @@ export class EmployeeList extends Component {
         );
     }
 
+
+    /**
+     * funkcja odpowiedzialna za generowanie nagłówka
+     * @returns nagłowek dancyh dla widoku listowania pracowników
+     */
     getHeaderDefinition() {
         return [
             {key: 'personalData.name', label: 'Imię pracownika', sortable: true},
@@ -29,6 +43,10 @@ export class EmployeeList extends Component {
         ];
     }
 
+    /**
+     * Funkcja odpowiedzialna za renderowanie listy pracowników
+     * @returns {XML} Lista praocowników do wyświetlenia
+     */
         render()
         {
             return (
