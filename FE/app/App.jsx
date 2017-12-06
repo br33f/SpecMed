@@ -27,6 +27,9 @@ import {PrescriptionEdit} from "./modules/prescription/Edit.jsx";
 import {MedicalEmployeeList} from "./modules/employee/MedList.jsx";
 import {MedicalEmployeeEdit} from "./modules/employee/MedEdit.jsx";
 import {PrescriptionEdit} from "./modules/prescription/Edit.jsx";
+import {VisitAdd} from "./modules/visit/Add.jsx";
+import {OpinionAdd} from "./modules/opinion/Add.jsx";
+import {CustomerEdit} from "./modules/customer/Add.jsx";
 
 export class App extends Component {
    constructor() {
@@ -77,6 +80,9 @@ export class App extends Component {
                     <Route exact path='/employee/Mededit/:employeeId' component={MedicalEmployeeEdit}/>
                     <Route exact path='/prescription/new' component={PrescriptionEdit}/>
                     <Route exact path='/prescription/edit/:prescriptionId' component={PrescriptionEdit}/>
+                    <Route exact path='/visit/new' component={VisitAdd}/>
+                    <Route exact path='/visit/rate' component={OpinionAdd}/>
+                    <Route exact path='/customer/new' component={CustomerEdit}/>
                 </Switch>
                 <br />
             </div>

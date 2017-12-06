@@ -83,6 +83,16 @@ export class Navigation extends React.Component {
                                     </DropdownItem>
                                 </DropdownMenu>
                             </UncontrolledDropdown>
+                            <UncontrolledDropdown>
+                                <DropdownToggle nav caret>
+                                    Wizyta
+                                </DropdownToggle>
+                                <DropdownMenu right={true}>
+                                    <DropdownItem tag={Link} to="/visit/new">
+                                        Dodaj wizytę
+                                    </DropdownItem>
+                                </DropdownMenu>
+                            </UncontrolledDropdown>
                         </Nav>
                     </Collapse>
                 </Navbar>
