@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 
 /**
  * Adnotacja pokazująca jedynie że zawartość danego pola powinna mieć odzwierciedlenie w slowniku
- * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
+ * @author Tobiasz Fortaszewski t.fortaszewski@gmail.com
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)

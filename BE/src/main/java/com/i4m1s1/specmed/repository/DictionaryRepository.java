@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 /**
  * Repozytorium zawierające dane słowników
- * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
+ * @author Tobiasz Fortaszewski t.fortaszewski@gmail.com
  */
 public interface DictionaryRepository extends MongoRepository<DictionarySM, String> {
     /**

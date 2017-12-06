@@ -1,7 +1,7 @@
 package com.i4m1s1.specmed.core.dict;
 
 /**
- * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
+ * @author Tobiasz Fortaszewski t.fortaszewski@gmail.com
  */
 //todo przydaloby sie gdzies tego uzywac w appce :/
 public enum WarningMsg {

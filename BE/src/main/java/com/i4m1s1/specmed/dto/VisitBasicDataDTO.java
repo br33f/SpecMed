@@ -4,7 +4,8 @@ import com.i4m1s1.specmed.persistence.MedicalEmployee;
 import com.i4m1s1.specmed.persistence.Visit;
 
 /**
- * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
+ * Data transfer object dla podstawowych danych wizyty
+ * @author Tobiasz Fortaszewski t.fortaszewski@gmail.com
  */
 public class VisitBasicDataDTO {
     private String id;

@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * Repozytorium zawierające dane pracowników medycznych
- * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
+ * @author Tobiasz Fortaszewski t.fortaszewski@gmail.com
  */
 public interface MedicalEmployeeRepository extends MongoRepository<MedicalEmployee, String> {
     /**

@@ -21,7 +21,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
  * If you change an Account object that is referenced by a Person object, you must save the Account object separately.
  * Calling save on the Person object will not automatically save the Account objects in the property accounts.
  *
- * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
+ * @author Tobiasz Fortaszewski t.fortaszewski@gmail.com
  */
 
 public class Visit {

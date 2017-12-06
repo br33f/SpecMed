@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * Encja zawierająca dane pracownika medycznego
- * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
+ * @author Tobiasz Fortaszewski t.fortaszewski@gmail.com
  */
 public class MedicalEmployee {
 

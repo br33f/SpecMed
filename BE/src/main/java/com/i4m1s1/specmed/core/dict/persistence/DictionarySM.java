@@ -6,8 +6,8 @@ import org.springframework.data.annotation.Id;
 import java.util.Map;
 
 /**
- * Klasa reprezentujaca pojedynczy enum
- * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
+ * Klasa reprezentujaca pojedynczy enum słownikowy
+ * @author Tobiasz Fortaszewski t.fortaszewski@gmail.com
  */
 public class DictionarySM {
 

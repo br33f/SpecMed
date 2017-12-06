@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 /**
+ * Klasa dla odpowiedzi dotyczących List przez API
  * Created by br33 on 25.11.2017.
  */
 public class ListResponse<T> extends ApiResponse {

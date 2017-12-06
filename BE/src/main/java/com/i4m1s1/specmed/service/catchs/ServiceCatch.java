@@ -10,7 +10,7 @@ import com.i4m1s1.specmed.service.response.ApiResponse;
  * docelowo kazda powinna miec request i response gdzie mozna
  * TODO dodac autoryzacje i logi w audycie jak bedzie czas
  *
- * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
+ * @author Tobiasz Fortaszewski t.fortaszewski@gmail.com
  */
 public abstract class ServiceCatch<Request extends ApiRequest, Response extends ApiResponse> {
 
@@ -19,9 +19,9 @@ public abstract class ServiceCatch<Request extends ApiRequest, Response extends 
     protected abstract Response createStubResponse();
 
     /**
-     * @param request a
-     * @return a
-     * @throws SMException a
+     * Generyczna metoda budująca response na podstawie wyniku metody {@link ServiceCatch#provide(ApiRequest)}
+     * @param request request przychodzący na api (JSON)
+     * @return response (JSON)
      */
     public Response serve(Request request) {
         try {

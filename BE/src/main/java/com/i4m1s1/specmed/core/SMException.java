@@ -5,7 +5,8 @@ import com.i4m1s1.specmed.core.dict.WarningMsg;
 import java.util.Arrays;
 
 /**
- * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
+ * Wyjątek używany w projekcie {@link Exception}
+ * @author Tobiasz Fortaszewski t.fortaszewski@gmail.com
  */
 public class SMException extends Exception {
 

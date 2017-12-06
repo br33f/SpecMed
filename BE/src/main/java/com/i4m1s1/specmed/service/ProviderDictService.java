@@ -12,7 +12,7 @@ import java.util.Map;
 
 /**
  * Serwis dostarczajacy aktualne slowniki
- * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
+ * @author Tobiasz Fortaszewski t.fortaszewski@gmail.com
  */
 @Service
 public class ProviderDictService extends BasicServiceCatch<String, Map<Integer, String>> {

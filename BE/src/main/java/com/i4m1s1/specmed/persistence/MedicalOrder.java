@@ -4,7 +4,7 @@ import org.springframework.data.annotation.Id;
 
 /**
  * Encja zawierająca dane usługi medycznej
- * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
+ * @author Tobiasz Fortaszewski t.fortaszewski@gmail.com
  */
 public class MedicalOrder {
 

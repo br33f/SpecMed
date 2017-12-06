@@ -6,7 +6,8 @@ import com.i4m1s1.specmed.persistence.MedicalEmployee;
 import java.util.List;
 
 /**
- * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
+ * Data transfer object dla podstawowych danych pracownika medycznego
+ * @author Tobiasz Fortaszewski t.fortaszewski@gmail.com
  */
 public class DoctorBasicDataDTO {
     private String id;

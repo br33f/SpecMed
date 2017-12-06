@@ -5,7 +5,7 @@ import org.springframework.data.annotation.Id;
 
 /**
  * Encja reprezentujaca pacjenta
- * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
+ * @author Tobiasz Fortaszewski t.fortaszewski@gmail.com
  */
 public class Customer {
 

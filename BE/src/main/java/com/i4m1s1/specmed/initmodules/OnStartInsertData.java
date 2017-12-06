@@ -22,7 +22,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
+ * Init moduł do ładowania danych do MongoDB - wykorzystywany podczas developu i testów
+ * @author Tobiasz Fortaszewski t.fortaszewski@gmail.com
  */
 @Component
 public class OnStartInsertData {

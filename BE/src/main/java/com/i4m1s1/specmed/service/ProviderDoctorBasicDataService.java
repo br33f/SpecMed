@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * Serwis dostarczajacy aktualne dane lekarzy
- * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
+ * @author Tobiasz Fortaszewski t.fortaszewski@gmail.com
  */
 @Service
 public class ProviderDoctorBasicDataService extends ListServiceCatch<MedicalEmployee, DoctorBasicDataDTO> {

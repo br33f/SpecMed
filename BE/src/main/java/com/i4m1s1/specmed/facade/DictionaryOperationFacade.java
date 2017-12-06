@@ -15,7 +15,8 @@ import java.util.Map;
 
 /**
  * Fasada udostępniająca operacje biznesow dla słowników
- * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
+ *
+ * @author Tobiasz Fortaszewski t.fortaszewski@gmail.com
  */
 
 @Component
@@ -37,7 +38,12 @@ public class DictionaryOperationFacade {
         Map<Integer, String> map = getDictByNameMap(name);
         return new ArrayList<>(map.values());
     }
-
+    /**
+     * Zwraca wartości słownikowe dla nazwy słownika
+     * @param name nazwa słownika
+     * @return wartości jako Lista {@link Map}
+     * @throws SMException
+     */
     public Map<Integer, String> getDictByNameMap(String name) throws SMException {
         boolean existsInDB = checkIfExistAsDictionaryName(name);
         if (!existsInDB) {
@@ -47,11 +53,24 @@ public class DictionaryOperationFacade {
         return dict.getDictMap();
     }
 
+    /**
+     * Zwraca wartości słownikowe dla nazwy słownika
+     * @param name nazwa słownika
+     * @return wartości jako Lista {@link List}
+     * @throws SMException
+     */
     public List<String> getDictByNameList(String name) throws SMException {
         Map<Integer, String> map = getDictByNameMap(name);
         return new ArrayList<>(map.values());
     }
 
+    /**
+     * Sprawdza czy wartość istnieje w słowniku
+     * @param name nazwa słownika
+     * @param toCheck wartość
+     * @return true jeżeli tak
+     * @throws SMException
+     */
     public boolean checkIfExistsInDictionary(DictionaryNames name, String toCheck) throws SMException {
         if (getIdByNameInDictionary(name, toCheck) != null) {
             return true;
@@ -60,6 +79,13 @@ public class DictionaryOperationFacade {
         }
     }
 
+    /**
+     * Zwraca z konkretnego słownika {@link DictionarySM} ID dla wartości string
+     * @param name {@link DictionaryNames} nazwa słownika
+     * @param toCheck wartość której ID zwraca
+     * @return id z wartości toCheck
+     * @throws SMException
+     */
     public Integer getIdByNameInDictionary(DictionaryNames name, String toCheck) throws SMException {
         Map<Integer, String> map = getDictByNameMap(name);
         for (Map.Entry<Integer, String> e : map.entrySet()) {
@@ -70,6 +96,12 @@ public class DictionaryOperationFacade {
         return null;
     }
 
+    /**
+     * Sprawdza czy istnieje słownik o podanej nazwie
+     *
+     * @param name nazwa słownika
+     * @return {@link Boolean} czy istnieje słownik
+     */
     public boolean checkIfExistAsDictionaryName(String name) {
         List<DictionaryNames> values = Arrays.asList(DictionaryNames.values());
         for (DictionaryNames value : values) {

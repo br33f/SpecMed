@@ -1,9 +1,13 @@
 package com.i4m1s1.specmed.service.request;
 
 /**
- * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
+ * Podstawowy Request
+ *
+ * @param <T> typ elementu z żądnia
+ * @author Tobiasz Fortaszewski t.fortaszewski@gmail.com
  */
 public class BasicRequest<T> extends ApiRequest {
+
 
     protected T chunkData;
 

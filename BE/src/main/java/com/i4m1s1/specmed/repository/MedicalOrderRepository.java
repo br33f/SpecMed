@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 /**
  * Repozytorium zawierające dane usług
- * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
+ * @author Tobiasz Fortaszewski t.fortaszewski@gmail.com
  */
 public interface MedicalOrderRepository extends MongoRepository<MedicalOrder, String> {
 }

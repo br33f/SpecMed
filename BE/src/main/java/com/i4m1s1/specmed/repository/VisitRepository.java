@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * Repozytorium zawierające dane wizyt
- * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
+ * @author Tobiasz Fortaszewski t.fortaszewski@gmail.com
  */
 
 public interface VisitRepository extends MongoRepository<Visit, String> {

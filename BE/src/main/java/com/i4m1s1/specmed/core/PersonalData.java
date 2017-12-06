@@ -6,7 +6,8 @@ import com.i4m1s1.specmed.core.dict.DictionaryNames;
 import java.util.Date;
 
 /**
- * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
+ * Klasa opisująca dane podstawowe osoby
+ * @author Tobiasz Fortaszewski t.fortaszewski@gmail.com
  */
 public class PersonalData {
     private String pesel;

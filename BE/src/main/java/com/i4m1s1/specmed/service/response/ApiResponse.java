@@ -1,7 +1,8 @@
 package com.i4m1s1.specmed.service.response;
 
 /**
- * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
+ * Klasa dla wszystkich Response w projekcie
+ * @author Tobiasz Fortaszewski t.fortaszewski@gmail.com
  */
 public abstract class ApiResponse {
     private String error;

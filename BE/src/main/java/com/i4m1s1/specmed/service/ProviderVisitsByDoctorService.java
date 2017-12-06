@@ -18,7 +18,7 @@ import java.util.List;
 
 /**
  * Serwis udostępniający przypisanie wizyt do doktora
- * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
+ * @author Tobiasz Fortaszewski t.fortaszewski@gmail.com
  */
 
 @Service

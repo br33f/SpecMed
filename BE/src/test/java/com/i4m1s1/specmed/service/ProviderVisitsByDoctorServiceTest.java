@@ -19,7 +19,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import static org.mockito.Mockito.when;
 
 /**
- * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
+ * @author Tobiasz Fortaszewski t.fortaszewski@gmail.com
  */
 @Ignore
 @RunWith(MockitoJUnitRunner.class)

@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * Ta adnotacja ma tylko wskazywac podczas programowania że Obiekt danej klasy posiada swoją kolekcje w DB
- * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
+ * @author Tobiasz Fortaszewski t.fortaszewski@gmail.com
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
