@@ -18,7 +18,22 @@ export class FormComponent extends Component {
 
     _bindValueToModel(event) {
         const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
+
+        let value = "";
+        switch (target.type) {
+            case 'checkbox':
+                value = !!target.checked;
+                break;
+            case 'select-multiple':
+                if (event.target.options && event.target.options.constructor === HTMLOptionsCollection) {
+                    let selectedOptions = Array.prototype.filter.call(event.target.options, option => option.selected);
+                    value = selectedOptions.map(option => option.value);
+                }
+                break;
+            default:
+                value = target.value;
+                break;
+        }
         const name = target.name;
 
         this.model.set(name, value);
