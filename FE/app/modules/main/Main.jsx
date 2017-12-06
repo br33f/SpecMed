@@ -3,7 +3,14 @@ import {Component} from 'react';
 
 import {Container, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
+/**
+ * Klasa głównej strony aplikacji
+ * @augments Component Komponent
+ */
 export class Main extends Component {
+    /**
+     * Funkcja odpowiedzialna na generowanie głownej strony serwisu
+     */
     render() {
         return (
             <Container fluid={true}>

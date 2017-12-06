@@ -4,11 +4,20 @@ import {Link} from 'react-router-dom';
 import {Container} from 'reactstrap';
 import {PostPageableTable} from '../../components/post-pageable-collection/PostPageableTable.jsx';
 
+/**
+ * Klasa odpowiedzialna za wyswietlenie listy ubezpieczeń
+ * @augments Component
+ */
 export class InsuranceList extends Component {
     constructor(props) {
         super(props);
     }
 
+    /**
+     * Generowanie linku do edycji
+     * @param insuranceId identyfikator ubezpieczenia
+     * @returns {XML} zwrocony link do generowania
+     */
     generateEditLink(insuranceId) {
         let editUrl = `/insurance/edit/${insuranceId}`;
         return (
@@ -17,7 +26,10 @@ export class InsuranceList extends Component {
             </Link>
         );
     }
-
+    /**
+     * funkcja odpowiedzialna za generowanie nagłówka dla ubezpieczen
+     * @returns nagłowek danych dla widoku listowania ubezpieczen
+     */
     getHeaderDefinition() {
         return [
             {key: 'name', label: 'Nazwa ubezpieczenia', sortable: true},
@@ -28,6 +40,10 @@ export class InsuranceList extends Component {
         ];
     }
 
+    /**
+     * Funckja odpowiedzialna za wyswietlanie listy ubezpieczen
+     * @returns {XML}
+     */
         render()
         {
             return (

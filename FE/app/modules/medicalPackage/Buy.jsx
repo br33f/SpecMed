@@ -19,6 +19,7 @@ const BaseModelConfigured = BaseModel.extend({
     saveUrl: 'visit/save'
 });
 
+
 export class MedicalPacakgeBuy extends FormComponent {
     constructor(props) {
         // Utworz model i przekaż go w konstruktorze do rodzica

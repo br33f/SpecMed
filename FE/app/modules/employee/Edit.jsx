@@ -19,7 +19,14 @@ const BaseModelConfigured = BaseModel.extend({
     saveUrl: 'employee/save'
 });
 
+/**
+ * Klasa odpowiedzialna za edycje pracownika. Wybierany jest pracownik i możemy dokonac jego edycji.
+ */
 export class EmployeeEdit extends FormComponent {
+    /**
+     * Kontruktor edycji formularza pracownika
+     * @param props parametry przekazywane do parametrów
+     */
     constructor(props) {
         // Utworz model i przekaż go w konstruktorze do rodzica
         let localModel = new BaseModelConfigured();
@@ -37,6 +44,9 @@ export class EmployeeEdit extends FormComponent {
         };
     }
 
+    /**
+     *
+     */
     componentDidMount() {
         this.employeeId && this.model.fetch();
         this.fetchDictionaries();

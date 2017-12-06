@@ -4,11 +4,20 @@ import {Link} from 'react-router-dom';
 import {Container} from 'reactstrap';
 import {PostPageableTable} from '../../components/post-pageable-collection/PostPageableTable.jsx';
 
+/**
+ * Klasa odpowiedzialna za wyswietlanei listy pracowników medycznych
+ * @augments Component
+ */
 export class MedicalEmployeeList extends Component {
     constructor(props) {
         super(props);
     }
 
+    /**
+     * Generowanie linku do edycji
+     * @param employeeId identyfikator pracownika medycznego
+     * @returns {XML} zwrocony link do generowania
+     */
     generateEditLink(employeeId) {
         //to nizej jeszcze nie jest w controlerze
         let editUrl = `/employee/medical-employee/${employeeId}`;
@@ -19,6 +28,10 @@ export class MedicalEmployeeList extends Component {
         );
     }
 
+    /**
+     * funkcja odpowiedzialna za generowanie nagłówka dla pracowników medycznych
+     * @returns nagłowek dancyh dla widoku listowania pracowników medycznych
+     */
     getHeaderDefinition() {
         return [
             {key: 'personalData.name', label: 'Imię pracownika', sortable: true},
@@ -30,6 +43,10 @@ export class MedicalEmployeeList extends Component {
         ];
     }
 
+    /**
+     * Funkcja odpowiedzialna za wyswietlenie listy pracownikow medycznych
+     * @returns {XML} element listy pracowników medycznych
+     */
     render()
     {
         return (
