@@ -86,7 +86,7 @@ export class VisitAdd extends FormComponent {
                         <Form>
                             <FormGroup>
                                 <Label for="visitPlace">Miejsce</Label>
-                                <Input type="text" name="personalData.name" id="visitPlace" placeholder="Miejsce"
+                                <Input type="text" name="place" id="visitPlace" placeholder="Miejsce"
                                        value={this.state.model.get('place')}
                                        onChange={this.bindValueToModel}/>
                             </FormGroup>
