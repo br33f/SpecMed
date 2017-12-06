@@ -4,7 +4,14 @@ import './jumbotron.scss';
 import { Link } from 'react-router-dom';
 import { Jumbotron } from 'reactstrap';
 
+/**
+ * Klasa odpowiedzialna za generowanie oraz obsluge nagłówka
+ */
 export class Jumbo extends React.Component {
+    /**
+     * Metoda odpowiedzialna za zwrocenie nagłówka aplikacji
+     * @returns {XML} głowny nagłowek aplikacji
+     */
     render() {
         return (
             <Jumbotron className="specJumbo">

@@ -1,7 +1,10 @@
 import _ from 'lodash';
 import axios from 'axios';
 
-/* -- Definicja BaseModel -- */
+/**
+ * Definicja BaseModel
+ * @constructor kontruktor BaseModel
+ */
 let BaseModel = function () {
     this.attributes = _.cloneDeep(this.defaults);
 
