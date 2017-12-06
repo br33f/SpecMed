@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
+ * Serwis udostępniający zapis recepty w systemie
  * Created by br33 on 05.12.2017.
  */
 @Service
@@ -20,6 +21,12 @@ public class ProviderSavePrescriptionService extends BasicServiceCatch<Prescript
     @Autowired
     private PrescriptionRepository repository;
 
+    /**
+     * Metoda usługowa do wystawiania recept
+     * @param request żądanie zawierające dane recept {@link PrescriptionRepository}
+     * @return Lista danych o recepcie
+     * @throws SMException
+     */
     @Override
     protected BasicResponse<Prescription> provide(BasicRequest<Prescription> request) throws SMException {
         Prescription savedPrescription = repository.save(request.getChunkData());

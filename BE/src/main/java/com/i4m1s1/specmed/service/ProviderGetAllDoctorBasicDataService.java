@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Serwis udostępniający aktualne wszystkie dane lekarzy
  * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
  */
 @Service
@@ -27,6 +28,12 @@ public class ProviderGetAllDoctorBasicDataService extends BasicServiceCatch<Obje
     @Autowired
     private MedicalEmployeeRepository repository;
 
+    /**
+     * Metoda usługowa pobierająca wszystkie informacje lekarzy
+     * @param request żądanie o wszystkie dane lekarzy {@link MedicalEmployeeRepository}
+     * @return Lista danych wszystkich lekarzy
+     * @throws SMException
+     */
     @Override
     protected BasicResponse<List<DoctorBasicDataDTO>> provide(BasicRequest<Object> request) throws SMException {
         BasicResponse<List<DoctorBasicDataDTO>> basicDataDTOBasicResponse =new BasicResponse<>();

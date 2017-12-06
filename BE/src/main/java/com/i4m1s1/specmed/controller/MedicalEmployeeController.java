@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * Kontroler udostępniajacy API dla usług związanych z pracownikiem medycznym
+ */
 @RestController
 @RequestMapping(path = "/medical-employee")
 public class MedicalEmployeeController {
@@ -26,12 +29,21 @@ public class MedicalEmployeeController {
     @Autowired
     private ProviderGetAllDoctorBasicDataService serviceAll;
 
+    /**
+     * Metoda udostępniająca wyszukania konkretnych pracowników medycznych
+     * @param request żądanie zawierające listę danych pracowników medycznych
+     * @return Lista danych pracowników medycznych
+     */
     @CrossOrigin
     @RequestMapping(method = RequestMethod.POST, path = "/list/basic")
     public ListResponse<DoctorBasicDataDTO> getBasicData(@RequestBody ListRequest<MedicalEmployee> request) {
         return service.serve(request);
     }
 
+    /**
+     * Metoda udostępniająca pobieranie pełnej listy pracowników medycznych
+     * @return Lista danych pracowników medycznych
+     */
     @CrossOrigin
     @RequestMapping(method = RequestMethod.GET, path = "/list/full")
     public BasicResponse<List<DoctorBasicDataDTO>> getFullList() {

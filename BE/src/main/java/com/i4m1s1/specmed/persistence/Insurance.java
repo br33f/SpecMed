@@ -6,6 +6,9 @@ import org.springframework.data.annotation.Id;
 
 import java.util.List;
 
+/**
+ * Encja zawierająca dane ubezpieczenia
+ */
 public class Insurance {
     @Id
     private String id;

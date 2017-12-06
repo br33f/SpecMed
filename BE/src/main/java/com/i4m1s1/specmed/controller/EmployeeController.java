@@ -11,6 +11,9 @@ import com.i4m1s1.specmed.service.response.ListResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Kontroler udostępniajacy API dla usług związanych z pracownikiem
+ */
 @RestController
 @RequestMapping(path ="/employee")
 public class EmployeeController {
@@ -23,6 +26,11 @@ public class EmployeeController {
     @Autowired
     private ProviderSaveEmployeeService providerSaveEmployeeService;
 
+    /**
+     * Metoda zapewniająca pobranie danych konkretnego pracownika
+     * @param employeeId żądanie zawierające id pracownika
+     * @return Dane pracownika
+     */
     @CrossOrigin
     @RequestMapping(method = RequestMethod.GET, path = "/get/{employeeId}")
     public BasicResponse<Employee> getBasicDataList(@PathVariable("employeeId") String employeeId) {
@@ -31,6 +39,11 @@ public class EmployeeController {
         return providerGetEmployeeService.serve(getEmployeeRequest);
     }
 
+    /**
+     * Metoda zapewniająca dodanie/edycję nowego pracownika
+     * @param request żądanie zawierające dane pracownika dodawanego/edytowanego
+     * @return dane pracownika dodawanego/edytowanego
+     */
     @CrossOrigin
     @RequestMapping(method = RequestMethod.PUT, path = "/save")
     public BasicResponse<Employee> getBasicDataList(@RequestBody BasicRequest<Employee> request) {
@@ -55,6 +68,12 @@ public class EmployeeController {
         }
      }
      *
+     */
+
+    /**
+     * Metoda zapewniająca zwracanie listy wszystkich pracowników
+     * @param request żądanie zawierające dane pracowników
+     * @return Lista danych pracowników
      */
     @CrossOrigin
     @RequestMapping(method = RequestMethod.POST, path = "/list")

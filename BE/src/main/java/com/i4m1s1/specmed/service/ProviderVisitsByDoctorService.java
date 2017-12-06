@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Serwis udostępniający przypisanie wizyt do doktora
  * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
  */
 
@@ -27,6 +28,14 @@ public class ProviderVisitsByDoctorService extends ListServiceCatch<Visit, Visit
     private VisitRepository visitRepository;
     @Autowired
     private MedicalEmployeeRepository medicalEmployeeRepository;
+
+    /**
+     * Metoda usługowa pobierająca dane wizyt przypisanych do konkretnych lekarzy
+     * @param request żądanie zawierające dane listy wizyt
+     * @return Lista danych przypisanych wizyt do lekarzy
+     * @throws SMException
+     */
+
 
     @Override
     protected ListResponse<VisitBasicDataDTO> provide(ListRequest<Visit> request) throws SMException {

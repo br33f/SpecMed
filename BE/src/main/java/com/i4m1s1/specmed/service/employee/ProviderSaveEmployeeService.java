@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
+ * Serwis udostępniający dodanie nowych pracowników
  * Created by br33 on 05.12.2017.
  */
 @Service
@@ -18,6 +19,12 @@ public class ProviderSaveEmployeeService extends BasicServiceCatch<Employee, Emp
     @Autowired
     private EmployeeRepository repository;
 
+    /**
+     * Metoda usługowa dodająca nowego pracownika
+     * @param request żądanie zawierające dane pracownika {@link EmployeeRepository}
+     * @return Lista dodanego pracownika
+     * @throws SMException
+     */
     @Override
     protected BasicResponse<Employee> provide(BasicRequest<Employee> request) throws SMException {
         Employee savedEmployee = repository.save(request.getChunkData());

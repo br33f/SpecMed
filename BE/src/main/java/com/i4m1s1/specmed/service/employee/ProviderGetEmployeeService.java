@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
+ * Serwis udostępniający pobranie danych konkretnego pracownika
  * Created by br33 on 25.11.2017.
  */
 @Service
@@ -18,6 +19,13 @@ public class ProviderGetEmployeeService extends BasicServiceCatch<String, Employ
     @Autowired
     private EmployeeRepository repository;
 
+
+    /**
+     * Metoda usługowa pobierająca dane pracownika
+     * @param request żądanie zawierające dane pracownika {@link EmployeeRepository}
+     * @return Lista danych wyszukanego pracownika
+     * @throws SMException
+     */
     @Override
     protected BasicResponse<Employee> provide(BasicRequest<String> request) throws SMException {
         BasicResponse<Employee> response = new BasicResponse<>();

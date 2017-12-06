@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Kontroler udostępniający API dla wspólnych usług
+ */
 @RestController
 @RequestMapping(path = "/common")
 public class CommonController {
@@ -24,12 +27,21 @@ public class CommonController {
     @Autowired
     private OnStartInsertData initModule;
 
+    /**
+     * Metoda zapewnijaca wyszukiwanie słownika
+     * @param request żądanie zawierające nazwę słownika
+     * @return Lista danych słownika
+     */
     @CrossOrigin
     @RequestMapping(method = RequestMethod.POST, path = "/dict")
     public BasicResponse<Map<Integer, String>> getDictByName(@RequestBody BasicRequest<String> request) {
         return service.serve(request);
     }
 
+    /**
+     * Metoda zapewniająca gaszenie modułów startowych
+     * @return potwierdzenie wykonania metody
+     */
     //DO GASZENIA INIT MODULOW
     @CrossOrigin
     @RequestMapping(method = RequestMethod.DELETE, path = "/module/stop")
@@ -38,6 +50,10 @@ public class CommonController {
         return "debug - delete - ok";
     }
 
+    /**
+     * Metoda zapewniająca uruchomienie modułów startowych
+     * @return potwierdzenie uruchomienia modułów
+     */
     //DO ODPALENIA INIT MODULOW
     @CrossOrigin
     @RequestMapping(method = RequestMethod.PUT, path = "/module/start")

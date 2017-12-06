@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 /**
+ * Serwis udostępniający dane pracownika
  * Created by br33 on 25.11.2017.
  */
 @Service
@@ -18,6 +19,12 @@ public class ProviderEmployeeBasicDataService extends ListServiceCatch<Employee,
 
     @Autowired
     private EmployeeRepository repository;
+
+    /**
+     * Metoda usługowa pobierająca dane pracowników placówki
+     * @param request żądanie zawierające dane pracowników {@link EmployeeRepository}
+     * @return Lista danych pracowników
+     */
 
     public ListResponse<Employee> provide(ListRequest<Employee> request) {
         Employee employee = request.getSearchCriteria();

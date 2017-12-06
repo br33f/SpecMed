@@ -8,6 +8,12 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 
 
 /**
+ *
+ * Encja zawierająca dane wizyt
+ *
+ *
+ *
+ *
  * ONE-TO-MANY
  * https://stackoverflow.com/questions/29303916/spring-data-mongodb-how-to-implement-entity-relationships
  * <p>

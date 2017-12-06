@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.Map;
 
 /**
+ * Serwis dostarczajacy aktualne slowniki
  * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
  */
 @Service
@@ -19,6 +20,12 @@ public class ProviderDictService extends BasicServiceCatch<String, Map<Integer, 
     @Autowired
     private DictionaryOperationFacade facade;
 
+    /**
+     * Metoda usługowa pobierająca słowniki
+     * @param request żądanie zawierające dane o slownikach {@link DictionaryOperationFacade }
+     * @return Listę danych zawartych w sklowniku
+     * @throws SMException
+     */
     @Override
     protected BasicResponse<Map<Integer, String>> provide(BasicRequest<String> request) throws SMException {
         BasicResponse<Map<Integer, String>> response = new BasicResponse<>();

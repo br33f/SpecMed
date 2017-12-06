@@ -11,9 +11,16 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.List;
 
 /**
+ * Repozytorium zawierające dane wizyt
  * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
  */
 
 public interface VisitRepository extends MongoRepository<Visit, String> {
+    /**
+     * Metoda zapewniająca wyszukanie wszystkich danych wizyt konkretnego pracownika medycznego
+     * @param medicalEmployee dane pracownika medycznego
+     * @param pageable lista wizyt
+     * @return Lista danych wizyt danego pracownika medycznego
+     */
     Page<Visit> findAllByMedicalEmpoyee(MedicalEmployee medicalEmployee, Pageable pageable);
 }

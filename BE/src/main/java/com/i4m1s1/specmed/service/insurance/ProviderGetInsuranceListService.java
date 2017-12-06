@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 /**
+ * Serwis udostępniający pobieranie wszystkich danych ubezpieczeń
  * Created by br33 on 02.12.2017.
  */
 @Service
@@ -21,6 +22,11 @@ public class ProviderGetInsuranceListService extends ListServiceCatch<Insurance,
     @Autowired
     private InsuranceRepository repository;
 
+    /**
+     * Metoda usługowa pobierająca dane wszystkich ubezpieczeń
+     * @param request żądanie zawierające dane listy ubezpieczeń {@link InsuranceRepository}
+     * @return Lista danych wszystkich ubezpieczeń
+     */
     public ListResponse<Insurance> provide(ListRequest<Insurance> request) {
         Insurance insurance = request.getSearchCriteria();
         Example<Insurance> exampleInsurance = Example.of(insurance);

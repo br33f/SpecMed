@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Kontroler udostępniajacy API dla usług związanych z wizytą
+ */
 @RestController
 @RequestMapping(path = "/visit")
 public class VisitController {
@@ -25,11 +28,22 @@ public class VisitController {
     @Autowired
     private ProviderSaveVisitService providerSavevisitService;
 
+    /**
+     * Metoda udostępniająca wyszukanie listy danych wizyt
+     * @param request żądanie zawierające listę danych wizyt
+     * @return Lista danych wizyt
+     */
     @CrossOrigin
     @RequestMapping(method = RequestMethod.POST, path = "/list")
     public ListResponse<VisitBasicDataDTO> getVisitByDoctor(@RequestBody ListRequest<Visit> request) {
         return service.serve(request);
     }
+
+    /**
+     * Metoda udostępniajaca dodawanie/edycję nowej wizyty
+     * @param request żądanie zawierające dane wizyty do dodania
+     * @return Dane wizyty dodawanej/edytowanej
+     */
 
     @CrossOrigin
     @RequestMapping(method = RequestMethod.PUT, path = "/save")

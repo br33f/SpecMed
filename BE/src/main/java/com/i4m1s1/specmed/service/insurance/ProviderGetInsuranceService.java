@@ -17,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 /**
+ * Serwis udostępniający dane wybranego ubezpieczenia
  * Created by br33 on 25.11.2017.
  */
 @Service
@@ -25,6 +26,12 @@ public class ProviderGetInsuranceService extends BasicServiceCatch<String, Insur
     @Autowired
     private InsuranceRepository repository;
 
+    /**
+     * Metoda usługowa pobierająca dane konkretnego ubezpieczenia
+     * @param request żądanie zawierające dane konkretnego ubezpieczenia {@link InsuranceRepository }
+     * @return Lista danych konkretnego ubezpieczenia
+     * @throws SMException
+     */
     @Override
     protected BasicResponse<Insurance> provide(BasicRequest<String> request) throws SMException {
         BasicResponse<Insurance> response = new BasicResponse<>();

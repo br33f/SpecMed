@@ -14,12 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Klasa dostepu do enumow z bazy
- * jest zrobiona zeby ludzie korzystali z tych metod przy pisaniu,
- * a szczegoly implementacyjne nizej(stąd do persist) będą najwyzej zmieniane.
- * <p>
- * Pozwoli to nam zrownoleglic prace albo cos
- *
+ * Fasada udostępniająca operacje biznesow dla słowników
  * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
  */
 

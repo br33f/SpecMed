@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
+ * Serwis udostępniający dodawanie nowej wizyty
  * Created by br33 on 05.12.2017.
  */
 @Service
@@ -19,6 +20,12 @@ public class ProviderSaveVisitService extends BasicServiceCatch<Visit, Visit> {
     @Autowired
     private VisitRepository repository;
 
+    /**
+     * Metoda usługowa pobierająca dane wizyt
+     * @param request żądanie zawierające dane o wizycie {@link VisitRepository}
+     * @return Lista danych wizyt
+     * @throws SMException
+     */
     @Override
     protected BasicResponse<Visit> provide(BasicRequest<Visit> request) throws SMException {
         Visit savedVisit = repository.save(request.getChunkData());
