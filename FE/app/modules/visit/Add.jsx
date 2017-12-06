@@ -19,8 +19,17 @@ const BaseModelConfigured = BaseModel.extend({
 
 });
 
+/**
+ * Klasa odpowiedzialna za dodawanie nowej wizyty
+ * @extends FormComponent
+ */
 export class VisitAdd extends FormComponent {
-
+    /**
+     * Konstruktor
+     * @constructor
+     * @param {immutable object} props parametry przekazane do komponentu
+     *
+     */
     constructor(props) {
         // Utworz model i przekaż go w konstruktorze do rodzica
         let localModel = new BaseModelConfigured();

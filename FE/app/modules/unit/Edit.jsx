@@ -20,7 +20,17 @@ const BaseModelConfigured = BaseModel.extend({
     saveUrl: 'unit/save'
 });
 
+/**
+ * Klasa odpowiedzialna za edycje oddziału
+ * @extends FormComponent
+ */
 export class UnitEdit extends FormComponent {
+    /**
+     * Konstruktor
+     * @constructor
+     * @param {immutable object} props parametry przekazane do komponentu
+     *
+     */
     constructor(props) {
         // Utworz model i przekaż go w konstruktorze do rodzica
         let localModel = new BaseModelConfigured();
@@ -38,11 +48,19 @@ export class UnitEdit extends FormComponent {
         };
     }
 
+    /**
+     * Metoda wywołuje się przy pierwszej inicjalizacji komponentu
+     * @public
+     */
     componentDidMount() {
         this.unitId && this.model.fetch();
         this.fetchDictionaries();
     }
 
+    /**
+     * Metoda pobiera słowniki
+     * @private
+     */
     fetchDictionaries() {
         SM.DictionaryManager.getDictAsArray("GENDER").then(dict => {
             this.setState({
@@ -51,6 +69,11 @@ export class UnitEdit extends FormComponent {
         });
     }
 
+
+    /**
+     * Metoda wywołuje synchronizację modelu z usługą REST
+     * @public
+     */
     onFormSave() {
         this.setState({
             isLoading: true
@@ -63,11 +86,19 @@ export class UnitEdit extends FormComponent {
         });
     }
 
+    /**
+     * Metoda czyści model i wywołuje przerysowanie komponentu
+     * @public
+     */
     onFormClear() {
         console.log("Clear!");
         this.model.clear();
     }
 
+    /**
+     * Metoda odpowiedzialna za wyświetlanie widoku edycji oddziału
+     * @returns {XML}
+     */
     render() {
         console.log("render");
         return (

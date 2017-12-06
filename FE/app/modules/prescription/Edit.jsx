@@ -19,7 +19,17 @@ const BaseModelConfigured = BaseModel.extend({
     saveUrl: 'prescription/save'
 });
 
+/**
+ * Klasa odpowiedzialna za edycje recepty
+ * @extends FormComponent
+ */
 export class    PrescriptionEdit extends FormComponent {
+    /**
+     * Konstruktor
+     * @constructor
+     * @param {immutable object} props parametry przekazane do komponentu
+     *
+     */
     constructor(props) {
         // Utworz model i przekaż go w konstruktorze do rodzica
         let localModel = new BaseModelConfigured();
@@ -37,11 +47,19 @@ export class    PrescriptionEdit extends FormComponent {
         };
     }
 
+    /**
+     * Metoda wywołuje się przy pierwszej inicjalizacji komponentu
+     * @public
+     */
     componentDidMount() {
         this.employeeId && this.model.fetch();
         this.fetchDictionaries();
     }
 
+    /**
+     * Metoda pobiera słowniki
+     * @private
+     */
     fetchDictionaries() {
         SM.DictionaryManager.getDictAsArray("GENDER").then(dict => {
             this.setState({
@@ -50,6 +68,10 @@ export class    PrescriptionEdit extends FormComponent {
         });
     }
 
+    /**
+     * Metoda wywołuje synchronizację modelu z usługą REST
+     * @public
+     */
     onFormSave() {
         this.setState({
             isLoading: true
@@ -62,11 +84,19 @@ export class    PrescriptionEdit extends FormComponent {
         });
     }
 
+    /**
+     * Metoda czyści model i wywołuje przerysowanie komponentu
+     * @public
+     */
     onFormClear() {
         console.log("Clear!");
         this.model.clear();
     }
 
+    /**
+     * Metoda odpowiedzialna za wyświetlanie widoku edycji recepty
+     * @returns {XML}
+     */
     render() {
         console.log("render");
         return (
