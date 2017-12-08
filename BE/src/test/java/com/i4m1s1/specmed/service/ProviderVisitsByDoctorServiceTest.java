@@ -4,6 +4,7 @@ import com.i4m1s1.specmed.core.SMException;
 import com.i4m1s1.specmed.core.dict.WarningMsg;
 import com.i4m1s1.specmed.repository.VisitRepository;
 import com.i4m1s1.specmed.service.common.request.ListRequest;
+import com.i4m1s1.specmed.service.common.response.ListResponse;
 import com.i4m1s1.specmed.service.visit.ProviderVisitsByDoctorService;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -41,7 +42,7 @@ public class ProviderVisitsByDoctorServiceTest {
         exception.expectMessage(EXPECTED_MESSAGE);
 
         //when
-        service.provide(request);
+        service.serve(request);
 
         //then
     }
