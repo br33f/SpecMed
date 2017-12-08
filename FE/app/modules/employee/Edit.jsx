@@ -5,6 +5,7 @@ import BaseModel from 'components/models/BaseModel';
 import {Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import {FormComponent} from "components/form-component/FormComponent.jsx";
 import {Loader} from "components/controls/Loader.jsx";
+import {BindedInput} from "components/controls/BindedInput.jsx";
 
 const BaseModelConfigured = BaseModel.extend({
     defaults: {
@@ -152,48 +153,32 @@ export class EmployeeEdit extends FormComponent {
                         <Form>
                             <FormGroup>
                                 <Label for="employeeName">Imię</Label>
-                                <Input type="text" name="personalData.name" id="employeeName" placeholder="Imię"
-                                       value={this.state.model.get('personalData.name')}
-                                       className={this.isValid('personalData.name') ? '' : 'is-invalid'}
-                                       onChange={this.bindValueToModel}
-                                />
-                                {this.getValidationFeedbackFor('personalData.name')}
+                                <BindedInput form={this} type="text" name="personalData.name" id="employeeName" placeholder="Imię" />
                             </FormGroup>
                             <FormGroup>
                                 <Label for="employeeSurname">Nazwisko</Label>
-                                <Input type="text" name="personalData.surname" id="employeeSurname"
-                                       placeholder="Nazwisko"
-                                       value={this.state.model.get('personalData.surname')}
-                                       className={this.isValid('personalData.surname') ? '' : 'is-invalid'}
-                                       onChange={this.bindValueToModel}
-                                />
-                                {this.getValidationFeedbackFor('personalData.surname')}
+                                <BindedInput form={this} type="text" name="personalData.surname" id="employeeSurname" placeholder="Nazwisko" />
                             </FormGroup>
                             <FormGroup>
                                 <Label for="employeePesel">Numer PESEL</Label>
-                                <Input type="number" name="personalData.pesel" id="employeePesel" placeholder="PESEL"
-                                       value={this.state.model.get('personalData.pesel')}
-                                       onChange={this.bindValueToModel}/>
+                                <BindedInput form={this} type="number" name="personalData.pesel" id="employeePesel" placeholder="PESEL" />
                             </FormGroup>
                             <FormGroup>
                                 <Label for="employeeBirthday">Data urodzenia</Label>
-                                <Input type="date" name="personalData.birthday" id="employeeBirthday"
-                                       placeholder="Data urodzenia"
-                                       value={this.state.model.get('personalData.birthday') && SM.Utils.customFormat(this.state.model.get('personalData.birthday'), "yyyy-mm-dd")}
-                                       onChange={this.bindValueToModel}/>
+                                <BindedInput form={this} type="date" name="personalData.birthday" id="employeeBirthday" placeholder="Data urodzenia"
+                                             value={this.state.model.get('personalData.birthday') && SM.Utils.customFormat(this.state.model.get('personalData.birthday'), "yyyy-mm-dd")}
+                                />
                             </FormGroup>
                             <FormGroup>
                                 <Label for="employeeGender">Płeć</Label>
-                                <Input type="select" name="personalData.gender" id="employeeGender"
-                                       value={this.state.model.get('personalData.gender')}
-                                       onChange={this.bindValueToModel}>
+                                <BindedInput form={this} type="select" name="personalData.gender" id="employeeGender" placeholder="Płeć">
                                     {this.state.genderDictionary.map(genderObj =>
                                         <option
                                             key={genderObj.id}
                                             value={genderObj.id}>
                                             {genderObj.label}
                                         </option>)}
-                                </Input>
+                                </BindedInput>
                             </FormGroup>
                             <div className="pull-right">
                                 <Button outline type="button" className="mr-1"
