@@ -28,8 +28,7 @@ export class UnitEdit extends FormComponent {
     /**
      * Konstruktor
      * @constructor
-     * @param {immutable object} props parametry przekazane do komponentu
-     *
+     * @param {object} props parametry przekazane do komponentu
      */
     constructor(props) {
         // Utworz model i przekaż go w konstruktorze do rodzica

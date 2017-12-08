@@ -21,11 +21,13 @@ const BaseModelConfigured = BaseModel.extend({
 
 /**
  * Klasa odpowiedzialna za edycje pracownika. Wybierany jest pracownik i możemy dokonac jego edycji.
+ * @extends FormComponent
  */
 export class EmployeeEdit extends FormComponent {
     /**
-     * Kontruktor edycji formularza pracownika
-     * @param props parametry przekazywane do parametrów
+     * Konstruktor
+     * @constructor
+     * @param {object} props parametry przekazane do komponentu
      */
     constructor(props) {
         // Utworz model i przekaż go w konstruktorze do rodzica
@@ -42,16 +44,54 @@ export class EmployeeEdit extends FormComponent {
             isLoading: false,
             isSaved: false
         };
+
+        this.addValidators();
+    }
+
+    addValidators() {
+        this.rules = {
+            "personalData.name": [
+                {
+                    validator: "required", // tutaj możemy przekazać nazwę funkcji walidującej z pliku Validators.js lub własną funkcję
+                    msg: "Pole imię jest wymagane" // pole opcjonalne
+                },
+                {
+                    validator: (val) => {
+                        // customowa funkcja walidująca
+                        // jeżeli wystąpił błąd to zwracamy komunikat, jeżeli nie ma błędu to nie zwracamy nic
+                        if (!val || val.toString().length < 3) {
+                            return "Imię musi mieć conajmniej 3 znaki";
+                        }
+                    }
+                }
+            ],
+            "personalData.surname": [
+                {
+                    validator: "required"
+                },
+                {
+                    validator: "maxLength",
+                    params: {
+                        length: 20
+                    }
+                }
+            ]
+        };
     }
 
     /**
-     *
+     * Metoda wywołuje się przy pierwszej inicjalizacji komponentu
+     * @public
      */
     componentDidMount() {
         this.employeeId && this.model.fetch();
         this.fetchDictionaries();
     }
 
+    /**
+     * Metoda pobiera słowniki
+     * @private
+     */
     fetchDictionaries() {
         SM.DictionaryManager.getDictAsArray("GENDER").then(dict => {
             this.setState({
@@ -60,25 +100,44 @@ export class EmployeeEdit extends FormComponent {
         });
     }
 
+    /**
+     * Metoda wywołuje synchronizację modelu z usługą REST
+     * @public
+     */
     onFormSave() {
-        this.setState({
-            isLoading: true
-        });
-        this.model.save().then(() => {
+        // metoda validate wywołuje walidację na polach określonych w this.rules
+        this.validate();
+        // this.errors zawiera błędy z walidacji
+        if (!this.errors) {
+            // jeśli nie zawiera błędów - wysyłamy formularz
             this.setState({
-                isLoading: false,
-                isSaved: true
+                isLoading: true
             });
-        });
+            this.model.save().then(() => {
+                this.setState({
+                    isLoading: false,
+                    isSaved: true
+                });
+            });
+        } else {
+            // jeżeli są błędy - wymuszamy update formularza, aby pokazać komunikaty o błędach
+            this.forceUpdate();
+        }
     }
 
+    /**
+     * Metoda czyści model i wywołuje przerysowanie komponentu
+     * @public
+     */
     onFormClear() {
-        console.log("Clear!");
         this.model.clear();
     }
 
+    /**
+     * Metoda odpowiedzialna za wyświetlanie widoku edycji oddziału
+     * @returns {XML}
+     */
     render() {
-        console.log("render");
         return (
             <Container fluid={true}>
                 <p className="contentTitle">
@@ -95,13 +154,20 @@ export class EmployeeEdit extends FormComponent {
                                 <Label for="employeeName">Imię</Label>
                                 <Input type="text" name="personalData.name" id="employeeName" placeholder="Imię"
                                        value={this.state.model.get('personalData.name')}
-                                       onChange={this.bindValueToModel}/>
+                                       className={this.isValid('personalData.name') ? '' : 'is-invalid'}
+                                       onChange={this.bindValueToModel}
+                                />
+                                {this.getValidationFeedbackFor('personalData.name')}
                             </FormGroup>
                             <FormGroup>
                                 <Label for="employeeSurname">Nazwisko</Label>
                                 <Input type="text" name="personalData.surname" id="employeeSurname"
-                                       placeholder="Nazwisko" value={this.state.model.get('personalData.surname')}
-                                       onChange={this.bindValueToModel}/>
+                                       placeholder="Nazwisko"
+                                       value={this.state.model.get('personalData.surname')}
+                                       className={this.isValid('personalData.surname') ? '' : 'is-invalid'}
+                                       onChange={this.bindValueToModel}
+                                />
+                                {this.getValidationFeedbackFor('personalData.surname')}
                             </FormGroup>
                             <FormGroup>
                                 <Label for="employeePesel">Numer PESEL</Label>
@@ -118,7 +184,8 @@ export class EmployeeEdit extends FormComponent {
                             </FormGroup>
                             <FormGroup>
                                 <Label for="employeeGender">Płeć</Label>
-                                <Input type="select" name="personalData.gender" id="employeeGender" value={this.state.model.get('personalData.gender')}
+                                <Input type="select" name="personalData.gender" id="employeeGender"
+                                       value={this.state.model.get('personalData.gender')}
                                        onChange={this.bindValueToModel}>
                                     {this.state.genderDictionary.map(genderObj =>
                                         <option

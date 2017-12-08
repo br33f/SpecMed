@@ -1,0 +1,48 @@
+[
+  {
+    "uri": "/",
+    "label": "Strona główna"
+  },
+  {
+    "label": "Pracownik",
+    "children": [
+      {
+        "uri": "/employee/list",
+        "label": "Lista pracowników"
+      },
+      {
+        "uri": "/employee/new",
+        "label": "Dodaj nowego pracownika"
+      },
+      {
+        "uri": "/medical-employee/list",
+        "label": "Lista pracowników medycznych"
+      },
+      {
+        "uri": "/medical-employee/new",
+        "label": "Dodaj nowego pracownika medycznego"
+      }
+    ]
+  },
+  {
+    "label": "Ubezpieczenia",
+    "children": [
+      {
+        "uri": "/insurance/list",
+        "label": "Lista ubezpieczeń"
+      },
+      {
+        "uri": "/insurance/new",
+        "label": "Dodaj ubezpieczenia"
+      }
+    ]
+  },
+  {
+    "uri": "/unit/new",
+    "label": "Nowa placówka"
+  },
+  {
+    "uri": "/visit/rate",
+    "label": "Oceń wizytę"
+  }
+]

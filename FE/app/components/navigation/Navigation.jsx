@@ -1,11 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import {Popper} from 'react-popper';
+import {Link} from 'react-router-dom';
 import {
-    Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink, UncontrolledDropdown,
-    DropdownToggle, DropdownMenu, DropdownItem
+    Collapse,
+    Navbar,
+    NavbarToggler,
+    NavbarBrand,
+    Nav,
+    NavItem,
+    NavLink,
+    UncontrolledDropdown,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem
 } from 'reactstrap';
 import './navigation.scss';
+
+import menuTree from './menu.json';
 
 /**
  * Klasa odpowiedzialana za generowanei oraz edycje menu aplikacji
@@ -14,89 +24,77 @@ export class Navigation extends React.Component {
     constructor(props) {
         super(props);
 
+        // hotfix warning xD
+        this.menuIdx = 0;
+
         this.toggle = this.toggle.bind(this);
         this.state = {
             isOpen: false
         };
     }
+
     toggle() {
         this.setState({
             isOpen: !this.state.isOpen
         });
     }
+
+    generateMenu() {
+        return (
+            <Nav className="ml-auto" navbar>
+                {
+                    menuTree.map(menuItem =>
+                        this.generateMenuItem(menuItem)
+                    )
+                }
+            </Nav>
+        );
+    }
+
+    generateMenuItem(menuItem) {
+        if (menuItem.children) {
+            return (
+                <UncontrolledDropdown key={this.menuIdx++}>
+                    <DropdownToggle nav caret>
+                        {menuItem.label}
+                    </DropdownToggle>
+                    <DropdownMenu right={true}>
+                        {menuItem.children.map(childItem =>
+                            <DropdownItem tag={Link} to={childItem.uri} key={this.menuIdx++}>
+                                {childItem.label}
+                            </DropdownItem>
+                        )}
+                    </DropdownMenu>
+                </UncontrolledDropdown>
+            );
+        } else {
+            if (menuItem.uri) {
+                return (
+                    <NavItem key={this.menuIdx++}>
+                        <NavLink tag={Link} to={menuItem.uri}>{menuItem.label}</NavLink>
+                    </NavItem>
+                );
+            } else {
+                return (
+                    <NavItem key={this.menuIdx++}>{menuItem.label}</NavItem>
+                );
+            }
+
+        }
+    }
+
     render() {
         return (
             <div>
                 <Navbar color="faded" light className="navbar-expand-md">
-                    <img className="navbarLogo" src={require('../../assets/images/logo.png')} alt={this.props.appTitle} />
+                    <img className="navbarLogo" src={require('../../assets/images/logo.png')}
+                         alt={this.props.appTitle}/>
                     <NavbarBrand tag={Link} to="/">
                         <span>{this.props.appTitle}</span>
                     </NavbarBrand>
-                    <NavbarToggler onClick={this.toggle} />
+                    <NavbarToggler onClick={this.toggle}/>
                     <Collapse isOpen={this.state.isOpen} navbar>
-                        <Nav className="ml-auto" navbar>
-                            <NavItem>
-                                <NavLink tag={Link} to="/">Strona główna</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink tag={Link} to="/visit">Wizyta</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink tag={Link} to="/medicalPackage">Pakiet medyczny</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink tag={Link} to="/medicalOrder">Zlecenie badania</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink tag={Link} to="/unit/new">Placówka</NavLink>
-                            </NavItem>
-                            <UncontrolledDropdown>
-                                <DropdownToggle nav caret>
-                                    Pracownik
-                                </DropdownToggle>
-                                <DropdownMenu right={true}>
-                                    <DropdownItem tag={Link} to="/employee/list">
-                                        Lista pracowników
-                                    </DropdownItem>
-                                    <DropdownItem tag={Link} to="/employee/new">
-                                        Dodaj pracownika
-                                    </DropdownItem>
-                                    <DropdownItem tag={Link} to="/employee/Medlist">
-                                        Lista pracowników medycznych
-                                    </DropdownItem>
-                                    <DropdownItem tag={Link} to="/employee/Mednew">
-                                        Dodaj pracownika medycznego
-                                    </DropdownItem>
-                                </DropdownMenu>
-
-                                <NavItem>
-                                    <NavLink tag={Link} to="/prescription/new">Recepta</NavLink>
-                                </NavItem>
-                            </UncontrolledDropdown>
-                            <UncontrolledDropdown>
-                                <DropdownToggle nav caret>
-                                    Ubezpieczenie
-                                </DropdownToggle>
-                                <DropdownMenu right={true}>
-                                    <DropdownItem tag={Link} to="/insurance/list">
-                                        Lista ubezpieczeń
-                                    </DropdownItem>
-                                    <DropdownItem tag={Link} to="/insurance/new">
-                                        Dodaj ubezpieczenie
-                                    </DropdownItem>
-                                </DropdownMenu>
-                            </UncontrolledDropdown>
-                            <UncontrolledDropdown>
-                                <DropdownToggle nav caret>
-                                    Wizyta
-                                </DropdownToggle>
-                                <DropdownMenu right={true}>
-                                    <DropdownItem tag={Link} to="/visit/new">
-                                        Dodaj wizytę
-                                    </DropdownItem>
-                                </DropdownMenu>
-                            </UncontrolledDropdown>
-                        </Nav>
+                        {this.generateMenu()}
                     </Collapse>
                 </Navbar>
             </div>

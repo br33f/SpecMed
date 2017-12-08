@@ -20,8 +20,8 @@ export class Main extends Component {
                 <ul>
                     <li>Tworzymy sobie nowy pakiet w katalogu app/modules (jeżeli jeszcze nie istnieje)</li>
                     <li>W pakiecie tworzymy nowy plik TWOJA_NAZWA.jsx</li>
-                    <li>W pliku <code>app/App.jsx</code> dodajemy importemy sobie nasz plik <code>{"import {NAZWA_TWOJEJ_KLASY} from './modules/TWOJ_PAKIET/TWOJA_NAZWA.jsx"}</code> (końcówka .jsx musi być)</li>
-                    <li>W pliku <code>app/App.jsx</code> dodajmy nową ścieżke do Routera <code>{'<Route exact path="link_przeglądarkowy" component={NAZWA_TWOJEJ_KLASY}/>'}</code></li>
+                    <li>W pliku <code>app/Routes.jsx</code> dodajemy importemy sobie nasz plik <code>{"import {NAZWA_TWOJEJ_KLASY} from './modules/TWOJ_PAKIET/TWOJA_NAZWA.jsx"}</code> (końcówka .jsx musi być)</li>
+                    <li>W pliku <code>app/Routes.jsx</code> dodajmy nową ścieżke do Routera w odpowiedniej metodzie <code>{'<Route exact path="link_przeglądarkowy" component={NAZWA_TWOJEJ_KLASY}/>'}</code></li>
                     <li>Po wejściu pod adres zdefiniowany powyżej jako <code>link_przeglądarkowy</code> wyświetli się Twój komponent</li>
                 </ul>
 

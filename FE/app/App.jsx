@@ -7,29 +7,9 @@ import {Jumbo} from './components/jumbo/Jumbo.jsx';
 import Utils from './components/helpers/Utils';
 import DictionaryManager from './components/helpers/DictionaryManager';
 
-import {Switch, Route} from 'react-router-dom';
+import {Routes} from './Routes.jsx';
 
-import {Main} from './modules/main/Main.jsx';
-import {EmployeeList} from './modules/employee/List.jsx'
-import {EmployeeEdit} from './modules/employee/Edit.jsx'
-import {VisitEdit} from './modules/visit/Edit.jsx'
-import {MedicalPacakgeBuy} from './modules/medicalPackage/Buy.jsx'
-import {InsuranceList} from './modules/insurance/List.jsx'
-import {InsuranceEdit} from './modules/insurance/Edit.jsx'
-import {PrescriptionNew} from './modules/prescription/New.jsx'
-import {MedicalPacketNew} from './modules/medicalPacket/New.jsx'
-import {PatientNew} from './modules/patient/New.jsx'
-import {OrderAdd} from './modules/medicalOrder/Add.jsx'
-import {UnitEdit} from "./modules/unit/Edit.jsx";
-import {MedicalEmployeeList} from "./modules/employee/MedList.jsx";
-import {MedicalEmployeeEdit} from "./modules/employee/MedEdit.jsx";
-import {PrescriptionEdit} from "./modules/prescription/Edit.jsx";
-import {MedicalEmployeeList} from "./modules/employee/MedList.jsx";
-import {MedicalEmployeeEdit} from "./modules/employee/MedEdit.jsx";
-import {PrescriptionEdit} from "./modules/prescription/Edit.jsx";
-import {VisitAdd} from "./modules/visit/Add.jsx";
-import {OpinionAdd} from "./modules/opinion/Add.jsx";
-import {CustomerEdit} from "./modules/customer/Add.jsx";
+
 
 export class App extends Component {
    constructor() {
@@ -57,33 +37,7 @@ export class App extends Component {
             <div>
                 <Navigation appTitle={this.appTitle}/>
                 <Jumbo appTitle={this.appTitle} />
-                <Switch>
-                    <Route exact path='/' component={Main}/>
-                    <Route exact path='/employee/list' component={EmployeeList}/>
-                    <Route exact path='/employee/new' component={EmployeeEdit}/>
-                    <Route exact path='/employee/edit/:employeeId' component={EmployeeEdit}/>
-                    <Route exact path='/visit/edit/:visitId' component={VisitEdit}/>
-                    <Route exact path='/employee/edit' component={EmployeeEdit}/>
-                    <Route exact path='/visit' component={VisitEdit}/>
-                    <Route exact path='/medicalPackage' component={MedicalPacakgeBuy}/>
-                    <Route exact path='/insurance/list' component={InsuranceList}/>
-                    <Route exact path='/insurance/new' component={InsuranceEdit}/>
-                    <Route exact path='/insurance/edit/:insuranceId' component={InsuranceEdit}/>
-                    <Route exact path='/prescription/new' component={PrescriptionNew}/>
-                    <Route exact path='/medicalPacket/new' component={MedicalPacketNew}/>
-                    <Route exact path='/patient/new' component={PatientNew}/>
-                    <Route exact path='/medicalOrder' component={OrderAdd}/>
-                    <Route exact path='/unit/new' component={UnitEdit}/>
-                    <Route exact path='/unit/edit/:unitId' component={UnitEdit}/>
-                    <Route exact path='/employee/Medlist' component={MedicalEmployeeList}/>
-                    <Route exact path='/employee/Mednew' component={MedicalEmployeeEdit}/>
-                    <Route exact path='/employee/Mededit/:employeeId' component={MedicalEmployeeEdit}/>
-                    <Route exact path='/prescription/new' component={PrescriptionEdit}/>
-                    <Route exact path='/prescription/edit/:prescriptionId' component={PrescriptionEdit}/>
-                    <Route exact path='/visit/new' component={VisitAdd}/>
-                    <Route exact path='/visit/rate' component={OpinionAdd}/>
-                    <Route exact path='/customer/new' component={CustomerEdit}/>
-                </Switch>
+                <Routes />
                 <br />
             </div>
         );

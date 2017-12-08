@@ -1,10 +1,17 @@
 import React from 'react';
 import {Component} from 'react';
-import BaseModel from "components/models/BaseModel";
+import BaseModel from 'components/models/BaseModel';
+import validators from 'components/helpers/Validators';
 
+/**
+ * Klasa bazowa dla komponentów formularza
+ * @extends Component
+ */
 export class FormComponent extends Component {
+
     /**
-     * Konstruktyor powołujący FormComponent
+     * Konstruktor powołujący FormComponent
+     * @constructor
      * @param model instancja obiektu BaseModel
      */
     constructor(props, model) {
@@ -16,11 +23,73 @@ export class FormComponent extends Component {
             this.forceUpdate()
         };
 
+        this.rules = {};
+        this.errors = {};
+
         this.bindValueToModel = this._bindValueToModel.bind(this);
+        this.getValidationFeedbackFor = this._getValidationFeedbackFor.bind(this);
+        this.isValid = this._isValid.bind(this);
+    }
+
+    validate() {
+        this.errors = {};
+
+        Object.entries(this.rules).forEach(ruleEntry => {
+            let fieldName = ruleEntry[0];
+            let rule = ruleEntry[1];
+
+            let rulesArray = [];
+            if (!(rule instanceof Array)) {
+                rulesArray.push(rule);
+            } else {
+                rulesArray = rule;
+            }
+
+            let validationResult = null;
+            rulesArray.forEach(ruleObj => {
+                if (validationResult === null) {
+                    // if no error yet
+                    validationResult = this._validateRule(fieldName, ruleObj);
+                    if (validationResult) {
+                        this.errors[fieldName] = validationResult;
+                    }
+                }
+            });
+        });
+    }
+
+    _validateRule(fieldName, ruleObj) {
+        let validationFunction = null;
+        if (typeof ruleObj.validator === "function") {
+            validationFunction = ruleObj.validator;
+        } else if (typeof validators[ruleObj.validator] === "function") {
+            validationFunction = validators[ruleObj.validator];
+        }
+
+        if (validationFunction) {
+            let validationResult = validationFunction(this.model.get(fieldName), ruleObj.params);
+            return validationResult ? (ruleObj.msg || validationResult) : null;
+        } else {
+            return null;
+        }
+    }
+
+    _getValidationFeedbackFor(fieldName) {
+        if (this.errors[fieldName]) {
+            return (
+                <div className="invalid-feedback">
+                    {this.errors[fieldName]}
+                </div>
+            );
+        }
+    }
+
+    _isValid(fieldName) {
+        return !this.errors[fieldName];
     }
 
     /**
-     *
+     * Metoda wiążąca pola DOM z modelem
      * @param event obslugiwany event
      */
     _bindValueToModel(event) {
