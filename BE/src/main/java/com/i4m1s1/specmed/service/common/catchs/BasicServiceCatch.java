@@ -1,7 +1,7 @@
-package com.i4m1s1.specmed.service.catchs;
+package com.i4m1s1.specmed.service.common.catchs;
 
-import com.i4m1s1.specmed.service.request.BasicRequest;
-import com.i4m1s1.specmed.service.response.BasicResponse;
+import com.i4m1s1.specmed.service.common.request.BasicRequest;
+import com.i4m1s1.specmed.service.common.response.BasicResponse;
 
 /**
  * @author Tobiasz Fortaszewski t.fortaszewski@gmail.com

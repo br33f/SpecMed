@@ -1,12 +1,11 @@
-package com.i4m1s1.specmed.service;
+package com.i4m1s1.specmed.service.visit;
 
 import com.i4m1s1.specmed.core.SMException;
 import com.i4m1s1.specmed.persistence.Visit;
-import com.i4m1s1.specmed.persistence.Visit;
 import com.i4m1s1.specmed.repository.VisitRepository;
-import com.i4m1s1.specmed.service.catchs.BasicServiceCatch;
-import com.i4m1s1.specmed.service.request.BasicRequest;
-import com.i4m1s1.specmed.service.response.BasicResponse;
+import com.i4m1s1.specmed.service.common.catchs.BasicServiceCatch;
+import com.i4m1s1.specmed.service.common.request.BasicRequest;
+import com.i4m1s1.specmed.service.common.response.BasicResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

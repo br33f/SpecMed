@@ -4,10 +4,10 @@ import com.i4m1s1.specmed.persistence.Employee;
 import com.i4m1s1.specmed.service.employee.ProviderEmployeeBasicDataService;
 import com.i4m1s1.specmed.service.employee.ProviderGetEmployeeService;
 import com.i4m1s1.specmed.service.employee.ProviderSaveEmployeeService;
-import com.i4m1s1.specmed.service.request.BasicRequest;
-import com.i4m1s1.specmed.service.request.ListRequest;
-import com.i4m1s1.specmed.service.response.BasicResponse;
-import com.i4m1s1.specmed.service.response.ListResponse;
+import com.i4m1s1.specmed.service.common.request.BasicRequest;
+import com.i4m1s1.specmed.service.common.request.ListRequest;
+import com.i4m1s1.specmed.service.common.response.BasicResponse;
+import com.i4m1s1.specmed.service.common.response.ListResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -2,9 +2,9 @@ package com.i4m1s1.specmed.service.employee;
 
 import com.i4m1s1.specmed.persistence.Employee;
 import com.i4m1s1.specmed.repository.EmployeeRepository;
-import com.i4m1s1.specmed.service.catchs.ListServiceCatch;
-import com.i4m1s1.specmed.service.request.ListRequest;
-import com.i4m1s1.specmed.service.response.ListResponse;
+import com.i4m1s1.specmed.service.common.catchs.ListServiceCatch;
+import com.i4m1s1.specmed.service.common.request.ListRequest;
+import com.i4m1s1.specmed.service.common.response.ListResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;

@@ -1,6 +1,6 @@
-package com.i4m1s1.specmed.service.request;
+package com.i4m1s1.specmed.service.common.request;
 
-import com.i4m1s1.specmed.service.request.common.PageCriteria;
+import com.i4m1s1.specmed.service.common.request.common.PageCriteria;
 
 /**
  * Klasa dla requestów dotyczących list

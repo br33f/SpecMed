@@ -1,10 +1,10 @@
-package com.i4m1s1.specmed.service.request.common;
+package com.i4m1s1.specmed.service.common.request.common;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
 /**
- * Zawiera informacje potrzebne do {@link com.i4m1s1.specmed.service.request.ListRequest}
+ * Zawiera informacje potrzebne do {@link com.i4m1s1.specmed.service.common.request.ListRequest}
  * Created by br33 on 25.11.2017.
  */
 public class PageCriteria {

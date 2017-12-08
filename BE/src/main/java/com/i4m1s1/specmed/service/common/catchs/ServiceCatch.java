@@ -1,9 +1,9 @@
-package com.i4m1s1.specmed.service.catchs;
+package com.i4m1s1.specmed.service.common.catchs;
 
 import com.i4m1s1.specmed.core.SMException;
 import com.i4m1s1.specmed.core.helper.DateHelper;
-import com.i4m1s1.specmed.service.request.ApiRequest;
-import com.i4m1s1.specmed.service.response.ApiResponse;
+import com.i4m1s1.specmed.service.common.request.ApiRequest;
+import com.i4m1s1.specmed.service.common.response.ApiResponse;
 
 /**
  * Klasa abstrakcyjna dla Servise z requestem i responsem.

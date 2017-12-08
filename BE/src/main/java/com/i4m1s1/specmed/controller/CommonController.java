@@ -1,9 +1,9 @@
 package com.i4m1s1.specmed.controller;
 
 import com.i4m1s1.specmed.initmodules.OnStartInsertData;
-import com.i4m1s1.specmed.service.ProviderDictService;
-import com.i4m1s1.specmed.service.request.BasicRequest;
-import com.i4m1s1.specmed.service.response.BasicResponse;
+import com.i4m1s1.specmed.service.dictionary.ProviderDictService;
+import com.i4m1s1.specmed.service.common.request.BasicRequest;
+import com.i4m1s1.specmed.service.common.response.BasicResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.Map;
 
 /**

@@ -1,4 +1,4 @@
-package com.i4m1s1.specmed.service.request;
+package com.i4m1s1.specmed.service.common.request;
 
 /**
  * Podstawowy Request

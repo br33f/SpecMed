@@ -2,12 +2,12 @@ package com.i4m1s1.specmed.controller;
 
 import com.i4m1s1.specmed.dto.VisitBasicDataDTO;
 import com.i4m1s1.specmed.persistence.Visit;
-import com.i4m1s1.specmed.service.ProviderSaveVisitService;
-import com.i4m1s1.specmed.service.ProviderVisitsByDoctorService;
-import com.i4m1s1.specmed.service.request.BasicRequest;
-import com.i4m1s1.specmed.service.request.ListRequest;
-import com.i4m1s1.specmed.service.response.BasicResponse;
-import com.i4m1s1.specmed.service.response.ListResponse;
+import com.i4m1s1.specmed.service.visit.ProviderSaveVisitService;
+import com.i4m1s1.specmed.service.visit.ProviderVisitsByDoctorService;
+import com.i4m1s1.specmed.service.common.request.BasicRequest;
+import com.i4m1s1.specmed.service.common.request.ListRequest;
+import com.i4m1s1.specmed.service.common.response.BasicResponse;
+import com.i4m1s1.specmed.service.common.response.ListResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;

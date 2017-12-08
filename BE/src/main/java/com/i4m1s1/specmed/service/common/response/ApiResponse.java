@@ -1,4 +1,4 @@
-package com.i4m1s1.specmed.service.response;
+package com.i4m1s1.specmed.service.common.response;
 
 /**
  * Klasa dla wszystkich Response w projekcie
