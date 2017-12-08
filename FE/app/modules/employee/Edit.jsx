@@ -108,7 +108,7 @@ export class EmployeeEdit extends FormComponent {
         // metoda validate wywołuje walidację na polach określonych w this.rules
         this.validate();
         // this.errors zawiera błędy z walidacji
-        if (!this.errors) {
+        if (!this.hasErrors()) {
             // jeśli nie zawiera błędów - wysyłamy formularz
             this.setState({
                 isLoading: true

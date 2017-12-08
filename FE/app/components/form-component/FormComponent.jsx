@@ -2,6 +2,7 @@ import React from 'react';
 import {Component} from 'react';
 import BaseModel from 'components/models/BaseModel';
 import validators from 'components/helpers/Validators';
+import _ from 'lodash';
 
 /**
  * Klasa bazowa dla komponentów formularza
@@ -29,6 +30,10 @@ export class FormComponent extends Component {
         this.bindValueToModel = this._bindValueToModel.bind(this);
         this.getValidationFeedbackFor = this._getValidationFeedbackFor.bind(this);
         this.isValid = this._isValid.bind(this);
+    }
+
+    hasErrors() {
+        return !_.isEmpty(this.errors);
     }
 
     validate() {
