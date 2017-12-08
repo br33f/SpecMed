@@ -5,21 +5,22 @@ import {Container} from 'reactstrap';
 import {PostPageableTable} from '../../components/post-pageable-collection/PostPageableTable.jsx';
 
 /**
- * Klasa odpowiedzialna za wyswietlanie listy pracowników.
+ * Klasa odpowiedzialna za wyswietlanei listy pracowników medycznych
  * @augments Component
  */
-export class EmployeeList extends Component {
+export class MedicalEmployeeList extends Component {
     constructor(props) {
         super(props);
     }
 
     /**
      * Generowanie linku do edycji
-     * @param employeeId identyfikator pracownika
+     * @param employeeId identyfikator pracownika medycznego
      * @returns {XML} zwrocony link do generowania
      */
     generateEditLink(employeeId) {
-        let editUrl = `/employee/edit/${employeeId}`;
+        //to nizej jeszcze nie jest w controlerze
+        let editUrl = `/employee/medical-employee/${employeeId}`;
         return (
             <Link to={editUrl}>
                 <i className="fa fa-pencil-square fa-lg" aria-hidden="true"></i>
@@ -27,10 +28,9 @@ export class EmployeeList extends Component {
         );
     }
 
-
     /**
-     * funkcja odpowiedzialna za generowanie nagłówka
-     * @returns nagłowek dancyh dla widoku listowania pracowników
+     * funkcja odpowiedzialna za generowanie nagłówka dla pracowników medycznych
+     * @returns nagłowek dancyh dla widoku listowania pracowników medycznych
      */
     getHeaderDefinition() {
         return [
@@ -44,20 +44,20 @@ export class EmployeeList extends Component {
     }
 
     /**
-     * Funkcja odpowiedzialna za renderowanie listy pracowników
-     * @returns {XML} Lista praocowników do wyświetlenia
+     * Funkcja odpowiedzialna za wyswietlenie listy pracownikow medycznych
+     * @returns {XML} element listy pracowników medycznych
      */
-        render()
-        {
-            return (
-                <Container fluid={true}>
-                    <p className="contentTitle">Lista pracowników</p>
-                    <PostPageableTable
-                        headerDefinition={this.getHeaderDefinition()}
-                        dataUrl="/employee/list"
-                    />
+    render()
+    {
+        return (
+            <Container fluid={true}>
+                <p className="contentTitle">Lista pracowników medycznych</p>
+                <PostPageableTable
+                    headerDefinition={this.getHeaderDefinition()}
+                    dataUrl="/medical-employee/list"
+                />
 
-                </Container>
-            );
-        }
+            </Container>
+        );
     }
+}

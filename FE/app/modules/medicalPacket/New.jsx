@@ -14,7 +14,15 @@ const BaseModelConfigured = BaseModel.extend({
     saveUrl: 'medical-packet/save'
 });
 
+/**
+ * Klasa odpowiedzialna za dodawanie i edycje pakietu medycznego
+ * @augments FormComponent
+ */
 export class MedicalPacketNew extends FormComponent {
+    /**
+     * Kontruktor formularza dodawania i edycji pakietu medycznego
+     * @param props parametry przekazywane do kontruktora
+     */
     constructor(props) {
         // Utworz model i przekaż go w konstruktorze do rodzica
         let localModel = new BaseModelConfigured();
@@ -28,17 +36,26 @@ export class MedicalPacketNew extends FormComponent {
     }
 
 
-
+    /**
+     * Funkcja odpowiedzialna za wykonananie akcji zapisu dla pakietu medycznego
+     */
     onFormSave() {
         console.log("Wohooo!");
         this.model.save();
     }
 
+    /**
+     * Funkcja odpowiedzialna za czyszczenie okna pakietu medycznego
+     */
     onFormClear() {
         console.log("Clear!");
         this.model.clear();
     }
 
+    /**
+     * Funkcja odpowiedzialna za wyświetlenie edycji i dodawania nowego pakietu medycznego
+     * @returns {XML} Sformatowane dane do wyświetlenie jako formularz zakupu pakietu medycznego
+     */
     render() {
         console.log("render");
         return (

@@ -8,33 +8,35 @@ import {Loader} from "components/controls/Loader.jsx";
 
 const BaseModelConfigured = BaseModel.extend({
     defaults: {
-        personalData: {
-            name: "",
-            surname: "",
-            pesel: "",
-            birthday: Date.now(),
-            gender: "1"
-        }
+        price: "",
+        place: "",
+        date: Date.now(),
+        hour: "",
+        status: "1",
+        doctor: ""
     },
     saveUrl: 'employee/save'
+
 });
 
 /**
- * Klasa odpowiedzialna za edycje pracownika. Wybierany jest pracownik i możemy dokonac jego edycji.
+ * Klasa odpowiedzialna za dodawanie nowej wizyty
+ * @extends FormComponent
  */
-export class EmployeeEdit extends FormComponent {
+export class VisitAdd extends FormComponent {
     /**
-     * Kontruktor edycji formularza pracownika
-     * @param props parametry przekazywane do parametrów
+     * Konstruktor
+     * @constructor
+     * @param {immutable object} props parametry przekazane do komponentu
+     *
      */
     constructor(props) {
         // Utworz model i przekaż go w konstruktorze do rodzica
         let localModel = new BaseModelConfigured();
         super(props, localModel);
 
-        // jeżeli przekazano employeeId w url
-        this.employeeId = props.match.params.employeeId;
-        localModel.fetchUrl = "/employee/get/" + this.employeeId;
+        // rozdział na edycje i dodawanie jest bo 16 nie damy rady zrobic
+        // albo cos
 
         this.state = {
             genderDictionary: [],
@@ -44,16 +46,17 @@ export class EmployeeEdit extends FormComponent {
         };
     }
 
-    /**
-     *
-     */
+    getSample() {
+        return ['Adam Abacki', 'Marcin Babacki'];
+    }
+
     componentDidMount() {
         this.employeeId && this.model.fetch();
         this.fetchDictionaries();
     }
 
     fetchDictionaries() {
-        SM.DictionaryManager.getDictAsArray("GENDER").then(dict => {
+        SM.DictionaryManager.getDictAsArray("VISIT_STATUS").then(dict => {
             this.setState({
                 genderDictionary: dict
             });
@@ -78,53 +81,64 @@ export class EmployeeEdit extends FormComponent {
     }
 
     render() {
-        console.log("render");
         return (
             <Container fluid={true}>
                 <p className="contentTitle">
-                    {this.employeeId ? 'Edycja' : 'Dodawanie'} nowego pracownika
+                    { 'Dodanie nowej wizyty' }
                     <Loader isEnabled={this.state.isLoading}/>
                 </p>
                 <Row>
                     <Col md={6}>
                         <div className="alert alert-success" hidden={!this.state.isSaved} role="alert">
-                            Pomyślnie zapisano pracownika.
+                            Pomyślnie zapisano wizytę.
                         </div>
                         <Form>
                             <FormGroup>
-                                <Label for="employeeName">Imię</Label>
-                                <Input type="text" name="personalData.name" id="employeeName" placeholder="Imię"
-                                       value={this.state.model.get('personalData.name')}
+                                <Label for="visitPlace">Miejsce</Label>
+                                <Input type="text" name="place" id="visitPlace" placeholder="Miejsce"
+                                       value={this.state.model.get('place')}
                                        onChange={this.bindValueToModel}/>
                             </FormGroup>
                             <FormGroup>
-                                <Label for="employeeSurname">Nazwisko</Label>
-                                <Input type="text" name="personalData.surname" id="employeeSurname"
-                                       placeholder="Nazwisko" value={this.state.model.get('personalData.surname')}
+                                <Label for="visitDate">Data</Label>
+                                <Input type="date" name="date" id="visitDate"
+                                       placeholder="Data" value={this.state.model.get('date')}
                                        onChange={this.bindValueToModel}/>
                             </FormGroup>
                             <FormGroup>
-                                <Label for="employeePesel">Numer PESEL</Label>
-                                <Input type="number" name="personalData.pesel" id="employeePesel" placeholder="PESEL"
-                                       value={this.state.model.get('personalData.pesel')}
+                                <Label for="visitHour">Godzina wizyty</Label>
+                                <Input type="time" name="visitHour" id="visitHour"
+                                       placeholder="Godzina wizyty"/>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="visitPrice">Cena</Label>
+                                <Input type="text" name="price" id="employeePesel" placeholder="Cena"
+                                       value={this.state.model.get('price')}
                                        onChange={this.bindValueToModel}/>
                             </FormGroup>
                             <FormGroup>
-                                <Label for="employeeBirthday">Data urodzenia</Label>
-                                <Input type="date" name="personalData.birthday" id="employeeBirthday"
-                                       placeholder="Data urodzenia"
-                                       value={this.state.model.get('personalData.birthday') && SM.Utils.customFormat(this.state.model.get('personalData.birthday'), "yyyy-mm-dd")}
-                                       onChange={this.bindValueToModel}/>
-                            </FormGroup>
-                            <FormGroup>
-                                <Label for="employeeGender">Płeć</Label>
-                                <Input type="select" name="personalData.gender" id="employeeGender" value={this.state.model.get('personalData.gender')}
+                                <Label for="visitStatus">Status początkowy</Label>
+                                <Input type="select" name="status" id="visitStatus"
+                                       value={this.state.model.get('status')}
                                        onChange={this.bindValueToModel}>
-                                    {this.state.genderDictionary.map(genderObj =>
+                                    {this.state.genderDictionary.map(statusObj =>
                                         <option
-                                            key={genderObj.id}
-                                            value={genderObj.id}>
-                                            {genderObj.label}
+                                            key={statusObj.id}
+                                            value={statusObj.id}>
+                                            {statusObj.label}
+                                        </option>)}
+                                </Input>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="medicalEmployee">Lekarz</Label>
+                                <Input type="select" name="medicalEmployee" id="medicalEmployee"
+                                       value={this.state.model.get('doctor')}
+                                       onChange={this.bindValueToModel}>
+                                    {this.getSample().map(doc =>
+                                        <option
+                                            key={doc}
+                                            value={doc}>
+                                            {doc}
                                         </option>)}
                                 </Input>
                             </FormGroup>
@@ -132,12 +146,13 @@ export class EmployeeEdit extends FormComponent {
                                 <Button outline type="button" className="mr-1"
                                         onClick={this.onFormClear.bind(this)}>Wyczyść formularz</Button>
                                 <Button outline color="primary" type="button"
-                                        onClick={this.onFormSave.bind(this)}>Zapisz pracownika</Button>
+                                        onClick={this.onFormSave.bind(this)}>Zapisz wizytę</Button>
                             </div>
                         </Form>
                     </Col>
                 </Row>
             </Container>
         );
+        console.log("render");
     }
 }

@@ -19,7 +19,15 @@ const BaseModelConfigured = BaseModel.extend({
     saveUrl: 'visit/save'
 });
 
+/**
+ * Klasa odpowiedzialna za wysiwetlenie formualarza zakupu pakietu medycznego
+ * @augments FormComponent
+ */
 export class MedicalPacakgeBuy extends FormComponent {
+    /**
+     * Kontruktor formularza zakupu pakietu medycznego
+     * @param props parametry przekazywane do kontruktora
+     */
     constructor(props) {
         // Utworz model i przekaż go w konstruktorze do rodzica
         let localModel = new BaseModelConfigured();
@@ -35,20 +43,35 @@ export class MedicalPacakgeBuy extends FormComponent {
         this.fetchAllEmployers();
     }
 
+    /**
+     * Funckja odpowiedzialna za przypisanie listy wszsytkich pakietów medycznych
+     */
     fetchAllEmployers() {
         axios.get("/medical-employee/list/full").then(fullList => {
             this.setState({specDictionary:fullList.data.content()});
         });
     }
+
+    /**
+     * Funkcja odpowiedzialna wykoanania akcji zakupu pakietu medycznego
+     */
     onFormSave() {
         console.log("Wohooo!");
         this.model.save();
     }
 
+    /**
+     * Funckja odpowiedzialna za czyszczenie  formularza zakupu pakietu medycznego
+     */
     onFormClear() {
         console.log("clearVisit!");
         this.model.clear();
     }
+
+    /**
+     * Funkcja odpowiedzialana za wyświetlenie formularza zakupu pakietu medycznego
+     * @returns {XML} Sformatowane dane do wyświetlenie jako formularz zakupu pakietu medycznego
+     */
     render() {
         console.log("render");
         return (

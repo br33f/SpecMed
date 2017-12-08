@@ -13,31 +13,49 @@ const BaseModelConfigured = BaseModel.extend({
     saveUrl: 'prescription/save'
 });
 
+/**
+ * Klasa odpowiedzialna za nową recepty
+ * @extends FormComponent
+ */
 export class PrescriptionNew extends FormComponent {
+    /**
+     * Konstruktor
+     * @constructor
+     * @param {immutable object} props parametry przekazane do komponentu
+     *
+     */
     constructor(props) {
         // Utworz model i przekaż go w konstruktorze do rodzica
         let localModel = new BaseModelConfigured();
         super(props, localModel);
-e
-
 
         this.state = {
             model: this.model
         };
     }
 
-
-
+    /**
+     * Metoda wywołuje synchronizację modelu z usługą REST
+     * @public
+     */
     onFormSave() {
         console.log("Wohooo!");
         this.model.save();
     }
 
+    /**
+     * Metoda czyści model i wywołuje przerysowanie komponentu
+     * @public
+     */
     onFormClear() {
         console.log("Clear!");
         this.model.clear();
     }
 
+    /**
+     * Metoda odpowiedzialna za wyświetlanie widoku nowej recepty
+     * @returns {XML}
+     */
     render() {
         console.log("render");
         return (

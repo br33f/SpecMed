@@ -7,6 +7,9 @@ import {
 } from 'reactstrap';
 import './navigation.scss';
 
+/**
+ * Klasa odpowiedzialana za generowanei oraz edycje menu aplikacji
+ */
 export class Navigation extends React.Component {
     constructor(props) {
         super(props);
@@ -44,6 +47,9 @@ export class Navigation extends React.Component {
                             <NavItem>
                                 <NavLink tag={Link} to="/medicalOrder">Zlecenie badania</NavLink>
                             </NavItem>
+                            <NavItem>
+                                <NavLink tag={Link} to="/unit/new">Placówka</NavLink>
+                            </NavItem>
                             <UncontrolledDropdown>
                                 <DropdownToggle nav caret>
                                     Pracownik
@@ -55,7 +61,17 @@ export class Navigation extends React.Component {
                                     <DropdownItem tag={Link} to="/employee/new">
                                         Dodaj pracownika
                                     </DropdownItem>
+                                    <DropdownItem tag={Link} to="/employee/Medlist">
+                                        Lista pracowników medycznych
+                                    </DropdownItem>
+                                    <DropdownItem tag={Link} to="/employee/Mednew">
+                                        Dodaj pracownika medycznego
+                                    </DropdownItem>
                                 </DropdownMenu>
+
+                                <NavItem>
+                                    <NavLink tag={Link} to="/prescription/new">Recepta</NavLink>
+                                </NavItem>
                             </UncontrolledDropdown>
                             <UncontrolledDropdown>
                                 <DropdownToggle nav caret>
@@ -67,6 +83,16 @@ export class Navigation extends React.Component {
                                     </DropdownItem>
                                     <DropdownItem tag={Link} to="/insurance/new">
                                         Dodaj ubezpieczenie
+                                    </DropdownItem>
+                                </DropdownMenu>
+                            </UncontrolledDropdown>
+                            <UncontrolledDropdown>
+                                <DropdownToggle nav caret>
+                                    Wizyta
+                                </DropdownToggle>
+                                <DropdownMenu right={true}>
+                                    <DropdownItem tag={Link} to="/visit/new">
+                                        Dodaj wizytę
                                     </DropdownItem>
                                 </DropdownMenu>
                             </UncontrolledDropdown>

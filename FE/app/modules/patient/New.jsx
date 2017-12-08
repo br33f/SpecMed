@@ -15,6 +15,10 @@ const BaseModelConfigured = BaseModel.extend({
     saveUrl: 'patient/save'
 });
 
+/**
+ * Klasa odpowiedzialna za dodawanie nowego pacjenta
+ * @augments FormComponent
+ */
 export class PatientNew extends FormComponent {
     constructor(props) {
         // Utworz model i przekaż go w konstruktorze do rodzica
@@ -29,17 +33,25 @@ export class PatientNew extends FormComponent {
     }
 
 
-
+    /**
+     * Funkcja opowiedzialna za obsluge zapisu nowego pacjenta do systemu
+     */
     onFormSave() {
         console.log("Wohooo!");
         this.model.save();
     }
 
+    /**
+     * Funkcja odpowiedzialna za czyszczenia formularza dodawania pacjenta
+     */
     onFormClear() {
         console.log("Clear!");
         this.model.clear();
     }
 
+    /**
+     * Funckja odpowiedziala za wyświetlanie formularza edycji i dodawania nowego pacjenta
+     */
     render() {
         console.log("render");
         return (

@@ -18,7 +18,17 @@ const BaseModelConfigured = BaseModel.extend({
     saveUrl: 'visit/save'
 });
 
+/**
+ * Klasa odpowiedzialna za edycje wizyty
+ * @extends FormComponent
+ */
 export class VisitEdit extends FormComponent {
+    /**
+     * Konstruktor
+     * @constructor
+     * @param {immutable object} props parametry przekazane do komponentu
+     *
+     */
     constructor(props) {
         // Utworz model i przekaż go w konstruktorze do rodzica
         let localModel = new BaseModelConfigured();
@@ -33,11 +43,19 @@ export class VisitEdit extends FormComponent {
         };
     }
 
+    /**
+     * Metoda wywołuje się przy pierwszej inicjalizacji komponentu
+     * @public
+     */
     componentDidMount() {
         this.visitId && this.fetchData();
         this.fetchAllEmployers();
     }
 
+    /**
+     * Metoda pobiera dane wizyty do edycji z usługi
+     * @private
+     */
     fetchData() {
         this.model.set({
             name: "Jan",
@@ -46,22 +64,38 @@ export class VisitEdit extends FormComponent {
         });
     }
 
+    /**
+     * Metoda pobiera wszystkich lekarzy
+     * @private
+     */
     fetchAllEmployers() {
         axios.get("/medical-employee/list/full").then(fullList => {
             this.setState({specDictionary: fullList.data.content});
         });
     }
 
+    /**
+     * Metoda wywołuje synchronizację modelu z usługą REST
+     * @public
+     */
     onFormSave() {
         console.log("Wohooo!");
         this.model.save();
     }
 
+    /**
+     * Metoda czyści model i wywołuje przerysowanie komponentu
+     * @public
+     */
     onFormClear() {
         console.log("clearVisit!");
         this.model.clear();
     }
 
+    /**
+     * Metoda odpowiedzialna za wyświetlanie widoku edycji wizyty
+     * @returns {XML}
+     */
     render() {
         console.log("render");
         return (

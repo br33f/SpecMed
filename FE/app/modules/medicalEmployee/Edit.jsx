@@ -1,32 +1,27 @@
+//bwrzos 05.12.2017
 import React from 'react';
 import {Component} from 'react';
 import {Container, Row, Col} from 'reactstrap';
 import BaseModel from 'components/models/BaseModel';
 import {Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import {FormComponent} from "components/form-component/FormComponent.jsx";
-import {Loader} from "components/controls/Loader.jsx";
+import axios from 'axios';
 
 const BaseModelConfigured = BaseModel.extend({
     defaults: {
-        personalData: {
+        visitData: {
             name: "",
             surname: "",
             pesel: "",
-            birthday: Date.now(),
-            gender: "1"
+            visitData: Date.now(),
+            vistHour:"",
+            orderType:""
         }
     },
-    saveUrl: 'employee/save'
+    saveUrl: 'medicalEmploye/save'
 });
 
-/**
- * Klasa odpowiedzialna za edycje pracownika. Wybierany jest pracownik i możemy dokonac jego edycji.
- */
-export class EmployeeEdit extends FormComponent {
-    /**
-     * Kontruktor edycji formularza pracownika
-     * @param props parametry przekazywane do parametrów
-     */
+export class MedicalEmployeeEdit extends FormComponent {
     constructor(props) {
         // Utworz model i przekaż go w konstruktorze do rodzica
         let localModel = new BaseModelConfigured();
@@ -44,9 +39,6 @@ export class EmployeeEdit extends FormComponent {
         };
     }
 
-    /**
-     *
-     */
     componentDidMount() {
         this.employeeId && this.model.fetch();
         this.fetchDictionaries();
@@ -76,14 +68,12 @@ export class EmployeeEdit extends FormComponent {
         console.log("Clear!");
         this.model.clear();
     }
-
     render() {
         console.log("render");
         return (
             <Container fluid={true}>
                 <p className="contentTitle">
-                    {this.employeeId ? 'Edycja' : 'Dodawanie'} nowego pracownika
-                    <Loader isEnabled={this.state.isLoading}/>
+                    Edycja procownik medyczny
                 </p>
                 <Row>
                     <Col md={6}>

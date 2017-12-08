@@ -16,16 +16,19 @@ const BaseModelConfigured = BaseModel.extend({
             gender: "1"
         }
     },
-    saveUrl: 'employee/save'
+    saveUrl: 'prescription/save'
 });
 
 /**
- * Klasa odpowiedzialna za edycje pracownika. Wybierany jest pracownik i możemy dokonac jego edycji.
+ * Klasa odpowiedzialna za edycje recepty
+ * @extends FormComponent
  */
-export class EmployeeEdit extends FormComponent {
+export class    PrescriptionEdit extends FormComponent {
     /**
-     * Kontruktor edycji formularza pracownika
-     * @param props parametry przekazywane do parametrów
+     * Konstruktor
+     * @constructor
+     * @param {immutable object} props parametry przekazane do komponentu
+     *
      */
     constructor(props) {
         // Utworz model i przekaż go w konstruktorze do rodzica
@@ -34,7 +37,7 @@ export class EmployeeEdit extends FormComponent {
 
         // jeżeli przekazano employeeId w url
         this.employeeId = props.match.params.employeeId;
-        localModel.fetchUrl = "/employee/get/" + this.employeeId;
+        localModel.fetchUrl = "/prescription/get/" + this.employeeId;
 
         this.state = {
             genderDictionary: [],
@@ -45,13 +48,18 @@ export class EmployeeEdit extends FormComponent {
     }
 
     /**
-     *
+     * Metoda wywołuje się przy pierwszej inicjalizacji komponentu
+     * @public
      */
     componentDidMount() {
         this.employeeId && this.model.fetch();
         this.fetchDictionaries();
     }
 
+    /**
+     * Metoda pobiera słowniki
+     * @private
+     */
     fetchDictionaries() {
         SM.DictionaryManager.getDictAsArray("GENDER").then(dict => {
             this.setState({
@@ -60,6 +68,10 @@ export class EmployeeEdit extends FormComponent {
         });
     }
 
+    /**
+     * Metoda wywołuje synchronizację modelu z usługą REST
+     * @public
+     */
     onFormSave() {
         this.setState({
             isLoading: true
@@ -72,17 +84,25 @@ export class EmployeeEdit extends FormComponent {
         });
     }
 
+    /**
+     * Metoda czyści model i wywołuje przerysowanie komponentu
+     * @public
+     */
     onFormClear() {
         console.log("Clear!");
         this.model.clear();
     }
 
+    /**
+     * Metoda odpowiedzialna za wyświetlanie widoku edycji recepty
+     * @returns {XML}
+     */
     render() {
         console.log("render");
         return (
             <Container fluid={true}>
                 <p className="contentTitle">
-                    {this.employeeId ? 'Edycja' : 'Dodawanie'} nowego pracownika
+                    {this.employeeId ? 'Edycja' : 'Dodawanie'} nowej recepty
                     <Loader isEnabled={this.state.isLoading}/>
                 </p>
                 <Row>
@@ -92,47 +112,29 @@ export class EmployeeEdit extends FormComponent {
                         </div>
                         <Form>
                             <FormGroup>
-                                <Label for="employeeName">Imię</Label>
-                                <Input type="text" name="personalData.name" id="employeeName" placeholder="Imię"
+                                <Label for="prescriptionNumber">Numer recepty</Label>
+                                <Input type="number" name="prescriptionData.Number" id="prescriptionNumber" placeholder="Numer recepty"
                                        value={this.state.model.get('personalData.name')}
                                        onChange={this.bindValueToModel}/>
                             </FormGroup>
                             <FormGroup>
-                                <Label for="employeeSurname">Nazwisko</Label>
-                                <Input type="text" name="personalData.surname" id="employeeSurname"
-                                       placeholder="Nazwisko" value={this.state.model.get('personalData.surname')}
+                                <Label for="prescriptionNfzUnit">Oddział NFZ</Label>
+                                <Input type="text" name="prescriptionData.NfzUnit" id="prescriptionNfzUnit"
+                                       placeholder="Oddzial NFZ" value={this.state.model.get('personalData.surname')}
                                        onChange={this.bindValueToModel}/>
                             </FormGroup>
                             <FormGroup>
-                                <Label for="employeePesel">Numer PESEL</Label>
-                                <Input type="number" name="personalData.pesel" id="employeePesel" placeholder="PESEL"
+                                <Label for="prescriptionDrugList">Lista leków</Label>
+                                <Input type="text" name="prescriptionData.drugList" id="prescriptionDrugList" placeholder="Lista leków"
                                        value={this.state.model.get('personalData.pesel')}
                                        onChange={this.bindValueToModel}/>
-                            </FormGroup>
-                            <FormGroup>
-                                <Label for="employeeBirthday">Data urodzenia</Label>
-                                <Input type="date" name="personalData.birthday" id="employeeBirthday"
-                                       placeholder="Data urodzenia"
-                                       value={this.state.model.get('personalData.birthday') && SM.Utils.customFormat(this.state.model.get('personalData.birthday'), "yyyy-mm-dd")}
-                                       onChange={this.bindValueToModel}/>
-                            </FormGroup>
-                            <FormGroup>
-                                <Label for="employeeGender">Płeć</Label>
-                                <Input type="select" name="personalData.gender" id="employeeGender" value={this.state.model.get('personalData.gender')}
-                                       onChange={this.bindValueToModel}>
-                                    {this.state.genderDictionary.map(genderObj =>
-                                        <option
-                                            key={genderObj.id}
-                                            value={genderObj.id}>
-                                            {genderObj.label}
-                                        </option>)}
-                                </Input>
-                            </FormGroup>
+                            </FormGroup> 
+
                             <div className="pull-right">
                                 <Button outline type="button" className="mr-1"
                                         onClick={this.onFormClear.bind(this)}>Wyczyść formularz</Button>
                                 <Button outline color="primary" type="button"
-                                        onClick={this.onFormSave.bind(this)}>Zapisz pracownika</Button>
+                                        onClick={this.onFormSave.bind(this)}>Zapisz receptę</Button>
                             </div>
                         </Form>
                     </Col>

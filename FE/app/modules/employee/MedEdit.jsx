@@ -20,12 +20,13 @@ const BaseModelConfigured = BaseModel.extend({
 });
 
 /**
- * Klasa odpowiedzialna za edycje pracownika. Wybierany jest pracownik i możemy dokonac jego edycji.
+ * Klasa odpowiedzialna za edycke proacownikow medycznych
+ * @augments FormComponent
  */
-export class EmployeeEdit extends FormComponent {
+export class MedicalEmployeeEdit extends FormComponent {
     /**
-     * Kontruktor edycji formularza pracownika
-     * @param props parametry przekazywane do parametrów
+     * @constructor tworzenie edycji pracownika medycznego, ktory jest pozniej przekazywany do swojego rodzica
+     * @param props parametry wejsciowe dla kontruktoera
      */
     constructor(props) {
         // Utworz model i przekaż go w konstruktorze do rodzica
@@ -45,13 +46,16 @@ export class EmployeeEdit extends FormComponent {
     }
 
     /**
-     *
+     * Funkcja odpowiedzialna za inicjalizacje danych przed utowrzeniem obiektu
      */
     componentDidMount() {
         this.employeeId && this.model.fetch();
         this.fetchDictionaries();
     }
 
+    /**
+     * Metoda wywoływana po inicjalizacji obiektu. odpowiedzialna ze pobranie płci ze słownika
+     */
     fetchDictionaries() {
         SM.DictionaryManager.getDictAsArray("GENDER").then(dict => {
             this.setState({
@@ -60,6 +64,9 @@ export class EmployeeEdit extends FormComponent {
         });
     }
 
+    /**
+     * Funkcja odpowiedzialna ze wykonanie akcji zapisu elementow po edycji
+     */
     onFormSave() {
         this.setState({
             isLoading: true
@@ -72,17 +79,24 @@ export class EmployeeEdit extends FormComponent {
         });
     }
 
+    /**
+     * Funkcja odpowiedzialna obsługę kliknięcia przycisku czyszczenia formularza
+     */
     onFormClear() {
         console.log("Clear!");
         this.model.clear();
     }
 
+    /**
+     * Funckja odpowiedzialna za wyświetlanie formularza edycji pracownika medycznego
+     * @returns {XML}
+     */
     render() {
         console.log("render");
         return (
             <Container fluid={true}>
                 <p className="contentTitle">
-                    {this.employeeId ? 'Edycja' : 'Dodawanie'} nowego pracownika
+                    {this.employeeId ? 'Edycja' : 'Dodawanie'} nowego pracownika medycznego
                     <Loader isEnabled={this.state.isLoading}/>
                 </p>
                 <Row>

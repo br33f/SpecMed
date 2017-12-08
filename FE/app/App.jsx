@@ -20,7 +20,16 @@ import {PrescriptionNew} from './modules/prescription/New.jsx'
 import {MedicalPacketNew} from './modules/medicalPacket/New.jsx'
 import {PatientNew} from './modules/patient/New.jsx'
 import {OrderAdd} from './modules/medicalOrder/Add.jsx'
-
+import {UnitEdit} from "./modules/unit/Edit.jsx";
+import {MedicalEmployeeList} from "./modules/employee/MedList.jsx";
+import {MedicalEmployeeEdit} from "./modules/employee/MedEdit.jsx";
+import {PrescriptionEdit} from "./modules/prescription/Edit.jsx";
+import {MedicalEmployeeList} from "./modules/employee/MedList.jsx";
+import {MedicalEmployeeEdit} from "./modules/employee/MedEdit.jsx";
+import {PrescriptionEdit} from "./modules/prescription/Edit.jsx";
+import {VisitAdd} from "./modules/visit/Add.jsx";
+import {OpinionAdd} from "./modules/opinion/Add.jsx";
+import {CustomerEdit} from "./modules/customer/Add.jsx";
 
 export class App extends Component {
    constructor() {
@@ -64,6 +73,16 @@ export class App extends Component {
                     <Route exact path='/medicalPacket/new' component={MedicalPacketNew}/>
                     <Route exact path='/patient/new' component={PatientNew}/>
                     <Route exact path='/medicalOrder' component={OrderAdd}/>
+                    <Route exact path='/unit/new' component={UnitEdit}/>
+                    <Route exact path='/unit/edit/:unitId' component={UnitEdit}/>
+                    <Route exact path='/employee/Medlist' component={MedicalEmployeeList}/>
+                    <Route exact path='/employee/Mednew' component={MedicalEmployeeEdit}/>
+                    <Route exact path='/employee/Mededit/:employeeId' component={MedicalEmployeeEdit}/>
+                    <Route exact path='/prescription/new' component={PrescriptionEdit}/>
+                    <Route exact path='/prescription/edit/:prescriptionId' component={PrescriptionEdit}/>
+                    <Route exact path='/visit/new' component={VisitAdd}/>
+                    <Route exact path='/visit/rate' component={OpinionAdd}/>
+                    <Route exact path='/customer/new' component={CustomerEdit}/>
                 </Switch>
                 <br />
             </div>

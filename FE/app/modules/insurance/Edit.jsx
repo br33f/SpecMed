@@ -18,6 +18,10 @@ const BaseModelConfigured = BaseModel.extend({
     saveUrl: 'insurance/save'
 });
 
+/**
+ * Klasa odpowiedzialna za edycje widoku ubezpieczenia
+ * @Component FormComponent
+ */
 export class InsuranceEdit extends FormComponent {
     constructor(props) {
         // Utworz model i przekaż go w konstruktorze do rodzica
@@ -38,12 +42,17 @@ export class InsuranceEdit extends FormComponent {
             isSaved: false
         };
     }
-
+    /**
+     * Funkcja odpowiedzialna za inicjalizacje danych przed utowrzeniem obiektu
+     */
     componentDidMount() {
         this.insuranceId && this.model.fetch();
         this.fetchDictionaries();
     }
 
+    /**
+     * Metoda wywoływana po inicjalizacji obiektu. odpowiedzialna ze pobranie płci ze słownika
+     */
     fetchDictionaries() {
         SM.DictionaryManager.getDictsAsArray("PROBES", "MEDICAL_PROCEDURES").then(dicts => {
             this.setState({
@@ -52,6 +61,9 @@ export class InsuranceEdit extends FormComponent {
         });
     }
 
+    /**
+     * Funkcja odpowiedzialna ze wykonanie akcji zapisu elementow po edycji
+     */
     onFormSave() {
         this.setState({
             isLoading: true
@@ -63,12 +75,18 @@ export class InsuranceEdit extends FormComponent {
             });
         });
     }
-
+    /**
+     * Funkcja odpowiedzialna obsługę kliknięcia przycisku czyszczenia formularza
+     */
     onFormClear() {
         console.log("Clear!");
         this.model.clear();
     }
 
+    /**
+     * funckaj odpowiedzialna za generowanie widoku edycji ubezpieczenia
+     * @returns {XML}
+     */
     render() {
         console.log("render");
         return (
