@@ -5,6 +5,8 @@ import BaseModel from 'components/models/BaseModel';
 import {Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import {FormComponent} from "components/form-component/FormComponent.jsx";
 import {Loader} from "components/controls/Loader.jsx";
+import {BindedInput} from "components/controls/BindedInput.jsx";
+
 
 const BaseModelConfigured = BaseModel.extend({
     defaults: {
@@ -45,7 +47,45 @@ export class UnitEdit extends FormComponent {
             isLoading: false,
             isSaved: false
         };
+
+        this.addValidators();
+
     }
+
+
+
+    addValidators() {
+        this.rules = {
+            "unitData.name": [
+                {
+                    validator: "required", // tutaj możemy przekazać nazwę funkcji walidującej z pliku Validators.js lub własną funkcję
+                    msg: "Pole jest wymagane" // pole opcjonalne
+                },
+                {
+                    validator: (val) => {
+                        // customowa funkcja walidująca
+                        // jeżeli wystąpił błąd to zwracamy komunikat, jeżeli nie ma błędu to nie zwracamy nic
+                        if (!val || val.toString().length < 3) {
+                            return "Nazwa placówki musi mieć więcej niż 3 znaki.";
+                        }
+                    }
+                }
+            ],
+            "personalData.surname": [
+                {
+                    validator: "required"
+                },
+                {
+                    validator: "maxLength",
+                    params: {
+                        length: 20
+                    }
+                }
+            ]
+        };
+    }
+
+
 
     /**
      * Metoda wywołuje się przy pierwszej inicjalizacji komponentu
@@ -74,15 +114,23 @@ export class UnitEdit extends FormComponent {
      * @public
      */
     onFormSave() {
-        this.setState({
-            isLoading: true
-        });
-        this.model.save().then(() => {
+        this.validate();
+
+        if (!this.hasErrors()) {
+            // jeśli nie zawiera błędów - wysyłamy formularz
             this.setState({
-                isLoading: false,
-                isSaved: true
+                isLoading: true
             });
-        });
+            this.model.save().then(() => {
+                this.setState({
+                    isLoading: false,
+                    isSaved: true
+                });
+            });
+        } else {
+            // jeżeli są błędy - wymuszamy update formularza, aby pokazać komunikaty o błędach
+            this.forceUpdate();
+        }
     }
 
     /**
@@ -114,39 +162,33 @@ export class UnitEdit extends FormComponent {
                         <Form>
                             <FormGroup>
                                 <Label for="unitName">Nazwa placówki</Label>
-                                <Input type="text" name="name" id="unitName" placeholder="nazwa placówki"
-                                       value={this.state.model.get('unitData.name')}
-                                       onChange={this.bindValueToModel}/>
+                                <BindedInput form={this} type="text" name="unitData.name" id="unitName" placeholder="Nazwa placówki" />
+
                             </FormGroup>
                             <FormGroup>
                                 <Label for="unitAddress">Adres placówki</Label>
-                                <Input type="text" name="address" id="unitAddress"
-                                       placeholder="adres placówki" value={this.state.model.get('unitData.address')}
-                                       onChange={this.bindValueToModel}/>
+                                <BindedInput form={this} type="text" name="unitData.address" id="unitAddress" placeholder="Adres Placówki" />
+
                             </FormGroup>
                             <FormGroup>
                                 <Label for="unitTown">Miasto</Label>
-                                <Input type="text" name="town" id="unitTown" placeholder="miasto"
-                                       value={this.state.model.get('unitData.town')}
-                                       onChange={this.bindValueToModel}/>
+                                <BindedInput form={this} type="text" name="unitData.town" id="unitTown" placeholder="Miasto" />
+
                             </FormGroup>
                             <FormGroup>
                                 <Label for="unitPostalcode">Kod pocztowy</Label>
-                                <Input type="text" name="postalcode" id="unitPostalcode" placeholder="kod pocztowy"
-                                       value={this.state.model.get('unitData.postalcode')}
-                                       onChange={this.bindValueToModel}/>
+                                <BindedInput form={this} type="text" name="unitData.postalcode" id="unitPostalcode" placeholder="Kot pocztowy" />
+
                             </FormGroup>
                             <FormGroup>
                                 <Label for="unitEmail">Adres e-mail</Label>
-                                <Input type="text" name="email" id="unitEmail" placeholder="adres e-mail"
-                                       value={this.state.model.get('unitData.email')}
-                                       onChange={this.bindValueToModel}/>
+                                <BindedInput form={this} type="text" name="unitData.postalcode" id="unitEmail" placeholder="Adres e-mail" />
+
                             </FormGroup>
                             <FormGroup>
                                 <Label for="unitTelephonenumber">Numer telefonu</Label>
-                                <Input type="number" name="telephonenumber" id="unitTelephonenumber" placeholder="numer telefonu"
-                                       value={this.state.model.get('unitData.telephonenumber')}
-                                       onChange={this.bindValueToModel}/>
+                                <BindedInput form={this} type="text" name="unitData.postalcode" id="unitEmail" placeholder="Adres e-mail" />
+
                             </FormGroup>
 
                             <div className="pull-right">
