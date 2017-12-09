@@ -5,7 +5,6 @@ import BaseModel from 'components/models/BaseModel';
 import {Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import {FormComponent} from "components/form-component/FormComponent.jsx";
 import {Loader} from "components/controls/Loader.jsx";
-import {BindedInput} from "components/controls/BindedInput.jsx";
 
 const BaseModelConfigured = BaseModel.extend({
     defaults: {
@@ -68,12 +67,27 @@ export class EmployeeEdit extends FormComponent {
             ],
             "personalData.surname": [
                 {
-                    validator: "required"
+                    validator: "required",
+                    msg: "Pole nazwisko jest wymagane"
                 },
                 {
                     validator: "maxLength",
                     params: {
                         length: 20
+                    }
+                }
+            ],
+            "personalData.pesel": [
+                {
+                    validator: "required",
+                    msg: "Pole PESEL jest wymagane"
+                },
+                {
+                    validator: (val) => {
+
+                        if (!val || val.toString().length != 11) {
+                            return "Numer PESEL musi mieć 11 znaków";
+                        }
                     }
                 }
             ]
@@ -153,32 +167,52 @@ export class EmployeeEdit extends FormComponent {
                         <Form>
                             <FormGroup>
                                 <Label for="employeeName">Imię</Label>
-                                <BindedInput form={this} type="text" name="personalData.name" id="employeeName" placeholder="Imię" />
+                                <Input type="text" name="personalData.name" id="employeeName" placeholder="Imię"
+                                       value={this.state.model.get('personalData.name')}
+                                       className={this.isValid('personalData.name') ? '' : 'is-invalid'}
+                                       onChange={this.bindValueToModel}
+                                />
+                                {this.getValidationFeedbackFor('personalData.name')}
                             </FormGroup>
                             <FormGroup>
                                 <Label for="employeeSurname">Nazwisko</Label>
-                                <BindedInput form={this} type="text" name="personalData.surname" id="employeeSurname" placeholder="Nazwisko" />
+                                <Input type="text" name="personalData.surname" id="employeeSurname"
+                                       placeholder="Nazwisko"
+                                       value={this.state.model.get('personalData.surname')}
+                                       className={this.isValid('personalData.surname') ? '' : 'is-invalid'}
+                                       onChange={this.bindValueToModel}
+                                />
+                                {this.getValidationFeedbackFor('personalData.surname')}
                             </FormGroup>
                             <FormGroup>
                                 <Label for="employeePesel">Numer PESEL</Label>
-                                <BindedInput form={this} type="number" name="personalData.pesel" id="employeePesel" placeholder="PESEL" />
+                                <Input type="number" name="personalData.pesel" id="employeePesel"
+                                       placeholder="PESEL"
+                                       value={this.state.model.get('personalData.pesel')}
+                                       className={this.isValid('personalData.pesel') ? '' : 'is-invalid'}
+                                       onChange={this.bindValueToModel}
+                                />
+                                {this.getValidationFeedbackFor('personalData.pesel')}
                             </FormGroup>
                             <FormGroup>
                                 <Label for="employeeBirthday">Data urodzenia</Label>
-                                <BindedInput form={this} type="date" name="personalData.birthday" id="employeeBirthday" placeholder="Data urodzenia"
-                                             value={this.state.model.get('personalData.birthday') && SM.Utils.customFormat(this.state.model.get('personalData.birthday'), "yyyy-mm-dd")}
-                                />
+                                <Input type="date" name="personalData.birthday" id="employeeBirthday"
+                                       placeholder="Data urodzenia"
+                                       value={this.state.model.get('personalData.birthday') && SM.Utils.customFormat(this.state.model.get('personalData.birthday'), "yyyy-mm-dd")}
+                                       onChange={this.bindValueToModel}/>
                             </FormGroup>
                             <FormGroup>
                                 <Label for="employeeGender">Płeć</Label>
-                                <BindedInput form={this} type="select" name="personalData.gender" id="employeeGender" placeholder="Płeć">
+                                <Input type="select" name="personalData.gender" id="employeeGender"
+                                       value={this.state.model.get('personalData.gender')}
+                                       onChange={this.bindValueToModel}>
                                     {this.state.genderDictionary.map(genderObj =>
                                         <option
                                             key={genderObj.id}
                                             value={genderObj.id}>
                                             {genderObj.label}
                                         </option>)}
-                                </BindedInput>
+                                </Input>
                             </FormGroup>
                             <div className="pull-right">
                                 <Button outline type="button" className="mr-1"

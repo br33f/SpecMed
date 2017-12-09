@@ -12,7 +12,7 @@ const BaseModelConfigured = BaseModel.extend({
             name: "",
             surname: "",
             pesel: "",
-            birthday: Date.now(),
+            birthday: "",
             gender: "1"
         }
     },
@@ -43,6 +43,83 @@ export class MedicalEmployeeEdit extends FormComponent {
             isLoading: false,
             isSaved: false
         };
+        this.addValidators();
+    }
+
+    addValidators() {
+        this.rules = {
+            "personalData.name": [
+                {
+                    validator: "required", // tutaj możemy przekazać nazwę funkcji walidującej z pliku Validators.js lub własną funkcję
+                    msg: "Pole imię jest wymagane" // pole opcjonalne
+                },
+                {
+                    validator: (val) => {
+                        // customowa funkcja walidująca
+                        // jeżeli wystąpił błąd to zwracamy komunikat, jeżeli nie ma błędu to nie zwracamy nic
+                        if (!val || val.toString().length < 3) {
+                            return "Imię musi mieć conajmniej 3 znaki";
+                        }
+                    }
+                }
+            ],
+            "personalData.surname": [
+                {
+                    validator: "required",
+                    msg: "Pole nazwisko jest wymagane"
+                },
+                {
+                    validator: "maxLength",
+                    params: {
+                        length: 20
+                    }
+                }
+            ],
+            "personalData.pesel": [
+                {
+                    validator: "required",
+                    msg: "Pole PESEL jest wymagane"
+                },
+                {
+                    validator: (val) => {
+
+                        if (!val || val.toString().length != 11) {
+                            return "Numer PESEL musi mieć 11 znaków";
+                        }
+                    }
+                }
+            ],
+            "personalData.birthday": [
+                {
+                    validator: "required",
+                    msg: "Pole data urodzenia jest wymagane"
+                },
+                {
+                    validator: (val) => {
+                        var today = new Date();
+                        var dd = today.getDate();
+                        var mm = today.getMonth()+1; //January is 0!
+                        var yyyy = today.getFullYear();
+
+                        if(dd<10) {
+                            dd = '0'+dd
+                        }
+
+                        if(mm<10) {
+                            mm = '0'+mm
+                        }
+
+                        today = yyyy + '-' + mm + '-' + dd;
+
+
+                        if (!val || (val >= today)) {
+                             return "Wprowadź poprawną datę urodzenia";
+                        }
+
+                    }
+                }
+            ]
+        };
     }
 
     /**
@@ -68,15 +145,24 @@ export class MedicalEmployeeEdit extends FormComponent {
      * Funkcja odpowiedzialna ze wykonanie akcji zapisu elementow po edycji
      */
     onFormSave() {
-        this.setState({
-            isLoading: true
-        });
-        this.model.save().then(() => {
+        // metoda validate wywołuje walidację na polach określonych w this.rules
+        this.validate();
+        // this.errors zawiera błędy z walidacji
+        if (!this.hasErrors()) {
+            // jeśli nie zawiera błędów - wysyłamy formularz
             this.setState({
-                isLoading: false,
-                isSaved: true
+                isLoading: true
             });
-        });
+            this.model.save().then(() => {
+                this.setState({
+                    isLoading: false,
+                    isSaved: true
+                });
+            });
+        } else {
+            // jeżeli są błędy - wymuszamy update formularza, aby pokazać komunikaty o błędach
+            this.forceUpdate();
+        }
     }
 
     /**
@@ -96,7 +182,7 @@ export class MedicalEmployeeEdit extends FormComponent {
         return (
             <Container fluid={true}>
                 <p className="contentTitle">
-                    {this.employeeId ? 'Edycja' : 'Dodawanie'} nowego pracownika medycznego
+                    {this.employeeId ? 'Edycja' : 'Dodawanie'} pracownika medycznego
                     <Loader isEnabled={this.state.isLoading}/>
                 </p>
                 <Row>
@@ -109,26 +195,40 @@ export class MedicalEmployeeEdit extends FormComponent {
                                 <Label for="employeeName">Imię</Label>
                                 <Input type="text" name="personalData.name" id="employeeName" placeholder="Imię"
                                        value={this.state.model.get('personalData.name')}
-                                       onChange={this.bindValueToModel}/>
+                                       className={this.isValid('personalData.name') ? '' : 'is-invalid'}
+                                       onChange={this.bindValueToModel}
+                                />
+                                {this.getValidationFeedbackFor('personalData.name')}
                             </FormGroup>
                             <FormGroup>
                                 <Label for="employeeSurname">Nazwisko</Label>
                                 <Input type="text" name="personalData.surname" id="employeeSurname"
-                                       placeholder="Nazwisko" value={this.state.model.get('personalData.surname')}
-                                       onChange={this.bindValueToModel}/>
+                                       placeholder="Nazwisko"
+                                       value={this.state.model.get('personalData.surname')}
+                                       className={this.isValid('personalData.surname') ? '' : 'is-invalid'}
+                                       onChange={this.bindValueToModel}
+                                />
+                                {this.getValidationFeedbackFor('personalData.surname')}
                             </FormGroup>
                             <FormGroup>
                                 <Label for="employeePesel">Numer PESEL</Label>
-                                <Input type="number" name="personalData.pesel" id="employeePesel" placeholder="PESEL"
+                                <Input type="number" name="personalData.pesel" id="employeePesel"
+                                       placeholder="PESEL"
                                        value={this.state.model.get('personalData.pesel')}
-                                       onChange={this.bindValueToModel}/>
+                                       className={this.isValid('personalData.pesel') ? '' : 'is-invalid'}
+                                       onChange={this.bindValueToModel}
+                                />
+                                {this.getValidationFeedbackFor('personalData.pesel')}
                             </FormGroup>
                             <FormGroup>
                                 <Label for="employeeBirthday">Data urodzenia</Label>
                                 <Input type="date" name="personalData.birthday" id="employeeBirthday"
                                        placeholder="Data urodzenia"
                                        value={this.state.model.get('personalData.birthday') && SM.Utils.customFormat(this.state.model.get('personalData.birthday'), "yyyy-mm-dd")}
-                                       onChange={this.bindValueToModel}/>
+                                       className={this.isValid('personalData.birthday') ? '' : 'is-invalid'}
+                                       onChange={this.bindValueToModel}
+                                />
+                                {this.getValidationFeedbackFor('personalData.birthday')}
                             </FormGroup>
                             <FormGroup>
                                 <Label for="employeeGender">Płeć</Label>
@@ -146,7 +246,7 @@ export class MedicalEmployeeEdit extends FormComponent {
                                 <Button outline type="button" className="mr-1"
                                         onClick={this.onFormClear.bind(this)}>Wyczyść formularz</Button>
                                 <Button outline color="primary" type="button"
-                                        onClick={this.onFormSave.bind(this)}>Zapisz pracownika</Button>
+                                        onClick={this.onFormSave.bind(this)}>Zapisssss pracownika</Button>
                             </div>
                         </Form>
                     </Col>
