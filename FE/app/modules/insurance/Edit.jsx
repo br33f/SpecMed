@@ -41,7 +41,54 @@ export class InsuranceEdit extends FormComponent {
             isLoading: false,
             isSaved: false
         };
+        this.addValidators();
     }
+
+    addValidators() {
+        this.rules = {
+            "name": [
+                {
+                    validator: "required",
+                    msg: "Pole nazwa jest wymagane"
+                },
+                {
+                    validator: (val) => {
+
+                        if (!val || val.toString().length < 3) {
+                            return "Nazwa musi mieć conajmniej 3 znaki";
+                        }
+                    }
+                }
+            ],
+            "price": [
+                {
+                    validator: "required",
+                    msg: "Pole cena jest wymagane"
+                },
+                {
+                    validator: (val) => {
+
+                        if (!val || val <= 0) {
+                            return "Proszę wpisać poprawną wartość";
+                        }
+                    }
+                }
+            ],
+            "notes": [
+                {
+                    validator: "required",
+                    msg: "Pole opis jest wymagane"
+                }
+            ],
+            "insurancePolicyNumber": [
+                {
+                    validator: "required",
+                    msg: "Pole numer polisy jest wymagane"
+                }
+            ]
+        };
+    }
+
     /**
      * Funkcja odpowiedzialna za inicjalizacje danych przed utowrzeniem obiektu
      */
@@ -65,15 +112,24 @@ export class InsuranceEdit extends FormComponent {
      * Funkcja odpowiedzialna ze wykonanie akcji zapisu elementow po edycji
      */
     onFormSave() {
-        this.setState({
-            isLoading: true
-        });
-        this.model.save().then(() => {
+        // metoda validate wywołuje walidację na polach określonych w this.rules
+        this.validate();
+        // this.errors zawiera błędy z walidacji
+        if (!this.hasErrors()) {
+            // jeśli nie zawiera błędów - wysyłamy formularz
             this.setState({
-                isLoading: false,
-                isSaved: true
+                isLoading: true
             });
-        });
+            this.model.save().then(() => {
+                this.setState({
+                    isLoading: false,
+                    isSaved: true
+                });
+            });
+        } else {
+            // jeżeli są błędy - wymuszamy update formularza, aby pokazać komunikaty o błędach
+            this.forceUpdate();
+        }
     }
     /**
      * Funkcja odpowiedzialna obsługę kliknięcia przycisku czyszczenia formularza
@@ -105,31 +161,43 @@ export class InsuranceEdit extends FormComponent {
                                 <Label for="insuranceName">Nazwa</Label>
                                 <Input type="text" name="name" id="insuranceName" placeholder="Nazwa"
                                        value={this.state.model.get('name')}
-                                       onChange={this.bindValueToModel}/>
+                                       className={this.isValid('name') ? '' : 'is-invalid'}
+                                       onChange={this.bindValueToModel}
+                                />
+                                {this.getValidationFeedbackFor('name')}
                             </FormGroup>
                             <FormGroup>
                                 <Label for="insurancePrice">Cena ubezpieczenia</Label>
                                 <Input type="number" name="price" id="insurancePrice"
                                        placeholder="Cena ubezpieczenia" value={this.state.model.get('price')}
-                                       onChange={this.bindValueToModel}/>
+                                       className={this.isValid('price') ? '' : 'is-invalid'}
+                                       onChange={this.bindValueToModel}
+                                />
+                                {this.getValidationFeedbackFor('price')}
                             </FormGroup>
                             <FormGroup>
                                 <Label for="insuranceNotes">Opis ubezpieczenia</Label>
                                 <Input type="textarea" name="notes" id="insuranceNotes" placeholder="Opis ubezpieczenia"
                                        value={this.state.model.get('notes')}
-                                       onChange={this.bindValueToModel}/>
+                                       className={this.isValid('notes') ? '' : 'is-invalid'}
+                                       onChange={this.bindValueToModel}
+                                />
+                                {this.getValidationFeedbackFor('notes')}
                             </FormGroup>
                             <FormGroup>
                                 <Label for="insurancePolicyNumber">Numer polisy ubezpieczeniowej</Label>
                                 <Input type="text" name="insurancePolicyNumber" id="insurancePolicyNumber"
                                        placeholder="Numer polisy ubezpieczeniowej"
                                        value={this.state.model.get('insurancePolicyNumber')}
-                                       onChange={this.bindValueToModel}/>
+                                       className={this.isValid('insurancePolicyNumber') ? '' : 'is-invalid'}
+                                       onChange={this.bindValueToModel}
+                                />
+                                {this.getValidationFeedbackFor('insurancePolicyNumber')}
                             </FormGroup>
                             <FormGroup>
                                 <Label for="insuranceProbes">Badania zawarte w ubezpieczeniu</Label>
                                 <Input type="select" multiple name="probeList" id="insuranceProbes"
-                                       value={this.state.model.get('probeList')}
+                                       value={this.state.model.get('personalData.probeList')}
                                        onChange={this.bindValueToModel}>
                                     {this.state.dictionaries['PROBES'].map(probeObj =>
                                         <option
@@ -142,7 +210,7 @@ export class InsuranceEdit extends FormComponent {
                             <FormGroup>
                                 <Label for="insuranceProcedures">Zabiegi medyczne zawarte w ubezpieczeniu</Label>
                                 <Input type="select" multiple name="procedureList" id="insuranceProcedures"
-                                       value={this.state.model.get('procedureList')}
+                                       value={this.state.model.get('personalData.procedureList')}
                                        onChange={this.bindValueToModel}>
                                     {this.state.dictionaries['MEDICAL_PROCEDURES'].map(procedureObj =>
                                         <option
