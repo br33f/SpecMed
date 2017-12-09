@@ -1,9 +1,9 @@
 package com.i4m1s1.specmed.controller;
 
-import com.i4m1s1.specmed.persistence.Probe;
+import com.i4m1s1.specmed.persistence.Unit;
+import com.i4m1s1.specmed.service.ProviderSaveUnitService;
 import com.i4m1s1.specmed.service.common.request.BasicRequest;
 import com.i4m1s1.specmed.service.common.response.BasicResponse;
-import com.i4m1s1.specmed.service.probe.ProviderSaveProbeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,18 +12,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Kontroler udostępniajacy API dla usług związanych z badaniami
+ * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
  */
 @RestController
-@RequestMapping(path = "/probe")
-public class ProbeController {
+@RequestMapping(path = "/unit")
+public class UnitController {
 
     @Autowired
-    private ProviderSaveProbeService providerSaveProbeService;
+    private ProviderSaveUnitService providerSaveUnitService;
 
     @CrossOrigin
     @RequestMapping(method = RequestMethod.PUT, path = "/save")
-    public BasicResponse<Probe> saveProbe(@RequestBody BasicRequest<Probe> request) {
-        return providerSaveProbeService.serve(request);
+    public BasicResponse<Unit> saveUnit(@RequestBody BasicRequest<Unit> request) {
+        return providerSaveUnitService.serve(request);
     }
 }

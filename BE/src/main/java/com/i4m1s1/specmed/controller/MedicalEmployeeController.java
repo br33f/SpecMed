@@ -2,11 +2,13 @@ package com.i4m1s1.specmed.controller;
 
 import com.i4m1s1.specmed.dto.DoctorBasicDataDTO;
 import com.i4m1s1.specmed.persistence.MedicalEmployee;
+import com.i4m1s1.specmed.service.common.request.BasicRequest;
 import com.i4m1s1.specmed.service.doctor.ProviderDoctorBasicDataService;
 import com.i4m1s1.specmed.service.doctor.ProviderGetAllDoctorBasicDataService;
 import com.i4m1s1.specmed.service.common.request.ListRequest;
 import com.i4m1s1.specmed.service.common.response.BasicResponse;
 import com.i4m1s1.specmed.service.common.response.ListResponse;
+import com.i4m1s1.specmed.service.doctor.ProviderSaveMedicalEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,6 +31,8 @@ public class MedicalEmployeeController {
     @Autowired
     private ProviderGetAllDoctorBasicDataService serviceAll;
 
+    @Autowired
+    private ProviderSaveMedicalEmployeeService serviceSave;
     /**
      * Metoda udostępniająca wyszukania konkretnych pracowników medycznych
      * @param request żądanie zawierające listę danych pracowników medycznych
@@ -48,5 +52,16 @@ public class MedicalEmployeeController {
     @RequestMapping(method = RequestMethod.GET, path = "/list/full")
     public BasicResponse<List<DoctorBasicDataDTO>> getFullList() {
         return serviceAll.serve(null);
+    }
+
+    /**
+     *
+     * @param request
+     * @return
+     */
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.PUT, path = "/save")
+    public BasicResponse<MedicalEmployee> saveProbe(@RequestBody BasicRequest<MedicalEmployee> request) {
+        return serviceSave.serve(request);
     }
 }
