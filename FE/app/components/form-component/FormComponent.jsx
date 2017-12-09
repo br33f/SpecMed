@@ -117,6 +117,7 @@ export class FormComponent extends Component {
         }
         const name = target.name;
 
+        console.log(name,value);
         this.model.set(name, value);
     }
 
