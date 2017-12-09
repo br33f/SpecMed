@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class VisitController {
 
     @Autowired
-    private ProviderVisitsByDoctorService service;
+    private ProviderVisitsByDoctorService providerVisitsByDoctorService;
 
     @Autowired
     private ProviderSaveVisitService providerSavevisitService;
@@ -36,7 +36,7 @@ public class VisitController {
     @CrossOrigin
     @RequestMapping(method = RequestMethod.POST, path = "/list")
     public ListResponse<VisitBasicDataDTO> getVisitByDoctor(@RequestBody ListRequest<Visit> request) {
-        return service.serve(request);
+        return providerVisitsByDoctorService.serve(request);
     }
 
     /**
@@ -47,7 +47,7 @@ public class VisitController {
 
     @CrossOrigin
     @RequestMapping(method = RequestMethod.PUT, path = "/save")
-    public BasicResponse<Visit> getBasicDataList(@RequestBody BasicRequest<Visit> request) {
+    public BasicResponse<Visit> saveVisit(@RequestBody BasicRequest<Visit> request) {
         return providerSavevisitService.serve(request);
     }
 }
