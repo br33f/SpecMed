@@ -56,7 +56,7 @@ export class UnitEdit extends FormComponent {
 
     addValidators() {
         this.rules = {
-            "unitData.name": [
+            "name": [
                 {
                     validator: "required", // tutaj możemy przekazać nazwę funkcji walidującej z pliku Validators.js lub własną funkcję
                     msg: "Pole jest wymagane" // pole opcjonalne
@@ -71,17 +71,69 @@ export class UnitEdit extends FormComponent {
                     }
                 }
             ],
-            "personalData.surname": [
+            "addressData.streetName": [
                 {
-                    validator: "required"
+                    validator: "required", // tutaj możemy przekazać nazwę funkcji walidującej z pliku Validators.js lub własną funkcję
+                    msg: "Pole jest wymagane" // pole opcjonalne
+                },
+
+            ],
+            "addressData.cityName": [
+                {
+                    validator: "required", // tutaj możemy przekazać nazwę funkcji walidującej z pliku Validators.js lub własną funkcję
+                    msg: "Pole jest wymagane" // pole opcjonalne
                 },
                 {
-                    validator: "maxLength",
-                    params: {
-                        length: 20
+                    validator: (val) => {
+                        // customowa funkcja walidująca
+                        // jeżeli wystąpił błąd to zwracamy komunikat, jeżeli nie ma błędu to nie zwracamy nic
+                        if (!val || val.toString().length < 3) {
+                            return "Nazwa miasta musi mieć więcej niż 3 znaki.";
+                        }
+                    }
+                }
+            ],
+            "addressData.postalCode": [
+                {
+                    validator: "required", // tutaj możemy przekazać nazwę funkcji walidującej z pliku Validators.js lub własną funkcję
+                    msg: "Pole jest wymagane" // pole opcjonalne
+                },
+
+            ],
+
+            "contactData.email": [
+                {
+                    validator: "required", // tutaj możemy przekazać nazwę funkcji walidującej z pliku Validators.js lub własną funkcję
+                    msg: "Pole jest wymagane" // pole opcjonalne
+                },
+                {
+                    validator: (val) => {
+                        // customowa funkcja walidująca
+                        // jeżeli wystąpił błąd to zwracamy komunikat, jeżeli nie ma błędu to nie zwracamy nic
+                        if (!val || val.toString().length < 3) {
+                            return "Nazwa miasta musi mieć więcej niż 3 znaki.";
+                        }
+                    }
+                }
+            ],
+
+            "contactData.telephoneNumber": [
+                {
+                    validator: "required", // tutaj możemy przekazać nazwę funkcji walidującej z pliku Validators.js lub własną funkcję
+                    msg: "Pole jest wymagane" // pole opcjonalne
+                },
+                {
+                    validator: (val) => {
+                        // customowa funkcja walidująca
+                        // jeżeli wystąpił błąd to zwracamy komunikat, jeżeli nie ma błędu to nie zwracamy nic
+                        if (!val || val.toString().length != 9) {
+                            return "Niepoprawny numer telefonu.";
+                        }
                     }
                 }
             ]
+
+
         };
     }
 
@@ -162,32 +214,32 @@ export class UnitEdit extends FormComponent {
                         <Form>
                             <FormGroup>
                                 <Label for="unitName">Nazwa placówki</Label>
-                                <BindedInput form={this} type="text" name="unitData.name" id="unitName" placeholder="Nazwa placówki" />
+                                <BindedInput form={this} type="text" name="name" id="unitName" placeholder="Nazwa placówki" />
 
                             </FormGroup>
                             <FormGroup>
                                 <Label for="unitAddress">Adres placówki</Label>
-                                <BindedInput form={this} type="text" name="unitData.address" id="unitAddress" placeholder="Adres Placówki" />
+                                <BindedInput form={this} type="text" name="addressData.streetName" id="unitAddress" placeholder="Adres Placówki" />
 
                             </FormGroup>
                             <FormGroup>
                                 <Label for="unitTown">Miasto</Label>
-                                <BindedInput form={this} type="text" name="unitData.town" id="unitTown" placeholder="Miasto" />
+                                <BindedInput form={this} type="text" name="addressData.cityName" id="unitTown" placeholder="Miasto" />
 
                             </FormGroup>
                             <FormGroup>
                                 <Label for="unitPostalcode">Kod pocztowy</Label>
-                                <BindedInput form={this} type="text" name="unitData.postalcode" id="unitPostalcode" placeholder="Kot pocztowy" />
+                                <BindedInput form={this} type="text" name="addressData.postalCode" id="unitPostalcode" placeholder="Kot pocztowy" />
 
                             </FormGroup>
                             <FormGroup>
                                 <Label for="unitEmail">Adres e-mail</Label>
-                                <BindedInput form={this} type="text" name="unitData.postalcode" id="unitEmail" placeholder="Adres e-mail" />
+                                <BindedInput form={this} type="text" name="contactData.email" id="unitEmail" placeholder="Adres e-mail" />
 
                             </FormGroup>
                             <FormGroup>
                                 <Label for="unitTelephonenumber">Numer telefonu</Label>
-                                <BindedInput form={this} type="text" name="unitData.postalcode" id="unitEmail" placeholder="Adres e-mail" />
+                                <BindedInput form={this} type="text" name="contactData.telephoneNumber" id="unitEmail" placeholder="numer telefonu" />
 
                             </FormGroup>
 
