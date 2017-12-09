@@ -7,6 +7,7 @@ import com.i4m1s1.specmed.persistence.Visit;
  * Data transfer object dla podstawowych danych wizyty
  * @author Tobiasz Fortaszewski t.fortaszewski@gmail.com
  */
+//TODO POPRAWIC PO DODANIU DATEEND I DATESTART
 public class VisitBasicDataDTO {
     private String id;
     private long date;
@@ -24,7 +25,7 @@ public class VisitBasicDataDTO {
         }
         setId(visit.getId());
         setPlace(visit.getPlace());
-        setDate(visit.getDate());
+        setDate(visit.getDateStart());
     }
 
     public String getId() {

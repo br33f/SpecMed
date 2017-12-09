@@ -1,5 +1,7 @@
 package com.i4m1s1.specmed.persistence;
 
+import com.i4m1s1.specmed.core.AddressData;
+import com.i4m1s1.specmed.core.ContactData;
 import com.i4m1s1.specmed.core.PersonalData;
 import org.springframework.data.annotation.Id;
 
@@ -12,8 +14,9 @@ public class Customer {
     @Id
     private String id;
     private PersonalData personalData;
-    private String login;
-    private String password;
+    private AddressData addressData;
+    private ContactData contactData;
+    private String type; //DOZWOLONE TYLKO PRYWATNY lub BIZNESOWY
 
     public String getId() {
         return id;
@@ -31,19 +34,19 @@ public class Customer {
         this.personalData = personalData;
     }
 
-    public String getLogin() {
-        return login;
+    public AddressData getAddressData() {
+        return addressData;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setAddressData(AddressData addressData) {
+        this.addressData = addressData;
     }
 
-    public String getPassword() {
-        return password;
+    public ContactData getContactData() {
+        return contactData;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setContactData(ContactData contactData) {
+        this.contactData = contactData;
     }
 }

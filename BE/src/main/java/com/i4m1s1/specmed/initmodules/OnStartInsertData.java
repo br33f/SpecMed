@@ -23,6 +23,7 @@ import java.util.Map;
 
 /**
  * Init moduł do ładowania danych do MongoDB - wykorzystywany podczas developu i testów
+ *
  * @author Tobiasz Fortaszewski t.fortaszewski@gmail.com
  */
 @Component
@@ -67,15 +68,15 @@ public class OnStartInsertData {
 
         //wizyty
         Visit v1 = new Visit();
-        v1.setDate(DateHelper.getCurrentDateAsLong());
+        v1.setDateStart(DateHelper.getCurrentDateAsLong());
         v1.setPlace("222");
         v1.setPrice("219");
         Visit v2 = new Visit();
-        v2.setDate(DateHelper.getCurrentDateAsLong());
+        v2.setDateStart(DateHelper.getCurrentDateAsLong());
         v2.setPlace("11A");
         v2.setPrice("99");
         Visit v3 = new Visit();
-        v3.setDate(DateHelper.getCurrentDateAsLong());
+        v3.setDateStart(DateHelper.getCurrentDateAsLong());
         v3.setPlace("121A");
         v3.setPrice("52");
         List<Visit> vl1 = Arrays.asList(v1, v2);
@@ -99,15 +100,13 @@ public class OnStartInsertData {
             me.setSpecializationList(specs.get(pd.indexOf(personalData)));
 
             //xD wow wow
-            if(i == 1){
-//                me.setVisits(vl1);
-                for(Visit v : vl1) {
+            if (i == 1) {
+                for (Visit v : vl1) {
                     v.setMedicalEmpoyee(me);
                 }
             }
-            if(i ==2 ){
-//                me.setVisits(vl2);
-                for(Visit v : vl2) {
+            if (i == 2) {
+                for (Visit v : vl2) {
                     v.setMedicalEmpoyee(me);
                 }
             }
@@ -127,7 +126,7 @@ public class OnStartInsertData {
 
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                for (int u = 0; u < 4; u++ ) {
+                for (int u = 0; u < 4; u++) {
                     pd.add(new PersonalData());
                     PersonalData personalData = pd.get(i);
                     personalData.setBirthday(new Date());
@@ -176,8 +175,43 @@ public class OnStartInsertData {
         dictg.setDictionaryName(DictionaryNames.GENDER);
         dictg.setDictMap(mapv);
 
+        //TYPY ZLECEń MEDYCZNYCH
+        Map<Integer, String> mapo = new HashMap<>();
+        mapo.put(55, "PROBE");
+        mapo.put(24, "MEDICAL_PROCEDURES");
+
+        DictionarySM dicto = new DictionarySM();
+        dicto.setDictionaryName(DictionaryNames.ORDER_TYPE);
+        dicto.setDictMap(mapo);
+
+        //ODDZIALY NFZ
+        Map<Integer, String> mapnfz = new HashMap<>();
+        mapnfz.put(1, "Dolnośląski Oddział Narodowego Funduszu Zdrowia we Wrocławiu");
+        mapnfz.put(2, "Kujawsko-Pomorski Oddział Narodowego Funduszu Zdrowia w Bydgoszczy");
+        mapnfz.put(3, "Lubelski Oddział Narodowego Funduszu Zdrowia w Lublinie");
+        mapnfz.put(4, "Lubuski Oddział Narodowego Funduszu Zdrowia w Zielonej Górze");
+        mapnfz.put(5, "Łódzki Oddział Narodowego Funduszu Zdrowia w Łodzi");
+        mapnfz.put(6, "Małopolski Oddział Narodowego Funduszu Zdrowia w Krakowie");
+        mapnfz.put(7, "Mazowiecki Oddział Narodowego Funduszu Zdrowia w Warszawie");
+        mapnfz.put(8, "Opolski Oddział Narodowego Funduszu Zdrowia w Opolu");
+        mapnfz.put(9, "Podkarpacki Oddział Narodowego Funduszu Zdrowia w Rzeszowie");
+        mapnfz.put(10, "Podlaski Oddział Narodowego Funduszu Zdrowia w Białymstoku");
+        mapnfz.put(11, "Pomorski Oddział Narodowego Funduszu Zdrowia w Gdańsku");
+        mapnfz.put(12, "Śląski Oddział Narodowego Funduszu Zdrowia w Katowicach");
+        mapnfz.put(13, "Świętokrzyski Oddział Narodowego Funduszu Zdrowia w Kielcach");
+        mapnfz.put(14, "Warmińsko-Mazurski Oddział Narodowego Funduszu Zdrowia w Olsztynie");
+        mapnfz.put(15, "Wielkopolski Oddział Narodowego Funduszu Zdrowia w Poznaniu");
+        mapnfz.put(16, "Zachodniopomorski Oddział Narodowego Funduszu Zdrowia w Szczecinie");
+
+        DictionarySM dictnfz = new DictionarySM();
+        dictnfz.setDictionaryName(DictionaryNames.NFZ_UNIT);
+        dictnfz.setDictMap(mapnfz);
+
         dictionaryRepository.save(dictg);
         dictionaryRepository.save(dict);
         dictionaryRepository.save(dictv);
+        dictionaryRepository.save(dicto);
+        dictionaryRepository.save(dictnfz);
+
     }
 }
