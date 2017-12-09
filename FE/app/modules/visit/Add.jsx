@@ -114,7 +114,7 @@ export class VisitAdd extends FormComponent {
      * @private
      */
     fetchCustomers() {
-        axios.get('/customer/list/full').then(response => {
+        axios.get('/customer/list/simple/full').then(response => {
             this.setState({
                 customerList: response.data.content
             });
