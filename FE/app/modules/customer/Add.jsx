@@ -5,6 +5,8 @@ import BaseModel from 'components/models/BaseModel';
 import {Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import {FormComponent} from "components/form-component/FormComponent.jsx";
 import {Loader} from "components/controls/Loader.jsx";
+import {BindedInput} from "components/controls/BindedInput.jsx";
+
 
 const BaseModelConfigured = BaseModel.extend({
     defaults: {
@@ -16,7 +18,7 @@ const BaseModelConfigured = BaseModel.extend({
             gender: "1"
         }
     },
-    saveUrl: 'employee/save'
+    saveUrl: 'customer/save'
 });
 
 export class CustomerEdit extends FormComponent {
@@ -27,7 +29,7 @@ export class CustomerEdit extends FormComponent {
 
         // jeżeli przekazano employeeId w url
         this.employeeId = props.match.params.employeeId;
-        localModel.fetchUrl = "/employee/get/" + this.employeeId;
+        localModel.fetchUrl = "/customer/get/" + this.employeeId;
 
         this.state = {
             genderDictionary: [],
@@ -35,7 +37,84 @@ export class CustomerEdit extends FormComponent {
             isLoading: false,
             isSaved: false
         };
+
+        this.addValidators();
+
     }
+
+
+    addValidators() {
+        this.rules = {
+            "personalData.name": [
+                {
+                    validator: "required", // tutaj możemy przekazać nazwę funkcji walidującej z pliku Validators.js lub własną funkcję
+                    msg: "Pole imię jest wymagane" // pole opcjonalne
+                },
+                {
+                    validator: (val) => {
+                        // customowa funkcja walidująca
+                        // jeżeli wystąpił błąd to zwracamy komunikat, jeżeli nie ma błędu to nie zwracamy nic
+                        if (!val || val.toString().length < 3) {
+                            return "Imię musi mieć conajmniej 3 znaki";
+                        }
+                    }
+                }
+            ],
+            "personalData.surname": [
+                {
+                    validator: "required"
+                },
+                {
+                    validator: "maxLength",
+                    params: {
+                        length: 20
+                    }
+                }
+            ],
+            "personalData.pesel": [
+                {
+                    validator: "required"
+                },
+                {
+                    validator: "maxLength",
+                    params: {
+                        length: 10
+                    }
+                }
+            ],
+            "addressData.cityName": [
+                {
+                    validator: "required"
+                },
+
+            ],
+            "addressData.street": [
+                {
+                    validator: "required"
+                },
+
+            ],
+            "addressData.houseNumber": [
+                {
+                    validator: "required"
+                },
+
+            ],
+            "addressData.apartmentNumber": [
+                {
+                    validator: "required"
+                },
+
+            ],
+            "addressData.postalCode": [
+                {
+                    validator: "required"
+                },
+
+            ]
+        };
+    }
+
 
     componentDidMount() {
         this.employeeId && this.model.fetch();
@@ -51,15 +130,24 @@ export class CustomerEdit extends FormComponent {
     }
 
     onFormSave() {
-        this.setState({
-            isLoading: true
-        });
-        this.model.save().then(() => {
+        // metoda validate wywołuje walidację na polach określonych w this.rules
+        this.validate();
+        // this.errors zawiera błędy z walidacji
+        if (!this.hasErrors()) {
+            // jeśli nie zawiera błędów - wysyłamy formularz
             this.setState({
-                isLoading: false,
-                isSaved: true
+                isLoading: true
             });
-        });
+            this.model.save().then(() => {
+                this.setState({
+                    isLoading: false,
+                    isSaved: true
+                });
+            });
+        } else {
+            // jeżeli są błędy - wymuszamy update formularza, aby pokazać komunikaty o błędach
+            this.forceUpdate();
+        }
     }
 
     onFormClear() {
@@ -85,70 +173,63 @@ export class CustomerEdit extends FormComponent {
                                 <div className="h5">Dane osobowe:</div>
                                 <FormGroup>
                                     <Label for="employeeName">Imię</Label>
-                                    <Input type="text" name="personalData.name" id="employeeName" placeholder="Imię"
-                                           value={this.state.model.get('personalData.name')}
-                                           onChange={this.bindValueToModel}/>
+                                    <BindedInput form={this} type="text" name="personalData.name" id="employeeName" placeholder="Imię" />
+
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="employeeSurname">Nazwisko</Label>
-                                    <Input type="text" name="personalData.surname" id="employeeSurname"
-                                           placeholder="Nazwisko" value={this.state.model.get('personalData.surname')}
-                                           onChange={this.bindValueToModel}/>
+                                    <BindedInput form={this} type="text" name="personalData.surname" id="employeeSurname" placeholder="Nazwisko" />
+
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="employeePesel">Numer PESEL</Label>
-                                    <Input type="text" name="personalData.pesel" id="employeePesel"
-                                           placeholder="PESEL" maxLength="11"
-                                           value={this.state.model.get('personalData.pesel')}
-                                           onChange={this.bindValueToModel}/>
+                                    <BindedInput form={this} type="number" name="personalData.pesel" id="employeePesel" placeholder="PESEL" />
+
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="employeeBirthday">Data urodzenia</Label>
-                                    <Input type="date" name="personalData.birthday" id="employeeBirthday"
-                                           placeholder="Data urodzenia"
-                                           value={this.state.model.get('personalData.birthday') && SM.Utils.customFormat(this.state.model.get('personalData.birthday'), "yyyy-mm-dd")}
-                                           onChange={this.bindValueToModel}/>
+                                    <BindedInput form={this} type="date" name="personalData.birthday" id="employeeBirthday" placeholder="Data urodzenia"
+                                                 value={this.state.model.get('personalData.birthday') && SM.Utils.customFormat(this.state.model.get('personalData.birthday'), "yyyy-mm-dd")}
+                                    />
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="employeeGender">Płeć</Label>
-                                    <Input type="select" name="personalData.gender" id="employeeGender"
-                                           value={this.state.model.get('personalData.gender')}
-                                           onChange={this.bindValueToModel}>
-                                        {this.getSampleGender().map(genderObj =>
+                                    <BindedInput form={this} type="select" name="personalData.gender" id="employeeGender" placeholder="Płeć">
+                                        {this.state.genderDictionary.map(genderObj =>
                                             <option
-                                                key={genderObj}
-                                                value={genderObj}>
-                                                {genderObj}
+                                                key={genderObj.id}
+                                                value={genderObj.id}>
+                                                {genderObj.label}
                                             </option>)}
-                                    </Input>
+                                    </BindedInput>
                                 </FormGroup>
                             </div>
                             <div className="pull-right">
                                 <div className="h5">Dane adresowe:</div>
                                 <FormGroup>
-                                    <Label for="employeeName">Miasto</Label>
-                                    <Input type="text" name="personalData.name" id="employeeName" placeholder="Miasto"
-                                    />
+                                    <Label for="cityname">Miasto</Label>
+                                    <BindedInput form={this} type="number" name="addressData.cityName" id="cityname" placeholder="Miasto" />
+
                                 </FormGroup>
                                 <FormGroup>
-                                    <Label for="employeeSurname">Ulica</Label>
-                                    <Input type="text" name="personalData.surname" id="employeeSurname"
-                                           placeholder="Ulica"/>
+                                    <Label for="street">Ulica</Label>
+                                    <BindedInput form={this} type="number" name="addressData.street" id="street" placeholder="Ulica" />
+
                                 </FormGroup>
                                 <FormGroup>
-                                    <Label for="employeeSurname">Numer domu</Label>
-                                    <Input type="text" name="personalData.surname" id="employeeSurname"
-                                           placeholder="Numer domu"/>
+                                    <Label for="housenumber">Numer domu</Label>
+                                    <BindedInput form={this} type="number" name="addressData.houseNumber" id="housenumber" placeholder="Numer domu" />
+
                                 </FormGroup>
                                 <FormGroup>
-                                    <Label for="employeeSurname">Numer mieszkania</Label>
-                                    <Input type="text" name="personalData.surname" id="employeeSurname"
-                                           placeholder="Numer mieszkania"/>
+                                    <Label for="apartmentNumber">Numer mieszkania</Label>
+                                    <BindedInput form={this} type="number" name="addressData.apartmentNumber" id="apartmentNumber" placeholder="Numer mieszkania" />
+
                                 </FormGroup>
                                 <FormGroup>
-                                    <Label for="employeeSurname">Kod pocztowy</Label>
-                                    <Input type="text" name="personalData.surname" id="employeeSurname"
-                                           placeholder="__-___"/>
+                                    <Label for="postalCode">Kod pocztowy</Label>
+                                    <BindedInput form={this} type="number" name="addressData.postalCode" id="postalCode" placeholder="__-___" />
+
                                 </FormGroup>
                                 <div>
                                     <hr/>
