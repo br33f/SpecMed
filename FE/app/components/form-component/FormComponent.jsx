@@ -29,6 +29,7 @@ export class FormComponent extends Component {
 
         this.bindValueToModel = this._bindValueToModel.bind(this);
         this.getValidationFeedbackFor = this._getValidationFeedbackFor.bind(this);
+        this.getDatepickerValidationFeedbackFor = this._getDatepickerValidationFeedbackFor.bind(this);
         this.isValid = this._isValid.bind(this);
     }
 
@@ -88,6 +89,17 @@ export class FormComponent extends Component {
             );
         }
     }
+
+    _getDatepickerValidationFeedbackFor(fieldName) {
+        if (this.errors[fieldName]) {
+            return (
+                <div className="invalid-feedback d-block">
+                    {this.errors[fieldName]}
+                </div>
+            );
+        }
+    }
+
 
     _isValid(fieldName) {
         return !this.errors[fieldName];

@@ -1,6 +1,7 @@
 package com.i4m1s1.specmed.controller;
 
 import com.i4m1s1.specmed.dto.VisitBasicDataDTO;
+import com.i4m1s1.specmed.dto.VisitDTO;
 import com.i4m1s1.specmed.persistence.Visit;
 import com.i4m1s1.specmed.service.visit.ProviderSaveVisitService;
 import com.i4m1s1.specmed.service.visit.ProviderVisitsByDoctorService;
@@ -47,7 +48,7 @@ public class VisitController {
 
     @CrossOrigin
     @RequestMapping(method = RequestMethod.PUT, path = "/save")
-    public BasicResponse<Visit> getBasicDataList(@RequestBody BasicRequest<Visit> request) {
+    public BasicResponse<VisitDTO> saveVisit(@RequestBody BasicRequest<VisitDTO> request) {
         return providerSavevisitService.serve(request);
     }
 }
