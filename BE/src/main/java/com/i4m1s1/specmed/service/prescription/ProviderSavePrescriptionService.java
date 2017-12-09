@@ -1,13 +1,19 @@
 package com.i4m1s1.specmed.service.prescription;
 
 import com.i4m1s1.specmed.core.SMException;
+import com.i4m1s1.specmed.core.dict.DictionaryNames;
+import com.i4m1s1.specmed.core.dict.persistence.DictionarySM;
 import com.i4m1s1.specmed.persistence.Prescription;
+import com.i4m1s1.specmed.repository.DictionaryRepository;
 import com.i4m1s1.specmed.repository.PrescriptionRepository;
 import com.i4m1s1.specmed.service.common.catchs.BasicServiceCatch;
 import com.i4m1s1.specmed.service.common.request.BasicRequest;
 import com.i4m1s1.specmed.service.common.response.BasicResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Serwis udostępniający zapis recepty w systemie
@@ -29,6 +35,7 @@ public class ProviderSavePrescriptionService extends BasicServiceCatch<Prescript
     protected BasicResponse<Prescription> provide(BasicRequest<Prescription> request) throws SMException {
         Prescription savedPrescription = repository.save(request.getChunkData());
 
+        //TODO uważać na response rzuca 500
         BasicResponse<Prescription> response = new BasicResponse<>();
         response.setContent(savedPrescription);
         return response;
