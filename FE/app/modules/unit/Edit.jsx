@@ -123,12 +123,9 @@ export class UnitEdit extends FormComponent {
                     msg: "Pole jest wymagane" // pole opcjonalne
                 },
                 {
-                    validator: (val) => {
-                        // customowa funkcja walidująca
-                        // jeżeli wystąpił błąd to zwracamy komunikat, jeżeli nie ma błędu to nie zwracamy nic
-                        if (!val || val.toString().length != 9) {
-                            return "Niepoprawny numer telefonu.";
-                        }
+                    validator: "maxLength",
+                    params: {
+                        length: 9
                     }
                 }
             ]
