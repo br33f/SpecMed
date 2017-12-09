@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class VisitController {
 
     @Autowired
-    private ProviderVisitsByDoctorService service;
+    private ProviderVisitsByDoctorService providerVisitsByDoctorService;
 
     @Autowired
     private ProviderSaveVisitService providerSavevisitService;
@@ -37,7 +37,7 @@ public class VisitController {
     @CrossOrigin
     @RequestMapping(method = RequestMethod.POST, path = "/list")
     public ListResponse<VisitBasicDataDTO> getVisitByDoctor(@RequestBody ListRequest<Visit> request) {
-        return service.serve(request);
+        return providerVisitsByDoctorService.serve(request);
     }
 
     /**
@@ -45,7 +45,6 @@ public class VisitController {
      * @param request żądanie zawierające dane wizyty do dodania
      * @return Dane wizyty dodawanej/edytowanej
      */
-
     @CrossOrigin
     @RequestMapping(method = RequestMethod.PUT, path = "/save")
     public BasicResponse<VisitDTO> saveVisit(@RequestBody BasicRequest<VisitDTO> request) {

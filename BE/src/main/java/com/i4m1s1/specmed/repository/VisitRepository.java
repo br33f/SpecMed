@@ -23,4 +23,5 @@ public interface VisitRepository extends MongoRepository<Visit, String> {
      * @return Lista danych wizyt danego pracownika medycznego
      */
     Page<Visit> findAllByMedicalEmpoyee(MedicalEmployee medicalEmployee, Pageable pageable);
+    Visit findById(String id);
 }

@@ -26,6 +26,15 @@ export default {
         if (!val || val.toString().length > paramLength) {
             return `Maksymalna długość tego pola to ${paramLength}`;
         }
-    }
+    },
 
+    minLength: function (val, params) {
+        let paramLength = 0;
+        if (params && params.length) {
+            paramLength = params.length;
+        }
+        if (!val || val.toString().length < paramLength) {
+            return `Minimalna długość tego pola to ${paramLength}`;
+        }
+    }
 };

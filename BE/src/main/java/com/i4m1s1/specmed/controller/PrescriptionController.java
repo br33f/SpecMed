@@ -23,7 +23,7 @@ public class PrescriptionController {
      */
     @CrossOrigin
     @RequestMapping(method = RequestMethod.PUT, path = "/save")
-    public BasicResponse<Prescription> getBasicDataList(@RequestBody BasicRequest<Prescription> request) {
+    public BasicResponse<Prescription> savePrescription(@RequestBody BasicRequest<Prescription> request) {
         return providerSavePrescriptionService.serve(request);
     }
 }

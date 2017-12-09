@@ -8,7 +8,8 @@ public enum WarningMsg {
     DB_SAVE_ERROR(1, "Błąd zapisu do bazy danych"),
     AUTH_ERROR(2, "Błąd autoryzacji"),
     DB_NO_RESULTS(3, "Brak wynikow zapytania"),
-    DICTIONARY_NOT_FOUND(4, "Brak slownika!");
+    DICTIONARY_NOT_FOUND(4, "Brak slownika!"),
+    VISIT_FOR_OPINION_NOT_FOUND(5,"Brak wizyty o podanym ID. Nie można dodać wizyty!");
 
     private final int id;
     private final String message;
