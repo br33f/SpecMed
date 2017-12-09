@@ -51,6 +51,10 @@
       {
         "uri": "/visit/rate",
         "label": "Oceń wizytę"
+      },
+      {
+        "uri": "/visit/appoint",
+        "label": "Umów się na wizytę"
       }
     ]
   }
