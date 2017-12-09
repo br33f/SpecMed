@@ -32,19 +32,25 @@ public class Visit {
      * Podczas rezerwacji wizyty pacjent przegląda WSZYSTKIE WOLNE (bez klientow/ze statusem wolne)
      * wizyty z interesującymi go parametrami (np. wizyty u proktologów lub itp.)
      * Wydaje sie to byc najprostsze w implementacji i generujace najmniej bledow.
+     *
+     *
+     *  * TO JEDNA Z ENCJI SLUŻĄCA DO GENEROWANIA HARMONOGRAMU LEKARZA
+
      */
+
 
     @Id
     private String id;
     @Related
-    private MedicalEmployee medicalEmpoyee; //w jpa tak sie robi. ulatwia selecty
+    private MedicalEmployee medicalEmpoyee;
     @Related
     private Customer customer;
-    private String price;
+    private String price; //cena - jako string
     @Dictionary(DictionaryNames.VISIT_STATUS)
     private String status; //wolna, zamowiona, odbyta, zaplacona(?)
-    private String place; //zmienic na slownik czy co tu ma w ogole byc todo?
-    private long date;
+    private String place; // miejsce odbycia wizyty
+    private long dateStart; // data odbycia
+    private long dateEnd; //data zakonczenia
 
 
     public String getId() {
@@ -71,12 +77,20 @@ public class Visit {
         this.status = status;
     }
 
-    public long getDate() {
-        return date;
+    public long getDateStart() {
+        return dateStart;
     }
 
-    public void setDate(long date) {
-        this.date = date;
+    public void setDateStart(long dateStart) {
+        this.dateStart = dateStart;
+    }
+
+    public long getDateEnd() {
+        return dateEnd;
+    }
+
+    public void setDateEnd(long dateEnd) {
+        this.dateEnd = dateEnd;
     }
 
     public String getPlace() {
