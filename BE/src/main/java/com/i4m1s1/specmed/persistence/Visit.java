@@ -1,5 +1,6 @@
 package com.i4m1s1.specmed.persistence;
 
+import com.i4m1s1.specmed.core.Opinion;
 import com.i4m1s1.specmed.core.annotation.Dictionary;
 import com.i4m1s1.specmed.core.annotation.Related;
 import com.i4m1s1.specmed.core.dict.DictionaryNames;
@@ -51,6 +52,7 @@ public class Visit {
     private String place; // miejsce odbycia wizyty
     private long dateStart; // data odbycia
     private long dateEnd; //data zakonczenia
+    private Opinion opinion;
 
 
     public String getId() {
@@ -115,5 +117,13 @@ public class Visit {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public Opinion getOpinion() {
+        return opinion;
+    }
+
+    public void setOpinion(Opinion opinion) {
+        this.opinion = opinion;
     }
 }
