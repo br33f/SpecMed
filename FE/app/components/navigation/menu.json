@@ -42,7 +42,17 @@
     "label": "Nowa placówka"
   },
   {
-    "uri": "/visit/rate",
-    "label": "Oceń wizytę"
+    "label": "Wizyta",
+    "children": [
+      {
+        "uri": "/visit/add",
+        "label": "Dodaj nową wizytę"
+      },
+      {
+        "uri": "/visit/rate",
+        "label": "Oceń wizytę"
+      }
+    ]
   }
+
 ]
