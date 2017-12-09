@@ -44,5 +44,9 @@
   {
     "uri": "/visit/rate",
     "label": "Oceń wizytę"
+  },
+  {
+    "uri":"/communication-with-doctor",
+    "label":"Napisz do lekarza"
   }
 ]
