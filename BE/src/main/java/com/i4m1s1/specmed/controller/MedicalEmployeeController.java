@@ -1,7 +1,9 @@
 package com.i4m1s1.specmed.controller;
 
 import com.i4m1s1.specmed.dto.DoctorBasicDataDTO;
+import com.i4m1s1.specmed.dto.ScheduleDTO;
 import com.i4m1s1.specmed.persistence.MedicalEmployee;
+import com.i4m1s1.specmed.service.doctor.ProviderGetScheduleByIdService;
 import com.i4m1s1.specmed.service.common.request.BasicRequest;
 import com.i4m1s1.specmed.service.doctor.ProviderDoctorBasicDataService;
 import com.i4m1s1.specmed.service.doctor.ProviderGetAllDoctorBasicDataService;
@@ -33,6 +35,9 @@ public class MedicalEmployeeController {
 
     @Autowired
     private ProviderSaveMedicalEmployeeService serviceSave;
+
+    @Autowired
+    private ProviderGetScheduleByIdService serviceSchedule;
     /**
      * Metoda udostępniająca wyszukania konkretnych pracowników medycznych
      * @param request żądanie zawierające listę danych pracowników medycznych
@@ -64,4 +69,16 @@ public class MedicalEmployeeController {
     public BasicResponse<MedicalEmployee> saveProbe(@RequestBody BasicRequest<MedicalEmployee> request) {
         return serviceSave.serve(request);
     }
+
+    /**
+     * Metoda zwracająca grafik w postaci Listy obiektów typu {@link com.i4m1s1.specmed.dto.ScheduleDTO}
+     * @param request żądanie zawierające id pracownika medycznego
+     * @return Lista obiektów typu DTO
+     */
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.POST, path = "/schedule")
+    public BasicResponse<List<ScheduleDTO>> getDictByName(@RequestBody BasicRequest<String> request) {
+        return serviceSchedule.serve(request);
+    }
+
 }

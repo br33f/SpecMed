@@ -1,8 +1,8 @@
-package com.i4m1s1.specmed.service;
+package com.i4m1s1.specmed.service.unit;
 
 import com.i4m1s1.specmed.core.SMException;
-import com.i4m1s1.specmed.persistence.Procedure;
-import com.i4m1s1.specmed.repository.ProcedureRepository;
+import com.i4m1s1.specmed.persistence.Unit;
+import com.i4m1s1.specmed.repository.UnitRepository;
 import com.i4m1s1.specmed.service.common.catchs.BasicServiceCatch;
 import com.i4m1s1.specmed.service.common.request.BasicRequest;
 import com.i4m1s1.specmed.service.common.response.BasicResponse;
@@ -13,15 +13,15 @@ import org.springframework.stereotype.Service;
  * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
  */
 @Service
-public class ProviderSaveProcedureService extends BasicServiceCatch<Procedure, Procedure> {
+public class ProviderSaveUnitService extends BasicServiceCatch<Unit, Unit> {
 
     @Autowired
-    private ProcedureRepository repository;
+    private UnitRepository repository;
 
     @Override
-    protected BasicResponse<Procedure> provide(BasicRequest<Procedure> request) throws SMException {
+    protected BasicResponse<Unit> provide(BasicRequest<Unit> request) throws SMException {
         repository.save(request.getChunkData());
-        BasicResponse<Procedure> response = new BasicResponse<>();
+        BasicResponse<Unit> response = new BasicResponse<>();
         response.setContent(request.getChunkData());
         return response;
     }

@@ -1,10 +1,9 @@
 package com.i4m1s1.specmed.controller;
 
 import com.i4m1s1.specmed.persistence.Procedure;
-import com.i4m1s1.specmed.service.ProviderSaveProcedureService;
+import com.i4m1s1.specmed.service.procedure.ProviderSaveProcedureService;
 import com.i4m1s1.specmed.service.common.request.BasicRequest;
 import com.i4m1s1.specmed.service.common.response.BasicResponse;
-import com.i4m1s1.specmed.service.probe.ProviderSaveProbeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;

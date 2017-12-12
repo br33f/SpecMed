@@ -70,4 +70,12 @@ public class Probe {
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
+
+    public long getDate() {
+        return date;
+    }
+
+    public void setDate(long date) {
+        this.date = date;
+    }
 }

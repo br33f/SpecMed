@@ -1,8 +1,8 @@
 package com.i4m1s1.specmed.controller;
 
 import com.i4m1s1.specmed.persistence.Customer;
-import com.i4m1s1.specmed.service.ProviderGetAllCustomerService;
-import com.i4m1s1.specmed.service.ProviderSaveCustomerService;
+import com.i4m1s1.specmed.service.customer.ProviderGetAllCustomerService;
+import com.i4m1s1.specmed.service.customer.ProviderSaveCustomerService;
 import com.i4m1s1.specmed.service.common.request.BasicRequest;
 import com.i4m1s1.specmed.service.common.request.ListRequest;
 import com.i4m1s1.specmed.service.common.response.BasicResponse;

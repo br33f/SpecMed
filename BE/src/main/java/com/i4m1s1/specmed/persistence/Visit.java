@@ -5,7 +5,6 @@ import com.i4m1s1.specmed.core.annotation.Dictionary;
 import com.i4m1s1.specmed.core.annotation.Related;
 import com.i4m1s1.specmed.core.dict.DictionaryNames;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 
 
 /**
@@ -43,15 +42,15 @@ public class Visit {
     @Id
     private String id;
     @Related
-    private MedicalEmployee medicalEmpoyee;
+    private MedicalEmployee medicalEmployee;
     @Related
     private Customer customer;
     private String price; //cena - jako string
     @Dictionary(DictionaryNames.VISIT_STATUS)
     private String status; //wolna, zamowiona, odbyta, zaplacona(?)
     private String place; // miejsce odbycia wizyty
-    private long dateStart; // data odbycia
-    private long dateEnd; //data zakonczenia
+    private Long dateStart; // data odbycia
+    private Long dateEnd; //data zakonczenia
     private Opinion opinion;
 
 
@@ -79,19 +78,19 @@ public class Visit {
         this.status = status;
     }
 
-    public long getDateStart() {
+    public Long getDateStart() {
         return dateStart;
     }
 
-    public void setDateStart(long dateStart) {
+    public void setDateStart(Long dateStart) {
         this.dateStart = dateStart;
     }
 
-    public long getDateEnd() {
+    public Long getDateEnd() {
         return dateEnd;
     }
 
-    public void setDateEnd(long dateEnd) {
+    public void setDateEnd(Long dateEnd) {
         this.dateEnd = dateEnd;
     }
 
@@ -103,12 +102,12 @@ public class Visit {
         this.place = place;
     }
 
-    public MedicalEmployee getMedicalEmpoyee() {
-        return medicalEmpoyee;
+    public MedicalEmployee getMedicalEmployee() {
+        return medicalEmployee;
     }
 
-    public void setMedicalEmpoyee(MedicalEmployee medicalEmpoyee) {
-        this.medicalEmpoyee = medicalEmpoyee;
+    public void setMedicalEmployee(MedicalEmployee medicalEmployee) {
+        this.medicalEmployee = medicalEmployee;
     }
 
     public Customer getCustomer() {
