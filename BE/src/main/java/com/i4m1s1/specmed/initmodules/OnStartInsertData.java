@@ -6,10 +6,12 @@ import com.i4m1s1.specmed.core.dict.persistence.DictionarySM;
 import com.i4m1s1.specmed.core.helper.DateHelper;
 import com.i4m1s1.specmed.persistence.Employee;
 import com.i4m1s1.specmed.persistence.MedicalEmployee;
+import com.i4m1s1.specmed.persistence.Probe;
 import com.i4m1s1.specmed.persistence.Visit;
 import com.i4m1s1.specmed.repository.DictionaryRepository;
 import com.i4m1s1.specmed.repository.EmployeeRepository;
 import com.i4m1s1.specmed.repository.MedicalEmployeeRepository;
+import com.i4m1s1.specmed.repository.ProbeRepository;
 import com.i4m1s1.specmed.repository.VisitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -37,6 +39,8 @@ public class OnStartInsertData {
     private VisitRepository visitRepository;
     @Autowired
     private DictionaryRepository dictionaryRepository;
+    @Autowired
+    private ProbeRepository probeRepository;
 
     /**
      * Czysci baze zeby odpalic ponownie inity.
@@ -102,18 +106,31 @@ public class OnStartInsertData {
             //xD wow wow
             if (i == 1) {
                 for (Visit v : vl1) {
-                    v.setMedicalEmpoyee(me);
+                    v.setMedicalEmployee(me);
                 }
             }
             if (i == 2) {
                 for (Visit v : vl2) {
-                    v.setMedicalEmpoyee(me);
+                    v.setMedicalEmployee(me);
                 }
             }
             medicalEmployeeRepository.save(me);
         }
         visitRepository.save(vl1);//PONOWNIE BO EDYTOWALISMY COS.
         visitRepository.save(vl2);
+
+        List<MedicalEmployee> list = medicalEmployeeRepository.findAll();
+        List<Probe> probes = new ArrayList<>();
+        for (MedicalEmployee medicalEmployee : list) {
+            Probe probe = new Probe();
+            probe.setPrice("123"+medicalEmployee.getId().charAt(medicalEmployee.getId().length()-1));
+            probe.setMedicalEmployee(medicalEmployee);
+            probe.setComment("Testowy komentarz dla ");
+            probe.setDate(DateHelper.getCurrentDateAsLong());
+            probe.setType(dictionaryRepository.findByDictionaryName(DictionaryNames.PROBES).getDictMap().get(1));
+            probes.add(probe);
+        }
+        probeRepository.save(probes);
     }
 
     //repo pracownikow

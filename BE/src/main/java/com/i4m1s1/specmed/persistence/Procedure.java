@@ -16,7 +16,7 @@ public class Procedure {
     @Id
     private String id;
     @Related
-    private List<MedicalEmployee> medicalEmpoyee; // lista lekarzy biorących udział w zabiegu
+    private List<MedicalEmployee> medicalEmployeeList; // lista lekarzy biorących udział w zabiegu
     @Related
     private Customer customer;
     private String price;
@@ -32,12 +32,12 @@ public class Procedure {
         this.id = id;
     }
 
-    public List<MedicalEmployee> getMedicalEmpoyee() {
-        return medicalEmpoyee;
+    public List<MedicalEmployee> getMedicalEmployeeList() {
+        return medicalEmployeeList;
     }
 
-    public void setMedicalEmpoyee(List<MedicalEmployee> medicalEmpoyee) {
-        this.medicalEmpoyee = medicalEmpoyee;
+    public void setMedicalEmployeeList(List<MedicalEmployee> medicalEmployeeList) {
+        this.medicalEmployeeList = medicalEmployeeList;
     }
 
     public Customer getCustomer() {

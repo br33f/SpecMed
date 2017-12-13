@@ -17,7 +17,7 @@ public class VisitBasicDataDTO {
     private String place;
 
     public VisitBasicDataDTO(Visit visit) {
-        MedicalEmployee medicalEmployee = visit.getMedicalEmpoyee();
+        MedicalEmployee medicalEmployee = visit.getMedicalEmployee();
         if(medicalEmployee != null) {
             setMedicalEmployeeId(medicalEmployee.getId());
             setMedicalEmployeeName(medicalEmployee.getPersonalData().getName());

@@ -41,7 +41,7 @@ public class ProviderVisitsByDoctorService extends ListServiceCatch<Visit, Visit
     protected ListResponse<VisitBasicDataDTO> provide(ListRequest<Visit> request) throws SMException {
         Visit visitReq = request.getSearchCriteria();
         MedicalEmployee medicalEmployeeResult = medicalEmployeeRepository.findById(visitReq.getId());
-        Page<Visit> page = visitRepository.findAllByMedicalEmpoyee(medicalEmployeeResult, request.getPageCriteria().getAsPageRequest());
+        Page<Visit> page = visitRepository.findAllByMedicalEmployee(medicalEmployeeResult, request.getPageCriteria().getAsPageRequest());
 
         List<Visit> visitList = page.getContent();
         List<VisitBasicDataDTO> resultList = new ArrayList<>();

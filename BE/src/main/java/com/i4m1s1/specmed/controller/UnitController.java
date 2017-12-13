@@ -1,7 +1,7 @@
 package com.i4m1s1.specmed.controller;
 
 import com.i4m1s1.specmed.persistence.Unit;
-import com.i4m1s1.specmed.service.ProviderSaveUnitService;
+import com.i4m1s1.specmed.service.unit.ProviderSaveUnitService;
 import com.i4m1s1.specmed.service.common.request.BasicRequest;
 import com.i4m1s1.specmed.service.common.response.BasicResponse;
 import org.springframework.beans.factory.annotation.Autowired;
