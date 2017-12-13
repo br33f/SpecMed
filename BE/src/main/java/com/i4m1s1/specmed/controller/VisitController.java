@@ -3,6 +3,7 @@ package com.i4m1s1.specmed.controller;
 import com.i4m1s1.specmed.dto.VisitBasicDataDTO;
 import com.i4m1s1.specmed.dto.VisitDTO;
 import com.i4m1s1.specmed.persistence.Visit;
+import com.i4m1s1.specmed.service.ProviderGetFreeVisitService;
 import com.i4m1s1.specmed.service.visit.ProviderSaveVisitService;
 import com.i4m1s1.specmed.service.visit.ProviderVisitsByDoctorService;
 import com.i4m1s1.specmed.service.common.request.BasicRequest;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * Kontroler udostępniajacy API dla usług związanych z wizytą
@@ -29,6 +32,8 @@ public class VisitController {
     @Autowired
     private ProviderSaveVisitService providerSavevisitService;
 
+    @Autowired
+    private ProviderGetFreeVisitService providerGetFreeVisitService;
     /**
      * Metoda udostępniająca wyszukanie listy danych wizyt
      * @param request żądanie zawierające listę danych wizyt
@@ -49,5 +54,12 @@ public class VisitController {
     @RequestMapping(method = RequestMethod.PUT, path = "/save")
     public BasicResponse<VisitDTO> saveVisit(@RequestBody BasicRequest<VisitDTO> request) {
         return providerSavevisitService.serve(request);
+    }
+
+
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.POST, path = "/list/free")
+    public BasicResponse<List<VisitBasicDataDTO>> getFreeVisitByDoctorId(@RequestBody BasicRequest<String> request) {
+        return providerGetFreeVisitService.serve(request);
     }
 }
