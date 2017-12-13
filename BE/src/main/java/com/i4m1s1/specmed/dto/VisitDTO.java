@@ -1,10 +1,5 @@
 package com.i4m1s1.specmed.dto;
 
-import com.i4m1s1.specmed.core.annotation.Dictionary;
-import com.i4m1s1.specmed.core.annotation.Related;
-import com.i4m1s1.specmed.core.dict.DictionaryNames;
-import com.i4m1s1.specmed.persistence.Customer;
-import com.i4m1s1.specmed.persistence.MedicalEmployee;
 import com.i4m1s1.specmed.persistence.Visit;
 
 /**
@@ -29,7 +24,7 @@ public class VisitDTO {
     public VisitDTO(Visit visit) {
        setId(visit.getId());
        setCustomerId(visit.getCustomer().getId());
-       setMedicalEmployeeId(visit.getMedicalEmpoyee().getId());
+       setMedicalEmployeeId(visit.getMedicalEmployee().getId());
        setDateEnd(visit.getDateEnd());
        setDateStart(visit.getDateStart());
        setPlace(visit.getPlace());
