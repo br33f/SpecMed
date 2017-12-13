@@ -14,8 +14,7 @@ const BaseModelConfigured = BaseModel.extend({
         visitId: "",
         specialization: "",
         medicalEmployeeId: ""
-    },
-    saveUrl: '/visit/appoint'
+    }
 });
 
 /**
@@ -80,9 +79,11 @@ export class VisitAppoint extends FormComponent {
         axios.post('/medical-employee/specialization/list', {
             chunkData: specialization
         }).then(response => {
-            this.setState({
-                medicalEmployeeList: response.data.content
-            });
+            if (response.data.content) {
+                this.setState({
+                    medicalEmployeeList: response.data.content
+                });
+            }
         });
     }
 
@@ -90,34 +91,17 @@ export class VisitAppoint extends FormComponent {
      * Metoda pobiera wizyty
      * @private
      */
-    fetchVisits() {
-        this.setState({
-            freeVisitsList: [
-                {
-                    id: 1,
-                    price: "300",
-                    place: "Gabinet zabiegowy",
-                    dateStart: 1512839700000,
-                    dateEnd: 1512840600000
-                },
-                {
-                    id: 2,
-                    price: "200",
-                    place: "Gabinet nr 5",
-                    dateStart: 1502839700000,
-                    dateEnd: 1502840600000
-                },
-                {
-                    id: 3,
-                    price: "100",
-                    place: "Gabinet dyrektora",
-                    dateStart: 1412839700000,
-                    dateEnd: 1412840600000
-                },
-            ]
+    fetchVisits(medicalEmployeeId) {
+        axios.post('/visit/list/free', {
+            chunkData: medicalEmployeeId
+        }).then(response => {
+            if (response.data.content) {
+                this.setState({
+                    freeVisitsList: response.data.content
+                })
+            }
         });
     }
-
 
     /**
      * Metoda wywołuje synchronizację modelu z usługą REST
@@ -129,7 +113,7 @@ export class VisitAppoint extends FormComponent {
             this.setState({
                 isLoading: true
             });
-            this.model.save().then(() => {
+            this.sendAppointmentRequest().then(() => {
                 this.setState({
                     isLoading: false,
                     isSaved: true
@@ -139,6 +123,18 @@ export class VisitAppoint extends FormComponent {
             this.forceUpdate();
         }
         console.log(this.errors);
+    }
+
+    sendAppointmentRequest() {
+        let SaveModel = BaseModel.extend({
+            saveUrl: '/visit/appoint'
+        });
+
+        let saveModel = new SaveModel();
+        saveModel.set('visitId', this.model.get('visitId'));
+        saveModel.set('customerId', "5a2be56facd24749a0563f48"); // TODO: podstawić prawdziwego klienta
+
+        return saveModel.save();
     }
 
     /**
@@ -156,7 +152,7 @@ export class VisitAppoint extends FormComponent {
 
     onMedicalEmployeeChange() {
         this.bindValueToModel(...arguments);
-        this.fetchVisits();
+        this.fetchVisits(this.model.get('medicalEmployeeId'));
     }
 
     /**
@@ -178,7 +174,8 @@ export class VisitAppoint extends FormComponent {
                         <Form>
                             <FormGroup>
                                 <Label for="specialization">Specjalizacja</Label>
-                                <BindedInput form={this} type="select" name="specialization" id="specialization" onChange={this.onSpecializationChange.bind(this)}>
+                                <BindedInput form={this} type="select" name="specialization" id="specialization"
+                                             onChange={this.onSpecializationChange.bind(this)}>
                                     <option
                                         key="PLACEHOLDER_ITEM"
                                         value="">
@@ -194,7 +191,8 @@ export class VisitAppoint extends FormComponent {
                             </FormGroup>
                             <FormGroup>
                                 <Label for="employee">Wybierz pracownika</Label>
-                                <BindedInput form={this} type="select" name="medicalEmployeeId" id="employee" onChange={this.onMedicalEmployeeChange.bind(this)}>
+                                <BindedInput form={this} type="select" name="medicalEmployeeId" id="employee"
+                                             onChange={this.onMedicalEmployeeChange.bind(this)}>
                                     <option
                                         key="PLACEHOLDER_ITEM"
                                         value="">
@@ -220,7 +218,7 @@ export class VisitAppoint extends FormComponent {
                                         <option
                                             key={visitObj.id}
                                             value={visitObj.id}>
-                                            {visitObj.place + " - Od " + SM.Utils.formatDateTime(visitObj.dateStart) + " Do " + SM.Utils.formatDateTime(visitObj.dateStart) + " - Cena: " + visitObj.price + "zł"}
+                                            {visitObj.place + " - Od " + SM.Utils.formatDateTime(visitObj.dateStart) + " Do " + SM.Utils.formatDateTime(visitObj.dateEnd) + " - Cena: " + visitObj.price + "zł"}
                                         </option>)}
                                 </BindedInput>
                             </FormGroup>
