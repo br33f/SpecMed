@@ -28,8 +28,8 @@ import {OpinionAdd} from "./modules/opinion/Add.jsx";
 // Customer
 import {CustomerEdit} from "./modules/customer/Add.jsx";
 
-//Contact-Wtih-Doctor
-import {CommunicationWithDoctor} from "./modules/communication-with-doctor/Add.jsx"
+// Visit
+import {VisitAdd} from "./modules/visit/Add.jsx";
 
 export class Routes extends Component {
     render() {
@@ -42,7 +42,7 @@ export class Routes extends Component {
                 {this.unitRoutes()}
                 {this.opinionRoutes()}
                 {this.customerRoutes()}
-                {this.conmmunicationWithDoctor()}
+                {this.visitRoutes()}
             </div>
         );
     }
@@ -111,10 +111,10 @@ export class Routes extends Component {
         );
     }
 
-    conmmunicationWithDoctor(){
-        return(
+    visitRoutes() {
+        return (
             <Switch>
-                <Route exact path='/communication-with-doctor' component={CommunicationWithDoctor}/>
+                <Route exact path='/visit/add' component={VisitAdd}/>
             </Switch>
         );
     }
