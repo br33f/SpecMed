@@ -5,7 +5,7 @@ package com.i4m1s1.specmed.dto;
  */
 public class VisitSelectedByCustomerDTO {
     private String visitId;
-    private String cusomerId;
+    private String customerId;
 
     public String getVisitId() {
         return visitId;
@@ -15,11 +15,11 @@ public class VisitSelectedByCustomerDTO {
         this.visitId = visitId;
     }
 
-    public String getCusomerId() {
-        return cusomerId;
+    public String getCustomerId() {
+        return customerId;
     }
 
-    public void setCusomerId(String cusomerId) {
-        this.cusomerId = cusomerId;
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 }

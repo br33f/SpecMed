@@ -30,8 +30,9 @@ public class ProviderMakeAppointmentService extends BasicServiceCatch<VisitSelec
         if(visit == null) {
             throw new SMException("20171213042055", WarningMsg.DB_NO_RESULTS);
         }
-        Customer customer = customerRepository.findById(request.getChunkData().getCusomerId());
+        Customer customer = customerRepository.findById(request.getChunkData().getCustomerId());
         if(customer == null) {
+            //mockthis
             throw  new SMException("20171213042144", WarningMsg.DB_NO_RESULTS);
         }
 
