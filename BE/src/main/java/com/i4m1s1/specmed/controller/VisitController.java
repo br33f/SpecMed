@@ -59,7 +59,7 @@ public class VisitController {
 
     @CrossOrigin
     @RequestMapping(method = RequestMethod.POST, path = "/list/free")
-    public BasicResponse<List<VisitBasicDataDTO>> getFreeVisitByDoctorId(@RequestBody BasicRequest<String> request) {
+    public BasicResponse<List<VisitDTO>> getFreeVisitByDoctorId(@RequestBody BasicRequest<String> request) {
         return providerGetFreeVisitService.serve(request);
     }
 }
