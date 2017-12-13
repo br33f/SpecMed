@@ -49,4 +49,12 @@ public class Customer {
     public void setContactData(ContactData contactData) {
         this.contactData = contactData;
     }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }
