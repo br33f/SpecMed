@@ -77,24 +77,12 @@ export class VisitAppoint extends FormComponent {
      * @private
      */
     fetchMedicalEmployees(specialization) {
-        this.setState({
-            medicalEmployeeList: [
-                {
-                    id: 1,
-                    name: "Janusz",
-                    surname: "Tracz"
-                },
-                {
-                    id: 2,
-                    name: "Jan",
-                    surname: "Nowak"
-                },
-                {
-                    id: 3,
-                    name: "Tadeusz",
-                    surname: "Norek"
-                }
-            ]
+        axios.post('/medical-employee/specialization/list', {
+            chunkData: specialization
+        }).then(response => {
+            this.setState({
+                medicalEmployeeList: response.data.content
+            });
         });
     }
 
@@ -163,7 +151,7 @@ export class VisitAppoint extends FormComponent {
 
     onSpecializationChange() {
         this.bindValueToModel(...arguments);
-        this.fetchMedicalEmployees();
+        this.fetchMedicalEmployees(this.model.get('specialization'));
     }
 
     onMedicalEmployeeChange() {
