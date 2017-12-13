@@ -48,7 +48,7 @@ public class ProviderSaveVisitService extends BasicServiceCatch<VisitDTO, VisitD
         visitToSave.setStatus(requestVisitDto.getStatus());
 
         MedicalEmployee medicalEmployee = medicalEmployeeRepository.findById(requestVisitDto.getMedicalEmployeeId());
-        visitToSave.setMedicalEmpoyee(medicalEmployee);
+        visitToSave.setMedicalEmployee(medicalEmployee);
 
         if (requestVisitDto.getCustomerId() != null) {
             Customer customer = customerRepository.findById(requestVisitDto.getCustomerId());
