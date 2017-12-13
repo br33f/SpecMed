@@ -2,8 +2,10 @@ package com.i4m1s1.specmed.controller;
 
 import com.i4m1s1.specmed.dto.VisitBasicDataDTO;
 import com.i4m1s1.specmed.dto.VisitDTO;
+import com.i4m1s1.specmed.dto.VisitSelectedByCustomerDTO;
 import com.i4m1s1.specmed.persistence.Visit;
 import com.i4m1s1.specmed.service.ProviderGetFreeVisitService;
+import com.i4m1s1.specmed.service.ProviderMakeAppointmentService;
 import com.i4m1s1.specmed.service.visit.ProviderSaveVisitService;
 import com.i4m1s1.specmed.service.visit.ProviderVisitsByDoctorService;
 import com.i4m1s1.specmed.service.common.request.BasicRequest;
@@ -34,6 +36,9 @@ public class VisitController {
 
     @Autowired
     private ProviderGetFreeVisitService providerGetFreeVisitService;
+
+    @Autowired
+    private ProviderMakeAppointmentService providerMakeAppointmentService;
     /**
      * Metoda udostępniająca wyszukanie listy danych wizyt
      * @param request żądanie zawierające listę danych wizyt
@@ -56,10 +61,15 @@ public class VisitController {
         return providerSavevisitService.serve(request);
     }
 
-
     @CrossOrigin
     @RequestMapping(method = RequestMethod.POST, path = "/list/free")
     public BasicResponse<List<VisitDTO>> getFreeVisitByDoctorId(@RequestBody BasicRequest<String> request) {
         return providerGetFreeVisitService.serve(request);
+    }
+
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.PUT, path = "/appoint")
+    public BasicResponse<Visit> makeAppointmentToVisit(@RequestBody BasicRequest<VisitSelectedByCustomerDTO> request) {
+        return providerMakeAppointmentService.serve(request);
     }
 }

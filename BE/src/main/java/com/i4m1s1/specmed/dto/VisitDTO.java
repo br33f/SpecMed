@@ -23,9 +23,8 @@ public class VisitDTO {
 
     public VisitDTO(Visit visit) {
        setId(visit.getId());
-       if (visit.getCustomer() != null) {
+       if(visit.getCustomer() != null)
            setCustomerId(visit.getCustomer().getId());
-       }
        setMedicalEmployeeId(visit.getMedicalEmployee().getId());
        setDateEnd(visit.getDateEnd());
        setDateStart(visit.getDateStart());
