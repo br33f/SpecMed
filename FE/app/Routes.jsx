@@ -30,6 +30,7 @@ import {CustomerEdit} from "./modules/customer/Add.jsx";
 
 // Visit
 import {VisitAdd} from "./modules/visit/Add.jsx";
+import {VisitAppoint} from "./modules/visit/Appoint.jsx";
 
 export class Routes extends Component {
     render() {
@@ -115,6 +116,7 @@ export class Routes extends Component {
         return (
             <Switch>
                 <Route exact path='/visit/add' component={VisitAdd}/>
+                <Route exact path='/visit/appoint' component={VisitAppoint}/>
             </Switch>
         );
     }
