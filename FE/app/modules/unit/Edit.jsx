@@ -8,17 +8,19 @@ import {Loader} from "components/controls/Loader.jsx";
 
 const BaseModelConfigured = BaseModel.extend({
     defaults: {
-        unitData: {
-            name: "Szpital im. Mikołaja Kopernika",
-            address: "łódzka 7",
-            town: "Warszawa",
-            postalcode: "12-345",
-            email: "m.kopernik@szpital.pl",
-            telephonenumber: "123123123"
+        name: "",
+        addressData: {
+            cityName: "",
+            postalCode: ""
+        },
+        contactData: {
+            telephoneNumber: "",
+            email: ""
         }
     },
-    saveUrl: 'unit/save'
+    saveUrl: '/unit/save'
 });
+
 
 /**
  * Klasa odpowiedzialna za edycje oddziału
@@ -90,7 +92,6 @@ export class UnitEdit extends FormComponent {
      * @public
      */
     onFormClear() {
-        console.log("Clear!");
         this.model.clear();
     }
 
@@ -114,41 +115,35 @@ export class UnitEdit extends FormComponent {
                         <Form>
                             <FormGroup>
                                 <Label for="unitName">Nazwa placówki</Label>
-                                <Input type="text" name="name" id="unitName" placeholder="nazwa placówki"
-                                       value={this.state.model.get('unitData.name')}
+                                <Input type="text" name="name" id="unitName" placeholder="Nazwa placówki"
+                                       value={this.state.model.get('name')}
                                        onChange={this.bindValueToModel}/>
                             </FormGroup>
                             <FormGroup>
-                                <Label for="unitAddress">Adres placówki</Label>
-                                <Input type="text" name="address" id="unitAddress"
-                                       placeholder="adres placówki" value={this.state.model.get('unitData.address')}
+                                <Label for="unitZip">Kod pocztowy</Label>
+                                <Input type="text" name="addressData.postalCode" id="unitZip"
+                                       placeholder="Kod pocztowy" value={this.state.model.get('addressData.postalCode')}
                                        onChange={this.bindValueToModel}/>
                             </FormGroup>
                             <FormGroup>
                                 <Label for="unitTown">Miasto</Label>
-                                <Input type="text" name="town" id="unitTown" placeholder="miasto"
-                                       value={this.state.model.get('unitData.town')}
-                                       onChange={this.bindValueToModel}/>
-                            </FormGroup>
-                            <FormGroup>
-                                <Label for="unitPostalcode">Kod pocztowy</Label>
-                                <Input type="text" name="postalcode" id="unitPostalcode" placeholder="kod pocztowy"
-                                       value={this.state.model.get('unitData.postalcode')}
+                                <Input type="text" name="addressData.cityName" id="unitTown" placeholder="Miasto"
+                                       value={this.state.model.get('addressData.cityName')}
                                        onChange={this.bindValueToModel}/>
                             </FormGroup>
                             <FormGroup>
                                 <Label for="unitEmail">Adres e-mail</Label>
-                                <Input type="text" name="email" id="unitEmail" placeholder="adres e-mail"
-                                       value={this.state.model.get('unitData.email')}
+                                <Input type="text" name="contactData.email" id="unitEmail" placeholder="Adres e-mail"
+                                       value={this.state.model.get('contactData.email')}
                                        onChange={this.bindValueToModel}/>
                             </FormGroup>
                             <FormGroup>
                                 <Label for="unitTelephonenumber">Numer telefonu</Label>
-                                <Input type="number" name="telephonenumber" id="unitTelephonenumber" placeholder="numer telefonu"
-                                       value={this.state.model.get('unitData.telephonenumber')}
+                                <Input type="number" name="contactData.telephoneNumber" id="unitTelephonenumber"
+                                       placeholder="Numer telefonu"
+                                       value={this.state.model.get('contactData.telephoneNumber')}
                                        onChange={this.bindValueToModel}/>
                             </FormGroup>
-
                             <div className="pull-right">
                                 <Button outline type="button" className="mr-1"
                                         onClick={this.onFormClear.bind(this)}>Wyczyść formularz</Button>
