@@ -36,6 +36,9 @@ export class CustomerEdit extends FormComponent {
     }
 
     componentWillReceiveProps(newProps) {
+        // metoda jest wywoływana tuż przed otrzymaniem parametów z routera
+        // np. gdy zmieniamy ekran z /customer/edit na /customer/new
+        // newProps zawiera nowe parametry
         this.getRoutingData(newProps);
     }
 
@@ -74,6 +77,7 @@ export class CustomerEdit extends FormComponent {
 
     onFormClear() {
         this.clearChildrenModels()
+        delete this.customerId;
     }
 
     clearChildrenModels() {
