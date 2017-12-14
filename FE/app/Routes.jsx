@@ -26,7 +26,7 @@ import {UnitEdit} from "./modules/unit/Edit.jsx";
 import {OpinionAdd} from "./modules/opinion/Add.jsx";
 
 // Customer
-import {CustomerEdit} from "./modules/customer/Add.jsx";
+import {CustomerEdit} from "./modules/customer/Edit.jsx";
 
 // Visit
 import {VisitAdd} from "./modules/visit/Add.jsx";
