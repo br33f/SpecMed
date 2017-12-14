@@ -2,25 +2,28 @@ import React from 'react';
 import {Component} from 'react';
 import {BindedInput} from 'components/controls/BindedInput.jsx';
 import {BindedDateTimePicker} from 'components/controls/BindedDateTimePicker.jsx';
-import BaseModel from 'components/models/BaseModel';
-import {Button, Form, FormGroup, Label, Input} from 'reactstrap';
+import {Form, FormGroup, Label} from 'reactstrap';
 import {FormComponent} from "components/form-component/FormComponent.jsx";
 import {Loader} from "components/controls/Loader.jsx";
 
-const BaseModelConfigured = BaseModel.extend({
-    defaults: {
-        pesel: "",
-        name: "",
-        surname: "",
-        gender: "",
-        birthday: Date.now()
-    }
-});
+const modelDefaults = {
+    pesel: "",
+    name: "",
+    surname: "",
+    gender: "",
+    birthday: Date.now()
+};
 
 export class PersonalEdit extends FormComponent {
     constructor(props) {
-        let localModel = new BaseModelConfigured();
-        super(props, localModel);
+        let personalModel = props.model;
+        super(props, personalModel);
+
+        personalModel.setDefaults(modelDefaults);
+        personalModel.set(modelDefaults);
+        if (props.customerId) {
+            personalModel.fetchUrl = `/customer/get/${props.customerId}/personal`;
+        }
 
         this.state = {
             genderDictionary: [],
@@ -28,10 +31,46 @@ export class PersonalEdit extends FormComponent {
             isLoading: false,
             isSaved: false
         };
+
+        this.addValidators();
     }
 
+    addValidators() {
+        this.rules = {
+            "pesel": [
+                {validator: "required"},
+                {validator: "number"},
+                {
+                    validator: "exactLength",
+                    params: {
+                        length: 11
+                    }
+                }
+            ],
+            "name": {validator: "required"},
+            "surname": {validator: "required"},
+            "gender": {validator: "required"},
+            "birthday": {validator: "required"}
+        };
+    }
+
+
     componentDidMount() {
+        this.handleFetch(this.props);
         this.fetchDictionaries();
+    }
+
+    componentWillReceiveProps(newProps) {
+        this.handleFetch(newProps);
+    }
+
+    handleFetch(props) {
+        if (props.customerId) {
+            this.model.fetchUrl = `/customer/get/${props.customerId}/personal`;
+            this.model.fetch();
+        } else {
+            this.model.clear();
+        }
     }
 
     /**
@@ -45,9 +84,6 @@ export class PersonalEdit extends FormComponent {
         });
     }
 
-    onFormClear() {
-        this.model.clear();
-    }
 
     render() {
         return (
@@ -71,6 +107,11 @@ export class PersonalEdit extends FormComponent {
                 <FormGroup>
                     <Label for="gender">Płeć</Label>
                     <BindedInput form={this} type="select" name="gender" id="gender">
+                        <option
+                            key="PLACEHOLDER_VAR"
+                            value="">
+                            Wybierz płeć
+                        </option>)
                         {this.state.genderDictionary.map(genderObj =>
                             <option
                                 key={genderObj.id}
@@ -81,7 +122,7 @@ export class PersonalEdit extends FormComponent {
                 </FormGroup>
                 <FormGroup>
                     <Label for="birthday">Data urodzin</Label>
-                    <BindedDateTimePicker form={this} id="birthday" name="birthday"
+                    <BindedDateTimePicker form={this} id="birthday" name="birthday" time={false}
                                           placeholder="Wybierz datę urodzin"/>
                 </FormGroup>
             </Form>

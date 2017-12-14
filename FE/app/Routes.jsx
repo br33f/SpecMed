@@ -27,6 +27,7 @@ import {OpinionAdd} from "./modules/opinion/Add.jsx";
 
 // Customer
 import {CustomerEdit} from "./modules/customer/Edit.jsx";
+import {CustomerList} from "./modules/customer/List.jsx";
 
 // Visit
 import {VisitAdd} from "./modules/visit/Add.jsx";
@@ -108,6 +109,8 @@ export class Routes extends Component {
         return (
             <Switch>
                 <Route exact path='/customer/new' component={CustomerEdit}/>
+                <Route exact path='/customer/edit/:customerId' component={CustomerEdit}/>
+                <Route exact path='/customer/list' component={CustomerList}/>
             </Switch>
         );
     }

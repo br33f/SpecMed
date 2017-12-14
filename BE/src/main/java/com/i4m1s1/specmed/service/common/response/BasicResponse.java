@@ -1,6 +1,6 @@
 package com.i4m1s1.specmed.service.common.response;
 
-/**
+import com.i4m1s1.specmed.persistence.Customer; /**
  * Podstawowa klasa dla response
  *
  * @param <T> typ zawartości

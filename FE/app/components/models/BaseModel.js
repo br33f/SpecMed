@@ -26,6 +26,20 @@ BaseModel.prototype.get = function (key) {
     return key ? _.get(this.attributes, key) : this.attributes;
 };
 
+BaseModel.prototype.getRecursive = function (key) {
+    let modelAttributes =  key ? _.cloneDeep(_.get(this.attributes, key)) : _.cloneDeep(this.attributes);
+
+    Object.entries(modelAttributes).forEach(modelEntry => {
+        let key = modelEntry[0];
+        let val = modelEntry[1];
+        if (val instanceof BaseModel) {
+            modelAttributes[key] = val.getRecursive();
+        }
+    });
+
+    return modelAttributes;
+};
+
 BaseModel.prototype.set = function () {
     if (!arguments) return;
 
@@ -40,6 +54,10 @@ BaseModel.prototype.set = function () {
     }
 
     this.onChange(this);
+};
+
+BaseModel.prototype.setDefaults = function (defaults) {
+    this.defaults = _.cloneDeep(defaults);
 };
 
 BaseModel.prototype.clear = function () {
@@ -62,7 +80,7 @@ BaseModel.prototype.save = function () {
 
 BaseModel.prototype.getSaveData = function () {
   return {
-      chunkData: this.get()
+      chunkData: this.getRecursive()
   };
 };
 

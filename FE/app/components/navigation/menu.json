@@ -4,6 +4,19 @@
     "label": "Strona główna"
   },
   {
+    "label": "Pacjent",
+    "children": [
+      {
+        "uri": "/customer/list",
+        "label": "Lista pacjentów"
+      },
+      {
+        "uri": "/customer/new",
+        "label": "Dodaj nowego pacjenta"
+      }
+    ]
+  },
+  {
     "label": "Pracownik",
     "children": [
       {

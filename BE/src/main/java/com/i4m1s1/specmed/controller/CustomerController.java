@@ -1,20 +1,18 @@
 package com.i4m1s1.specmed.controller;
 
+import com.i4m1s1.specmed.core.AddressData;
+import com.i4m1s1.specmed.core.ContactData;
+import com.i4m1s1.specmed.core.PersonalData;
 import com.i4m1s1.specmed.persistence.Customer;
-import com.i4m1s1.specmed.service.customer.ProviderGetAllCustomerService;
-import com.i4m1s1.specmed.service.customer.ProviderSaveCustomerService;
+import com.i4m1s1.specmed.persistence.Employee;
+import com.i4m1s1.specmed.service.customer.*;
 import com.i4m1s1.specmed.service.common.request.BasicRequest;
 import com.i4m1s1.specmed.service.common.request.ListRequest;
 import com.i4m1s1.specmed.service.common.response.BasicResponse;
 import com.i4m1s1.specmed.service.common.response.ListResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import com.i4m1s1.specmed.dto.SimpleCustomerDataDTO;
-import com.i4m1s1.specmed.service.customer.ProviderGetAllSimpleCustomerDataService;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -29,6 +27,18 @@ public class CustomerController {
     private ProviderSaveCustomerService providerSaveCustomerService;
 
     @Autowired
+    private ProviderGetCustomerService providerGetCustomerService;
+
+    @Autowired
+    private ProviderGetCustomerAddressDataService providerGetCustomerAddressDataService;
+
+    @Autowired
+    private ProviderGetCustomerContactDataService providerGetCustomerContactDataService;
+
+    @Autowired
+    private ProviderGetCustomerPersonalDataService providerGetCustomerPersonalDataService;
+
+    @Autowired
     private ProviderGetAllCustomerService providerGetAllCustomerService;
 
     @Autowired
@@ -41,7 +51,39 @@ public class CustomerController {
     }
 
     @CrossOrigin
-    @RequestMapping(method = RequestMethod.GET, path = "/list/full")
+    @RequestMapping(method = RequestMethod.GET, path = "/get/{customerId}")
+    public BasicResponse<Customer> getCustomer(@PathVariable("customerId") String customerId) {
+        BasicRequest<String> getCustomerRequest = new BasicRequest<>();
+        getCustomerRequest.setChunkData(customerId);
+        return providerGetCustomerService.serve(getCustomerRequest);
+    }
+
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.GET, path = "/get/{customerId}/address")
+    public BasicResponse<AddressData> getCustomerAddressData(@PathVariable("customerId") String customerId) {
+        BasicRequest<String> getCustomerRequest = new BasicRequest<>();
+        getCustomerRequest.setChunkData(customerId);
+        return providerGetCustomerAddressDataService.serve(getCustomerRequest);
+    }
+
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.GET, path = "/get/{customerId}/contact")
+    public BasicResponse<ContactData> getCustomerContactData(@PathVariable("customerId") String customerId) {
+        BasicRequest<String> getCustomerRequest = new BasicRequest<>();
+        getCustomerRequest.setChunkData(customerId);
+        return providerGetCustomerContactDataService.serve(getCustomerRequest);
+    }
+
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.GET, path = "/get/{customerId}/personal")
+    public BasicResponse<PersonalData> getCustomerPersonalData(@PathVariable("customerId") String customerId) {
+        BasicRequest<String> getCustomerRequest = new BasicRequest<>();
+        getCustomerRequest.setChunkData(customerId);
+        return providerGetCustomerPersonalDataService.serve(getCustomerRequest);
+    }
+
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.POST, path = "/list")
     public ListResponse<Customer> getBasicDataList(@RequestBody ListRequest<Customer> request) {
         return providerGetAllCustomerService.serve(request);
     }

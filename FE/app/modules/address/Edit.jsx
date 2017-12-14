@@ -1,34 +1,60 @@
 import React from 'react';
 import {Component} from 'react';
 import {BindedInput} from 'components/controls/BindedInput.jsx';
-import BaseModel from 'components/models/BaseModel';
-import {Button, Form, FormGroup, Label, Input} from 'reactstrap';
+import {Form, FormGroup, Label} from 'reactstrap';
 import {FormComponent} from "components/form-component/FormComponent.jsx";
 import {Loader} from "components/controls/Loader.jsx";
 
-const BaseModelConfigured = BaseModel.extend({
-    defaults: {
-        cityName: "",
-        streetName: "",
-        houseNumber: "",
-        apartmentNumber: "",
-        postalCode: ""
-    }
-});
+const modelDefaults = {
+    cityName: "",
+    streetName: "",
+    houseNumber: "",
+    apartmentNumber: "",
+    postalCode: ""
+};
+
 export class AddressEdit extends FormComponent {
     constructor(props) {
-        let localModel = new BaseModelConfigured();
-        super(props, localModel);
+        let addressModel = props.model;
+        super(props, addressModel);
+
+        addressModel.setDefaults(modelDefaults);
+        addressModel.set(modelDefaults);
 
         this.state = {
             model: this.model,
             isLoading: false,
             isSaved: false
         };
+
+        this.addValidators();
     }
 
-    onFormClear() {
-        this.model.clear();
+    addValidators() {
+        this.rules = {
+            "postalCode": [{validator: "required"}, {validator: "zipCode"}],
+            "streetName": {validator: "required"},
+            "houseNumber": {validator: "required"},
+            "apartmentNumber": {validator: "number"},
+            "cityName": {validator: "required"}
+        };
+    }
+
+    componentDidMount() {
+        this.handleFetch(this.props);
+    }
+
+    componentWillReceiveProps(newProps) {
+        this.handleFetch(newProps);
+    }
+
+    handleFetch(props) {
+        if (props.customerId) {
+            this.model.fetchUrl = `/customer/get/${props.customerId}/address`;
+            this.model.fetch();
+        } else {
+            this.model.clear();
+        }
     }
 
     render() {

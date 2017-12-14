@@ -1,31 +1,57 @@
 import React from 'react';
 import {Component} from 'react';
 import {BindedInput} from 'components/controls/BindedInput.jsx';
-import BaseModel from 'components/models/BaseModel';
-import {Button, Form, FormGroup, Label, Input} from 'reactstrap';
+import {Form, FormGroup, Label} from 'reactstrap';
 import {FormComponent} from "components/form-component/FormComponent.jsx";
 import {Loader} from "components/controls/Loader.jsx";
 
-const BaseModelConfigured = BaseModel.extend({
-    defaults: {
-        telephoneNumber: "",
-        email: ""
-    }
-});
+const modelDefaults = {
+    telephoneNumber: "",
+    email: ""
+};
+
 export class ContactEdit extends FormComponent {
     constructor(props) {
-        let localModel = new BaseModelConfigured();
-        super(props, localModel);
+        let contactModel = props.model;
+        super(props, contactModel);
+
+        contactModel.setDefaults(modelDefaults);
+        contactModel.set(modelDefaults);
+        if (props.customerId) {
+            contactModel.fetchUrl = `/customer/get/${props.customerId}/contact`;
+        }
 
         this.state = {
             model: this.model,
             isLoading: false,
             isSaved: false
         };
+
+        this.addValidators();
     }
 
-    onFormClear() {
-        this.model.clear();
+    addValidators() {
+        this.rules = {
+            "telephoneNumber": [{validator: "required"}, {validator: "number"}],
+            "email": [{validator: "required"}, {validator: "email"}]
+        };
+    }
+
+    componentDidMount() {
+        this.handleFetch(this.props);
+    }
+
+    componentWillReceiveProps(newProps) {
+        this.handleFetch(newProps);
+    }
+
+    handleFetch(props) {
+        if (props.customerId) {
+            this.model.fetchUrl = `/customer/get/${props.customerId}/contact`;
+            this.model.fetch();
+        } else {
+            this.model.clear();
+        }
     }
 
     render() {

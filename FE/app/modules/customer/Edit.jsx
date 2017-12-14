@@ -12,17 +12,21 @@ import {ContactEdit} from '../contact/Edit.jsx';
 
 const BaseModelConfigured = BaseModel.extend({
     defaults: {
-        addressData: {},
-        personalData: {},
-        contactData: {}
+        // w głownym modelu znajdują się oddzielne modele dla każdej sekcji
+        // przekazywane są przez props do widoku child jako referencja, zatem zawsze mamy aktualne dane!
+        addressData: new BaseModel(),
+        personalData: new BaseModel(),
+        contactData: new BaseModel()
     },
-    saveUrl: '/employee/save'
+    saveUrl: '/customer/save'
 });
 
 export class CustomerEdit extends FormComponent {
     constructor(props) {
-        let localModel = new BaseModelConfigured();
-        super(props, localModel);
+        let customerModel = new BaseModelConfigured();
+        super(props, customerModel);
+
+        this.getRoutingData(props);
 
         this.state = {
             model: this.model,
@@ -31,32 +35,72 @@ export class CustomerEdit extends FormComponent {
         };
     }
 
-    onFormSave() {
+    componentWillReceiveProps(newProps) {
+        this.getRoutingData(newProps);
+    }
 
+    getRoutingData(props) {
+        this.customerId = props.match.params.customerId;
+        this.model.set('id', this.customerId);
+    }
+
+    onFormSave() {
+        this.validateChildren();
+
+        if (!this.hasErrors()) {
+            this.setState({
+                isLoading: true
+            });
+
+            this.model.save().then(() => {
+                this.setState({
+                    isLoading: false,
+                    isSaved: true
+                });
+                this.clearChildrenModels();
+            });
+        }
+
+        this.forceUpdate();
+    }
+
+    validateChildren() {
+        this.refs.address.validate();
+        this.refs.personal.validate();
+        this.refs.contact.validate();
+
+        this.errors = Object.assign({}, this.refs.address.errors, this.refs.personal.errors, this.refs.contact.errors);
     }
 
     onFormClear() {
-        console.log("Clear!");
-        this.model.clear();
+        this.clearChildrenModels()
+    }
+
+    clearChildrenModels() {
+        this.model.get('addressData').clear();
+        this.model.get('personalData').clear();
+        this.model.get('contactData').clear();
     }
 
     render() {
-        console.log("render");
         return (
             <Container fluid={true}>
                 <p className="contentTitle">
-                    Edycja pacjenta
+                    {this.customerId ? 'Edycja' : 'Dodawanie nowego'} pacjenta
                     <Loader isEnabled={this.state.isLoading}/>
                 </p>
+                <div className="alert alert-success" hidden={!this.state.isSaved} role="alert">
+                    {this.customerId ? 'Pomyślnie zapisano pacjenta.' : 'Pomyślnie dodano pacjenta.'}
+                </div>
                 <Row>
-                    <Col md={4}>
-                        <AddressEdit />
+                    <Col md={4} sm={6} xs={12}>
+                        <AddressEdit ref="address" model={this.model.get('addressData')} customerId={this.customerId}/>
                     </Col>
-                    <Col md={4}>
-                        <PersonalEdit />
+                    <Col md={4} sm={6} xs={12}>
+                        <PersonalEdit ref="personal" model={this.model.get('personalData')} customerId={this.customerId}/>
                     </Col>
-                    <Col md={4}>
-                        <ContactEdit />
+                    <Col md={4} sm={6} xs={12}>
+                        <ContactEdit ref="contact" model={this.model.get('contactData')} customerId={this.customerId}/>
                     </Col>
                 </Row>
                 <div>
@@ -64,13 +108,9 @@ export class CustomerEdit extends FormComponent {
                     <Button outline type="button" className="mr-1"
                             onClick={this.onFormClear.bind(this)}>Wyczyść formularz</Button>
                     <Button outline color="primary" type="button"
-                            onClick={this.onFormSave.bind(this)}>Aktualizuj dane pacjenta</Button>
+                            onClick={this.onFormSave.bind(this)}>Zapisz pacjenta</Button>
                 </div>
             </Container>
         );
-    }
-
-    getSampleGender() {
-        return ['Kobieta', 'Mezczyzna'];
     }
 }
