@@ -70,6 +70,23 @@
         "label": "Umów się na wizytę"
       }
     ]
+  },
+  {
+    "label": "Konto",
+    "children": [
+      {
+        "uri": "/register",
+        "label": "Rejestracja"
+      },
+      {
+        "uri": "/login",
+        "label": "Zaloguj się"
+      },
+      {
+        "uri": "/logout",
+        "label": "Wyloguj się"
+      }
+    ]
   }
 
 ]

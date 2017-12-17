@@ -34,6 +34,7 @@ export class App extends Component {
 
    configureAxis() {
        axios.defaults.baseURL = 'http://localhost:8080';
+       Utils.setAuthorizationHeader();
    }
 
     render() {
