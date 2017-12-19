@@ -14,6 +14,7 @@ public class Employee {
     private PersonalData personalData;
     private AddressData addressData;
     private ContactData contactData;
+    private String experience;
 
     public Employee() {
     }
@@ -53,4 +54,10 @@ public class Employee {
     public void setContactData(ContactData contactData) {
         this.contactData = contactData;
     }
+
+    public String getExperience() {
+        return experience;
+    }
+
+    public void setExperience(String experience) { this.experience = experience; }
 }

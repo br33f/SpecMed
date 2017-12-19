@@ -71,6 +71,12 @@ export class PersonalEdit extends FormComponent {
         } else {
             this.model.clear();
         }
+        if (props.employeeId) {
+            this.model.fetchUrl = `/employee/get/${props.employeeId}/personal`;
+            this.model.fetch();
+        } else {
+            this.model.clear();
+        }
     }
 
     /**

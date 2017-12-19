@@ -55,6 +55,12 @@ export class AddressEdit extends FormComponent {
         } else {
             this.model.clear();
         }
+        if (props.employeeId) {
+            this.model.fetchUrl = `/employee/get/${props.employeeId}/address`;
+            this.model.fetch();
+        } else {
+            this.model.clear();
+        }
     }
 
     render() {
