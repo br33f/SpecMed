@@ -19,10 +19,13 @@ import static com.i4m1s1.specmed.core.dict.WarningMsg.AUTH_ERROR;
 
 /**
  * Helper służący do tworzenia i weryfikacji/odczytywania JWT
+ *
  * @author br33f
  */
 public class AuthHelper {
-    private static final String secret = "specmed";
+
+    public static final String JWT_HEADER = "JWTH";
+    private static final String SPECMED = "specmed";
     private static final long ONE_SECOND = 1000;
     private static final long ONE_MINUTE = 60 * ONE_SECOND;
     private static final long ONE_HOUR = 60 * ONE_MINUTE;
@@ -39,7 +42,6 @@ public class AuthHelper {
         } catch (IOException e) {
             throw new SMException("545664578888", AUTH_ERROR, e.getMessage());
         }
-
         JWTCreator.Builder tokenBuilder = JWT.create()
                 .withIssuedAt(issuedAt)
                 .withExpiresAt(expiresAt)
@@ -50,10 +52,11 @@ public class AuthHelper {
     }
 
     public static User readToken(String token) throws SMException {
+        if (token == null) {
+            return null;
+        }
         Algorithm algorithm = generateAlgorithm();
-
         JWTVerifier verifier = JWT.require(algorithm).build();
-
         DecodedJWT jwt = null;
         try {
             jwt = verifier.verify(token);
@@ -65,7 +68,7 @@ public class AuthHelper {
         String jwtSerializedPermissions = jwt.getClaim("permissions").asString();
         ArrayList<Permission> jwtPermissions = null;
         try {
-            jwtPermissions = (ArrayList<Permission>)deserializeObject(jwtSerializedPermissions);
+            jwtPermissions = (ArrayList<Permission>) deserializeObject(jwtSerializedPermissions);
         } catch (Exception e) {
             throw new SMException("53454356354346", AUTH_ERROR, e.getMessage());
         }
@@ -80,7 +83,7 @@ public class AuthHelper {
     private static Algorithm generateAlgorithm() throws SMException {
         Algorithm algorithm = null;
         try {
-            algorithm = Algorithm.HMAC512(secret);
+            algorithm = Algorithm.HMAC512(SPECMED);
         } catch (UnsupportedEncodingException e) {
             throw new SMException("124214124444", AUTH_ERROR, e.getMessage());
         }

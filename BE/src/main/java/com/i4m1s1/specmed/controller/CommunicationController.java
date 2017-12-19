@@ -1,5 +1,6 @@
 package com.i4m1s1.specmed.controller;
 
+import com.i4m1s1.specmed.core.annotation.PermitWith;
 import com.i4m1s1.specmed.dto.NewPrivateMessageDTO;
 import com.i4m1s1.specmed.persistence.PrivateMessage;
 import com.i4m1s1.specmed.service.ProviderSavePrivateMessageFromCustomerService;
@@ -22,6 +23,7 @@ public class CommunicationController {
     @Autowired
     private ProviderSavePrivateMessageFromCustomerService savePrivateMessageService;
 
+    @PermitWith({"THIS_IS_NEEDED", "PERMISSION_NOT_NEEDED"})
     @CrossOrigin
     @RequestMapping(method = RequestMethod.PUT, path = "/save")
     public BasicResponse<PrivateMessage> savePrivateMessage(@RequestBody BasicRequest<NewPrivateMessageDTO> request) {

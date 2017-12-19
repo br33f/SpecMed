@@ -1,8 +1,5 @@
 package com.i4m1s1.specmed.service.auth;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTVerifier;
-import com.auth0.jwt.algorithms.Algorithm;
 import com.i4m1s1.specmed.core.SMException;
 import com.i4m1s1.specmed.core.helper.AuthHelper;
 import com.i4m1s1.specmed.dto.LoginDTO;
@@ -15,11 +12,6 @@ import org.apache.commons.lang.StringUtils;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.io.UnsupportedEncodingException;
-import java.util.Date;
-
-import static com.i4m1s1.specmed.core.dict.WarningMsg.AUTH_ERROR;
 
 @Service
 public class ProviderUserLoginService extends BasicServiceCatch<LoginDTO, String> {
