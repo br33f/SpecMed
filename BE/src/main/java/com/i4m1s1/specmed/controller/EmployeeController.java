@@ -1,6 +1,12 @@
 package com.i4m1s1.specmed.controller;
 
+import com.i4m1s1.specmed.core.AddressData;
+import com.i4m1s1.specmed.core.ContactData;
+import com.i4m1s1.specmed.core.PersonalData;
 import com.i4m1s1.specmed.persistence.Employee;
+import com.i4m1s1.specmed.service.employee.ProviderGetEmployeeAddressDataService;
+import com.i4m1s1.specmed.service.employee.ProviderGetEmployeeContactDataService;
+import com.i4m1s1.specmed.service.employee.ProviderGetEmployeePersonalDataService;
 import com.i4m1s1.specmed.service.employee.ProviderEmployeeBasicDataService;
 import com.i4m1s1.specmed.service.employee.ProviderGetEmployeeService;
 import com.i4m1s1.specmed.service.employee.ProviderSaveEmployeeService;
@@ -24,6 +30,15 @@ public class EmployeeController {
     private ProviderGetEmployeeService providerGetEmployeeService;
 
     @Autowired
+    private ProviderGetEmployeeAddressDataService providerGetEmployeeAddressDataService;
+
+    @Autowired
+    private ProviderGetEmployeeContactDataService providerGetEmployeeContactDataService;
+
+    @Autowired
+    private ProviderGetEmployeePersonalDataService providerGetEmployeePersonalDataService;
+
+    @Autowired
     private ProviderSaveEmployeeService providerSaveEmployeeService;
 
     /**
@@ -37,6 +52,30 @@ public class EmployeeController {
         BasicRequest<String> getEmployeeRequest = new BasicRequest<>();
         getEmployeeRequest.setChunkData(employeeId);
         return providerGetEmployeeService.serve(getEmployeeRequest);
+    }
+
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.GET, path = "/get/{employeeId}/address")
+    public BasicResponse<AddressData> getCustomerAddressData(@PathVariable("employeeId") String employeeId) {
+        BasicRequest<String> getEmployeeRequest = new BasicRequest<>();
+        getEmployeeRequest.setChunkData(employeeId);
+        return providerGetEmployeeAddressDataService.serve(getEmployeeRequest);
+    }
+
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.GET, path = "/get/{employeeId}/contact")
+    public BasicResponse<ContactData> getCustomerContactData(@PathVariable("employeeId") String employeeId) {
+        BasicRequest<String> getEmployeeRequest = new BasicRequest<>();
+        getEmployeeRequest.setChunkData(employeeId);
+        return providerGetEmployeeContactDataService.serve(getEmployeeRequest);
+    }
+
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.GET, path = "/get/{employeeId}/personal")
+    public BasicResponse<PersonalData> getCustomerPersonalData(@PathVariable("employeeId") String employeeId) {
+        BasicRequest<String> getEmployeeRequest = new BasicRequest<>();
+        getEmployeeRequest.setChunkData(employeeId);
+        return providerGetEmployeePersonalDataService.serve(getEmployeeRequest);
     }
 
     /**

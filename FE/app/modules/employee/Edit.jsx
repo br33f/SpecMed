@@ -9,6 +9,7 @@ import {Loader} from "components/controls/Loader.jsx";
 import {AddressEdit} from '../address/Edit.jsx';
 import {PersonalEdit} from '../personal/Edit.jsx';
 import {ContactEdit} from '../contact/Edit.jsx';
+import {BindedInput} from 'components/controls/BindedInput.jsx';
 
 const BaseModelConfigured = BaseModel.extend({
     defaults: {
@@ -16,7 +17,8 @@ const BaseModelConfigured = BaseModel.extend({
         // przekazywane są przez props do widoku child jako referencja, zatem zawsze mamy aktualne dane!
         addressData: new BaseModel(),
         personalData: new BaseModel(),
-        contactData: new BaseModel()
+        contactData: new BaseModel(),
+        experience: ""
     },
     saveUrl: '/employee/save'
 });
@@ -90,25 +92,25 @@ export class EmployeeEdit extends FormComponent {
         return (
             <Container fluid={true}>
                 <p className="contentTitle">
-                    {this.customerId ? 'Edycja' : 'Dodawanie nowego'} pracownika
+                    {this.employeeId ? 'Edycja' : 'Dodawanie nowego'} pracownika
                     <Loader isEnabled={this.state.isLoading}/>
                 </p>
                 <div className="alert alert-success" hidden={!this.state.isSaved} role="alert">
-                    {this.customerId ? 'Pomyślnie zapisano pracownika.' : 'Pomyślnie dodano pracownika.'}
+                    {this.employeeId ? 'Pomyślnie zapisano pracownika.' : 'Pomyślnie dodano pracownika.'}
                 </div>
                 <Row>
                     <Col md={4} sm={6} xs={12}>
-                        <AddressEdit ref="address" model={this.model.get('addressData')} customerId={this.employeeId}/>
+                        <AddressEdit ref="address" model={this.model.get('addressData')} employeeId={this.employeeId}/>
                     </Col>
                     <Col md={4} sm={6} xs={12}>
-                        <PersonalEdit ref="personal" model={this.model.get('personalData')} customerId={this.employeeId}/>
+                        <PersonalEdit ref="personal" model={this.model.get('personalData')} employeeId={this.employeeId}/>
                     </Col>
                     <Col md={4} sm={6} xs={12}>
-                        <ContactEdit ref="contact" model={this.model.get('contactData')} customerId={this.employeeId}/>
+                        <ContactEdit ref="contact" model={this.model.get('contactData')} employeeId={this.employeeId}/>
                         {/*tym moze sie roznic od customera?*/}
                         <FormGroup>
                             <h5> Doświadczenie zawodowe </h5>
-                            <Input form = {this} type="textarea" name="experience" id="employeeExperience" placeholder="Doświadczenie zawodowe pracownika"/>
+                            <BindedInput form={this} type="textarea" name="experience" id="employeeExperience" placeholder="Doświadczenie zawodowe pracownika"/>
                         </FormGroup>
                     </Col>
                 </Row>
