@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import _ from 'lodash';
 import {Component} from 'react';
 
 import {TableHeader} from './TableHeader.jsx';
 import {TableContent} from './TableContent.jsx';
+import {TablePagination} from './TablePagination.jsx';
 
-import {Table, Pagination, PaginationItem, PaginationLink} from 'reactstrap';
+import {Table} from 'reactstrap';
 import './postpageablettable.scss';
 
 const DEFAULT_PAGE_SIZE = 10;
@@ -77,7 +77,6 @@ export class PostPageableTable extends Component {
     }
 
     render() {
-        const currentPage = this.currentPage;
         const headerDefinition = this.props.headerDefinition;
 
         if (this.state.employeeList && this.state.employeeList.length > 0) {
@@ -88,25 +87,7 @@ export class PostPageableTable extends Component {
                         <TableContent headerDefinition={headerDefinition} employeeList={this.state.employeeList}
                                       dictionaries={this.state.dictionaries}/>
                     </Table>
-                    <Pagination className="mx-auto">
-                        <PaginationItem disabled={currentPage <= 0}>
-                            <PaginationLink previous
-                                            onClick={currentPage > 0 ? this.setPage.bind(this, currentPage - 1) : () => {
-                                            }}/>
-                        </PaginationItem>
-                        {
-                            Array.apply(0, Array(this.state.totalPages)).map((x, i) =>
-                                <PaginationItem key={i} active={currentPage === i}>
-                                    <PaginationLink onClick={this.setPage.bind(this, i)}>{i + 1}</PaginationLink>
-                                </PaginationItem>
-                            )
-                        }
-                        <PaginationItem disabled={currentPage >= this.state.totalPages - 1}>
-                            <PaginationLink next
-                                            onClick={currentPage < this.state.totalPages - 1 ? this.setPage.bind(this, currentPage + 1) : () => {
-                                            }}/>
-                        </PaginationItem>
-                    </Pagination>
+                    <TablePagination setPage={this.setPage.bind(this)} currentPage={this.currentPage} totalPages={this.state.totalPages} />
                 </div>
             );
         } else {

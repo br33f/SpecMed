@@ -23,13 +23,16 @@ import static com.i4m1s1.specmed.core.dict.WarningMsg.AUTH_ERROR;
  */
 public class AuthHelper {
     private static final String secret = "specmed";
+    private static final long ONE_SECOND = 1000;
+    private static final long ONE_MINUTE = 60 * ONE_SECOND;
+    private static final long ONE_HOUR = 60 * ONE_MINUTE;
 
     public static String createToken(User user) throws SMException {
-        Algorithm algorithm = genereteAlgorithm();
+        Algorithm algorithm = generateAlgorithm();
 
-        long now = System.currentTimeMillis();
+        long now = DateHelper.getCurrentDateAsLong();
         Date issuedAt = new Date(now);
-        Date expiresAt = new Date(now + 3600 * 1000);
+        Date expiresAt = new Date(now + ONE_HOUR);
         String serializedPermissions = null;
         try {
             serializedPermissions = serializeObject(user.getPermissions());
@@ -47,7 +50,7 @@ public class AuthHelper {
     }
 
     public static User readToken(String token) throws SMException {
-        Algorithm algorithm = genereteAlgorithm();
+        Algorithm algorithm = generateAlgorithm();
 
         JWTVerifier verifier = JWT.require(algorithm).build();
 
@@ -74,7 +77,7 @@ public class AuthHelper {
         return jwtUser;
     }
 
-    private static Algorithm genereteAlgorithm() throws SMException {
+    private static Algorithm generateAlgorithm() throws SMException {
         Algorithm algorithm = null;
         try {
             algorithm = Algorithm.HMAC512(secret);

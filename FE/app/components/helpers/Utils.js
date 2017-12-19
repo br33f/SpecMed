@@ -1,4 +1,5 @@
 import dateFormat from 'dateformat';
+import axios from 'axios';
 
 export default {
     /**
@@ -42,5 +43,14 @@ export default {
         let date = new Date(timestamp);
 
         return dateFormat(date, format);
+    },
+
+    setAuthorizationHeader: function () {
+        let authToken = localStorage.getItem("authToken");
+        if (authToken) {
+            axios.defaults.headers.common['Authorization'] = localStorage.getItem("authToken");
+        } else {
+            delete axios.defaults.headers.common['Authorization'];
+        }
     }
 }

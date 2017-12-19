@@ -36,6 +36,11 @@ import {VisitAppoint} from "./modules/visit/Appoint.jsx";
 // Communication
 import {CommunicationWithDoctor} from "./modules/communication-with-doctor/Add.jsx";
 
+// User
+import {Register} from "./modules/user/Register.jsx";
+import {Login} from "./modules/user/Login.jsx";
+import {Logout} from "./modules/user/Logout.jsx";
+
 export class Routes extends Component {
     render() {
         return (
@@ -49,6 +54,7 @@ export class Routes extends Component {
                 {this.customerRoutes()}
                 {this.visitRoutes()}
                 {this.messageRoutes()}
+                {this.userRoutes()}
             </div>
         );
     }
@@ -134,5 +140,15 @@ export class Routes extends Component {
                 <Route exact path='/contact/send' component={CommunicationWithDoctor}/>
             </Switch>
         )
+    }
+
+    userRoutes() {
+        return (
+            <Switch>
+                <Route exact path='/register' component={Register}/>
+                <Route exact path='/login' component={Login}/>
+                <Route exact path='/logout' component={Logout}/>
+            </Switch>
+        );
     }
 }

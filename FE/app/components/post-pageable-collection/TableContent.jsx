@@ -40,13 +40,13 @@ export class TableContent extends Component {
         let formatType = format instanceof Object ? format.type : format;
         switch (formatType) {
             case "date":
-                return SM.Utils.formatDate(value);
+                return value ? SM.Utils.formatDate(value) : '';
                 break;
             case "time":
-                return SM.Utils.formatTime(value);
+                return value ? SM.Utils.formatTime(value) : '';
                 break;
             case "datetime":
-                return SM.Utils.formatDateTime(value);
+                return value ? SM.Utils.formatDateTime(value) : '';
                 break;
             case "dictionary":
                 return this.props.dictionaries[format.dictionaryName] && this.props.dictionaries[format.dictionaryName][value];

@@ -11,6 +11,7 @@ import com.i4m1s1.specmed.repository.UserRepository;
 import com.i4m1s1.specmed.service.common.catchs.BasicServiceCatch;
 import com.i4m1s1.specmed.service.common.request.BasicRequest;
 import com.i4m1s1.specmed.service.common.response.BasicResponse;
+import org.apache.commons.lang.StringUtils;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,7 @@ public class ProviderUserLoginService extends BasicServiceCatch<LoginDTO, String
         String email = request.getChunkData().getEmail();
         String password = request.getChunkData().getPassword();
 
-        if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
+        if (StringUtils.isBlank(email) || StringUtils.isBlank(password)) {
             response.setError("Nie podano wymaganych pól: email i password.");
             return response;
         }
