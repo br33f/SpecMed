@@ -17,12 +17,12 @@ export class ContactEdit extends FormComponent {
 
         contactModel.setDefaults(modelDefaults);
         contactModel.set(modelDefaults);
-        if (props.customerId) {
-            contactModel.fetchUrl = `/customer/get/${props.customerId}/contact`;
-        }
-        if (props.employeeId) {
-            contactModel.fetchUrl = `/employee/get/${props.employeeId}/contact`;
-        }
+        // if (props.customerId) {
+        //     contactModel.fetchUrl = `/customer/get/${props.customerId}/contact`;
+        // }
+        // if (props.employeeId) {
+        //     contactModel.fetchUrl = `/employee/get/${props.employeeId}/contact`;
+        // }
 
         this.state = {
             model: this.model,
@@ -56,7 +56,7 @@ export class ContactEdit extends FormComponent {
             this.model.clear();
         }
         if (props.employeeId) {
-            this.model.fetchUrl = `/employee/get/${props.employeeId}/address`;
+            this.model.fetchUrl = `/employee/get/${props.employeeId}/contact`;
             this.model.fetch();
         } else {
             this.model.clear();

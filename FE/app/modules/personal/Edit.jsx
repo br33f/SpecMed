@@ -21,9 +21,9 @@ export class PersonalEdit extends FormComponent {
 
         personalModel.setDefaults(modelDefaults);
         personalModel.set(modelDefaults);
-        if (props.customerId) {
-            personalModel.fetchUrl = `/customer/get/${props.customerId}/personal`;
-        }
+        // if (props.customerId) {
+        //     personalModel.fetchUrl = `/customer/get/${props.customerId}/personal`;
+        // }
 
         this.state = {
             genderDictionary: [],
@@ -67,6 +67,12 @@ export class PersonalEdit extends FormComponent {
     handleFetch(props) {
         if (props.customerId) {
             this.model.fetchUrl = `/customer/get/${props.customerId}/personal`;
+            this.model.fetch();
+        } else {
+            this.model.clear();
+        }
+        if (props.employeeId) {
+            this.model.fetchUrl = `/employee/get/${props.employeeId}/personal`;
             this.model.fetch();
         } else {
             this.model.clear();
