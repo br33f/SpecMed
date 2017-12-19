@@ -70,6 +70,19 @@
         "label": "Umów się na wizytę"
       }
     ]
+  },
+  {
+    "label": "Wiadomości",
+    "children": [
+      {
+        "uri": "/contact/send",
+        "label": "Wyślij wiadomość do lekarza"
+      },
+      {
+        "uri": "/contact/list",
+        "label": "Lista moich wiadomości"
+      }
+    ]
   }
 
 ]

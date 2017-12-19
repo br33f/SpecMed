@@ -33,6 +33,9 @@ import {CustomerList} from "./modules/customer/List.jsx";
 import {VisitAdd} from "./modules/visit/Add.jsx";
 import {VisitAppoint} from "./modules/visit/Appoint.jsx";
 
+// Communication
+import {CommunicationWithDoctor} from "./modules/communication-with-doctor/Add.jsx";
+
 export class Routes extends Component {
     render() {
         return (
@@ -45,6 +48,7 @@ export class Routes extends Component {
                 {this.opinionRoutes()}
                 {this.customerRoutes()}
                 {this.visitRoutes()}
+                {this.messageRoutes()}
             </div>
         );
     }
@@ -122,5 +126,13 @@ export class Routes extends Component {
                 <Route exact path='/visit/appoint' component={VisitAppoint}/>
             </Switch>
         );
+    }
+
+    messageRoutes() {
+        return (
+            <Switch>
+                <Route exact path='/contact/send' component={CommunicationWithDoctor}/>
+            </Switch>
+        )
     }
 }

@@ -6,12 +6,15 @@ import {Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import {FormComponent} from "components/form-component/FormComponent.jsx";
 import {Loader} from "components/controls/Loader.jsx";
 import {BindedInput} from "components/controls/BindedInput.jsx";
+import axios from 'axios';
 
 const BaseModelConfigured = BaseModel.extend({
     defaults: {
-        description: ""
+        content: "",
+        medicalEmployeeId: "",
+        customerId: "" /* To powinnismy brac w aplikacji z ApplicationContext.getCurentUser() - cos takiego */
     },
-    saveUrl: 'insurance/save'
+    saveUrl: 'communication/save'
 });
 
 export class CommunicationWithDoctor extends FormComponent {
@@ -21,11 +24,10 @@ export class CommunicationWithDoctor extends FormComponent {
         let localModel = new BaseModelConfigured();
         super(props, localModel);
 
-        // rozdział na edycje i dodawanie jest bo 16 nie damy rady zrobic
-        // albo cos
 
         this.state = {
-            specDictionary: [],
+            medicalEmployeeList: [],
+            specializationDictionary: [],
             model: this.model,
             isLoading: false,
             isSaved: false
@@ -35,7 +37,7 @@ export class CommunicationWithDoctor extends FormComponent {
 
     addValidators() {
         this.rules = {
-            "description": [
+            "content": [
                 {
                     validator: "minLength",
                     params: {
@@ -43,11 +45,15 @@ export class CommunicationWithDoctor extends FormComponent {
                     }
                 }
             ],
+            "medicalEmployeeId":
+                {
+                    validator: "required"
+                },
+            "specialization":
+        {
+            validator: "required"
+        },
         };
-    }
-
-    getSample() {
-        return ['Adam Abacki', 'Marcin Babacki'];
     }
 
     componentDidMount() {
@@ -56,37 +62,63 @@ export class CommunicationWithDoctor extends FormComponent {
     }
 
     fetchDictionaries() {
-        SM.DictionaryManager.getDictAsArray("medicalEmployee").then(dict => {
+        SM.DictionaryManager.getDictAsArray("SPECIALIZATION").then(dict => {
             this.setState({
-                genderDictionary: dict
+                specializationDictionary: dict
             });
         });
     }
 
-    fetchAllEmployers() {
-        axios.get("/medical-employee/list/full").then(fullList => {
-            this.setState({specDictionary: fullList.data.content});
+    /**
+     * Metoda pobiera pracowników medycznych
+     * @private
+     */
+    fetchMedicalEmployees(specialization) {
+        axios.post('/medical-employee/specialization/list', {
+            chunkData: specialization
+        }).then(response => {
+            if (response.data.content) {
+                this.setState({
+                    medicalEmployeeList: response.data.content
+                });
+            }
         });
+    }
+
+    onSpecializationChange() {
+        this.bindValueToModel(...arguments);
+        this.fetchMedicalEmployees(this.model.get('specialization'));
     }
 
     onFormSave() {
         this.validate();
-        console.log(this.errors);
         if (!this.hasErrors()) {
-            // jeśli nie zawiera błędów - wysyłamy formularz
             this.setState({
                 isLoading: true
             });
-            this.model.save().then(() => {
+            this.sendNewMessageRequest().then(() => {
                 this.setState({
                     isLoading: false,
                     isSaved: true
                 });
             });
         } else {
-            // jeżeli są błędy - wymuszamy update formularza, aby pokazać komunikaty o błędach
             this.forceUpdate();
         }
+        console.log(this.errors);
+    }
+
+    sendNewMessageRequest() {
+        let SaveModel = BaseModel.extend({
+            saveUrl: 'communication/save'
+        });
+
+        let saveModel = new SaveModel();
+        saveModel.set('medicalEmployeeId', this.model.get('medicalEmployeeId'));
+        saveModel.set("content", this.model.get('content'));
+        saveModel.set('customerId', "5a2be56facd24749a0563f48"); // TODO: podstawić prawdziwego klienta lub nie :)
+
+        return saveModel.save();
     }
 
     onFormClear() {
@@ -94,40 +126,69 @@ export class CommunicationWithDoctor extends FormComponent {
         this.model.clear();
     }
 
+    onMedicalEmployeeChange() {
+        this.bindValueToModel(...arguments);
+    }
+
     render() {
         return (
             <Container fluid={true}>
                 <p className="contentTitle">
-                    {'Komunikacja z lekarzem'}
+                    {'Wyślij wiadomość do lekarza'}
                     <Loader isEnabled={this.state.isLoading}/>
                 </p>
-
                 <Row>
                     <Col md={6}>
                         <div className="alert alert-success" hidden={!this.state.isSaved} role="alert">
-                            Pomyślnie wysłano wiadomość.
+                            {'Pomyślnie wysłano wiadomość.'}
                         </div>
-                        <FormGroup>
-                            <Label for="employeeGender">Lekarz</Label>
-                            <BindedInput form={this} type="select" name="personalData.gender" id="employeeGender"
-                                         placeholder="Lekarz">
-                                <option>Jan Kowalski</option>
-                                <option>Janusz Tracz</option>
-                                <option>Janusz Nowak</option>
-                            </BindedInput>
-                        </FormGroup>
                         <Form>
                             <FormGroup>
-                                <Label for="description">Napisz to nas:</Label>
-                                <br/>
-                                <BindedInput form={this} type="textarea" name="description" id="description"
-                                             placeholder="Wiadmomość...">
-
+                                <Label for="specialization">Specjalizacja</Label>
+                                <BindedInput form={this} type="select" name="specialization" id="specialization"
+                                             onChange={this.onSpecializationChange.bind(this)}>
+                                    <option
+                                        key="PLACEHOLDER_ITEM"
+                                        value="">
+                                        Wybierz specjalizację z listy
+                                    </option>
+                                    {this.state.specializationDictionary.map(specObj =>
+                                        <option
+                                            key={specObj.id}
+                                            value={specObj.id}>
+                                            {specObj.label}
+                                        </option>)}
                                 </BindedInput>
                             </FormGroup>
-                            {/*dobry hardcode*/}
-                            <div className="pull-left">
-                                <hr/>
+                            <FormGroup>
+                                <Label for="employee">Wybierz pracownika</Label>
+                                <BindedInput form={this} type="select" name="medicalEmployeeId" id="employee"
+                                             onChange={this.onMedicalEmployeeChange.bind(this)}>
+                                    <option
+                                        key="PLACEHOLDER_ITEM"
+                                        value="">
+                                        Wybierz pracownika z listy
+                                    </option>
+                                    {this.state.medicalEmployeeList.map(meObj =>
+                                        <option
+                                            key={meObj.id}
+                                            value={meObj.id}>
+                                            {meObj.name + ' ' + meObj.surname}
+                                        </option>)}
+                                </BindedInput>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="contentId">Twoja wiadomość:</Label>
+                                <br/>
+                                <textarea rows="5" cols="60" type="text" name="content" id="contentId"
+                                          placeholder="pytaj o co chcesz..."
+                                          value={this.state.model.get('content')}
+                                          onChange={this.bindValueToModel}/>
+                            </FormGroup>
+
+                            <div className="pull-right">
+                                <Button outline type="button" className="mr-1"
+                                        onClick={this.onFormClear.bind(this)}>Wyczyść formularz</Button>
                                 <Button outline color="primary" type="button"
                                         onClick={this.onFormSave.bind(this)}>Wyślij wiadomość</Button>
                             </div>
