@@ -76,6 +76,19 @@ export class EmployeeEdit extends FormComponent {
                         length: 20
                     }
                 }
+            ],
+            "personalData.pesel": [
+                {
+                    validator: "required",
+                    msg: "Pole PESEL jest wymagane"
+                },
+                {
+                    validator: (val) => {
+                        if (!val || val.toString().length != 11) {
+                            return "PESEL musi mieć 11 cyfr";
+                        }
+                    }
+                }
             ]
         };
     }
@@ -142,7 +155,7 @@ export class EmployeeEdit extends FormComponent {
         return (
             <Container fluid={true}>
                 <p className="contentTitle">
-                    {this.employeeId ? 'Edycja' : 'Dodawanie'} nowego pracownika
+                    {this.employeeId ? 'Edycja' : 'Dodawanie nowego'} pracownika
                     <Loader isEnabled={this.state.isLoading}/>
                 </p>
                 <Row>
