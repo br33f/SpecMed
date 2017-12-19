@@ -30,7 +30,7 @@ export default {
      * @returns {string} data oraz czas przedstawiona w formacie data godzina
      */
     formatDateTime: function (timestamp) {
-      return this.formatDate(timestamp) + " " + this.formatTime(timestamp);
+        return this.formatDate(timestamp) + " " + this.formatTime(timestamp);
     },
 
     /**
@@ -52,5 +52,14 @@ export default {
         } else {
             delete axios.defaults.headers.common['Authorization'];
         }
+    },
+
+    omitByRecursively: function (value, iteratee) {
+        return _.isObject(value) ?
+            _(value)
+                .omitBy(iteratee)
+                .mapValues(v => this.omitByRecursively(v, iteratee))
+                .value() :
+            value;
     }
 }

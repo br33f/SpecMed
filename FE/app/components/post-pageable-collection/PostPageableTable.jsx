@@ -35,6 +35,12 @@ export class PostPageableTable extends Component {
         this.fetchDictionaries();
     }
 
+    componentWillReceiveProps(newProps) {
+        if (!_.isEqual(this.props, newProps)) {
+            this.fetchData(newProps);
+        }
+    }
+
     fetchDictionaries() {
         let dictionariesToFetch = this.props.headerDefinition
             .filter(column => column.format && column.format.type === 'dictionary')
@@ -47,15 +53,15 @@ export class PostPageableTable extends Component {
         });
     }
 
-    fetchData() {
-        axios.post(this.props.dataUrl, {
+    fetchData(props = this.props) {
+        axios.post(props.dataUrl, {
             pageCriteria: {
                 currentPage: this.currentPage,
                 pageSize: this.pageSize,
                 sortKey: this.sortKey,
                 sortDirection: this.sortDirection
             },
-            searchCriteria: {}
+            searchCriteria: _.extend({}, props.searchCriteria)
         }).then(res => {
             this.setState({
                 employeeList: res.data.content,

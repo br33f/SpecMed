@@ -13,6 +13,10 @@
       {
         "uri": "/customer/new",
         "label": "Dodaj nowego pacjenta"
+      },
+      {
+        "uri": "/customer/search",
+        "label": "Wyszukiwarka pacjentów"
       }
     ]
   },

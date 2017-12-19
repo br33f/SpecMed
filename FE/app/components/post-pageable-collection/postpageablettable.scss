@@ -1,4 +1,6 @@
 .postPageableTable {
+  overflow-x: auto;
+
   thead {
     .sortDescending, .sortAscending {
       position: relative;
