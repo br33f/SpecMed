@@ -17,12 +17,12 @@ export class ContactEdit extends FormComponent {
 
         contactModel.setDefaults(modelDefaults);
         contactModel.set(modelDefaults);
-        // if (props.customerId) {
-        //     contactModel.fetchUrl = `/customer/get/${props.customerId}/contact`;
-        // }
-        // if (props.employeeId) {
-        //     contactModel.fetchUrl = `/employee/get/${props.employeeId}/contact`;
-        // }
+        if (props.customerId) {
+            contactModel.fetchUrl = `/customer/get/${props.customerId}/contact`;
+        }
+        if (props.employeeId) {
+            contactModel.fetchUrl = `/employee/get/${props.employeeId}/contact`;
+        }
 
         this.state = {
             model: this.model,

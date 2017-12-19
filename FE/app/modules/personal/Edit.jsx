@@ -21,9 +21,9 @@ export class PersonalEdit extends FormComponent {
 
         personalModel.setDefaults(modelDefaults);
         personalModel.set(modelDefaults);
-        // if (props.customerId) {
-        //     personalModel.fetchUrl = `/customer/get/${props.customerId}/personal`;
-        // }
+        if (props.customerId) {
+            personalModel.fetchUrl = `/customer/get/${props.customerId}/personal`;
+        }
 
         this.state = {
             genderDictionary: [],
