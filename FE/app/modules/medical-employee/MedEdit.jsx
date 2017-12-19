@@ -8,13 +8,11 @@ import {Loader} from "components/controls/Loader.jsx";
 
 const BaseModelConfigured = BaseModel.extend({
     defaults: {
-        personalData: {
-            name: "",
-            surname: "",
-            pesel: "",
-            birthday: Date.now(),
-            gender: "1"
-        }
+        // w głownym modelu znajdują się oddzielne modele dla każdej sekcji
+        // przekazywane są przez props do widoku child jako referencja, zatem zawsze mamy aktualne dane!
+        addressData: new BaseModel(),
+        personalData: new BaseModel(),
+        contactData: new BaseModel()
     },
     saveUrl: 'employee/save'
 });
@@ -42,6 +40,38 @@ export class MedicalEmployeeEdit extends FormComponent {
             model: this.model,
             isLoading: false,
             isSaved: false
+        };
+        this.addValidators();
+    }
+
+    addValidators() {
+        this.rules = {
+            "personalData.name": [
+                {
+                    validator: "required", // tutaj możemy przekazać nazwę funkcji walidującej z pliku Validators.js lub własną funkcję
+                    msg: "Pole imię jest wymagane" // pole opcjonalne
+                },
+                {
+                    validator: (val) => {
+                        // customowa funkcja walidująca
+                        // jeżeli wystąpił błąd to zwracamy komunikat, jeżeli nie ma błędu to nie zwracamy nic
+                        if (!val || val.toString().length < 3) {
+                            return "Imię musi mieć conajmniej 3 znaki";
+                        }
+                    }
+                }
+            ],
+            "personalData.surname": [
+                {
+                    validator: "required"
+                },
+                {
+                    validator: "maxLength",
+                    params: {
+                        length: 20
+                    }
+                }
+            ]
         };
     }
 
