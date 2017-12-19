@@ -5,203 +5,120 @@ import BaseModel from 'components/models/BaseModel';
 import {Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import {FormComponent} from "components/form-component/FormComponent.jsx";
 import {Loader} from "components/controls/Loader.jsx";
-import {BindedInput} from "components/controls/BindedInput.jsx";
+
+import {AddressEdit} from '../address/Edit.jsx';
+import {PersonalEdit} from '../personal/Edit.jsx';
+import {ContactEdit} from '../contact/Edit.jsx';
 
 const BaseModelConfigured = BaseModel.extend({
     defaults: {
-        personalData: {
-            name: "",
-            surname: "",
-            pesel: "",
-            birthday: Date.now(),
-            gender: "1"
-        }
+        // w głownym modelu znajdują się oddzielne modele dla każdej sekcji
+        // przekazywane są przez props do widoku child jako referencja, zatem zawsze mamy aktualne dane!
+        addressData: new BaseModel(),
+        personalData: new BaseModel(),
+        contactData: new BaseModel()
     },
-    saveUrl: 'employee/save'
+    saveUrl: '/employee/save'
 });
 
-/**
- * Klasa odpowiedzialna za edycje pracownika. Wybierany jest pracownik i możemy dokonac jego edycji.
- * @extends FormComponent
- */
 export class EmployeeEdit extends FormComponent {
-    /**
-     * Konstruktor
-     * @constructor
-     * @param {object} props parametry przekazane do komponentu
-     */
     constructor(props) {
-        // Utworz model i przekaż go w konstruktorze do rodzica
-        let localModel = new BaseModelConfigured();
-        super(props, localModel);
+        let customerModel = new BaseModelConfigured();
+        super(props, customerModel);
 
-        // jeżeli przekazano employeeId w url
-        this.employeeId = props.match.params.employeeId;
-        localModel.fetchUrl = "/employee/get/" + this.employeeId;
+        this.getRoutingData(props);
 
         this.state = {
-            genderDictionary: [],
             model: this.model,
             isLoading: false,
             isSaved: false
         };
-
-        this.addValidators();
     }
 
-    addValidators() {
-        this.rules = {
-            "personalData.name": [
-                {
-                    validator: "required", // tutaj możemy przekazać nazwę funkcji walidującej z pliku Validators.js lub własną funkcję
-                    msg: "Pole imię jest wymagane" // pole opcjonalne
-                },
-                {
-                    validator: (val) => {
-                        // customowa funkcja walidująca
-                        // jeżeli wystąpił błąd to zwracamy komunikat, jeżeli nie ma błędu to nie zwracamy nic
-                        if (!val || val.toString().length < 3) {
-                            return "Imię musi mieć conajmniej 3 znaki";
-                        }
-                    }
-                }
-            ],
-            "personalData.surname": [
-                {
-                    validator: "required"
-                },
-                {
-                    validator: "maxLength",
-                    params: {
-                        length: 20
-                    }
-                }
-            ],
-            "personalData.pesel": [
-                {
-                    validator: "required",
-                    msg: "Pole PESEL jest wymagane"
-                },
-                {
-                    validator: (val) => {
-                        if (!val || val.toString().length != 11) {
-                            return "PESEL musi mieć 11 cyfr";
-                        }
-                    }
-                }
-            ]
-        };
+    componentWillReceiveProps(newProps) {
+        // metoda jest wywoływana tuż przed otrzymaniem parametów z routera
+        // np. gdy zmieniamy ekran z /customer/edit na /customer/new
+        // newProps zawiera nowe parametry
+        this.getRoutingData(newProps);
     }
 
-    /**
-     * Metoda wywołuje się przy pierwszej inicjalizacji komponentu
-     * @public
-     */
-    componentDidMount() {
-        this.employeeId && this.model.fetch();
-        this.fetchDictionaries();
+    getRoutingData(props) {
+        this.employeeId = props.match.params.employeeId;
+        this.model.set('id', this.employeeId);
     }
 
-    /**
-     * Metoda pobiera słowniki
-     * @private
-     */
-    fetchDictionaries() {
-        SM.DictionaryManager.getDictAsArray("GENDER").then(dict => {
-            this.setState({
-                genderDictionary: dict
-            });
-        });
-    }
-
-    /**
-     * Metoda wywołuje synchronizację modelu z usługą REST
-     * @public
-     */
     onFormSave() {
-        // metoda validate wywołuje walidację na polach określonych w this.rules
-        this.validate();
-        // this.errors zawiera błędy z walidacji
+        this.validateChildren();
+
         if (!this.hasErrors()) {
-            // jeśli nie zawiera błędów - wysyłamy formularz
             this.setState({
                 isLoading: true
             });
+
             this.model.save().then(() => {
                 this.setState({
                     isLoading: false,
                     isSaved: true
                 });
+                this.clearChildrenModels();
             });
-        } else {
-            // jeżeli są błędy - wymuszamy update formularza, aby pokazać komunikaty o błędach
-            this.forceUpdate();
         }
+
+        this.forceUpdate();
     }
 
-    /**
-     * Metoda czyści model i wywołuje przerysowanie komponentu
-     * @public
-     */
+    validateChildren() {
+        this.refs.address.validate();
+        this.refs.personal.validate();
+        this.refs.contact.validate();
+
+        this.errors = Object.assign({}, this.refs.address.errors, this.refs.personal.errors, this.refs.contact.errors);
+    }
+
     onFormClear() {
-        this.model.clear();
+        this.clearChildrenModels()
+        delete this.employeeId;
     }
 
-    /**
-     * Metoda odpowiedzialna za wyświetlanie widoku edycji oddziału
-     * @returns {XML}
-     */
+    clearChildrenModels() {
+        this.model.get('addressData').clear();
+        this.model.get('personalData').clear();
+        this.model.get('contactData').clear();
+    }
+
     render() {
         return (
             <Container fluid={true}>
                 <p className="contentTitle">
-                    {this.employeeId ? 'Edycja' : 'Dodawanie nowego'} pracownika
+                    {this.customerId ? 'Edycja' : 'Dodawanie nowego'} pracownika
                     <Loader isEnabled={this.state.isLoading}/>
                 </p>
+                <div className="alert alert-success" hidden={!this.state.isSaved} role="alert">
+                    {this.customerId ? 'Pomyślnie zapisano pracownika.' : 'Pomyślnie dodano pracownika.'}
+                </div>
                 <Row>
-                    <Col md={6}>
-                        <div className="alert alert-success" hidden={!this.state.isSaved} role="alert">
-                            Pomyślnie zapisano pracownika.
-                        </div>
-                        <Form>
-                            <FormGroup>
-                                <Label for="employeeName">Imię</Label>
-                                <BindedInput form={this} type="text" name="personalData.name" id="employeeName" placeholder="Imię" />
-                            </FormGroup>
-                            <FormGroup>
-                                <Label for="employeeSurname">Nazwisko</Label>
-                                <BindedInput form={this} type="text" name="personalData.surname" id="employeeSurname" placeholder="Nazwisko" />
-                            </FormGroup>
-                            <FormGroup>
-                                <Label for="employeePesel">Numer PESEL</Label>
-                                <BindedInput form={this} type="number" name="personalData.pesel" id="employeePesel" placeholder="PESEL" />
-                            </FormGroup>
-                            <FormGroup>
-                                <Label for="employeeBirthday">Data urodzenia</Label>
-                                <BindedInput form={this} type="date" name="personalData.birthday" id="employeeBirthday" placeholder="Data urodzenia"
-                                             value={this.state.model.get('personalData.birthday') && SM.Utils.customFormat(this.state.model.get('personalData.birthday'), "yyyy-mm-dd")}
-                                />
-                            </FormGroup>
-                            <FormGroup>
-                                <Label for="employeeGender">Płeć</Label>
-                                <BindedInput form={this} type="select" name="personalData.gender" id="employeeGender" placeholder="Płeć">
-                                    {this.state.genderDictionary.map(genderObj =>
-                                        <option
-                                            key={genderObj.id}
-                                            value={genderObj.id}>
-                                            {genderObj.label}
-                                        </option>)}
-                                </BindedInput>
-                            </FormGroup>
-                            <div className="pull-right">
-                                <Button outline type="button" className="mr-1"
-                                        onClick={this.onFormClear.bind(this)}>Wyczyść formularz</Button>
-                                <Button outline color="primary" type="button"
-                                        onClick={this.onFormSave.bind(this)}>Zapisz pracownika</Button>
-                            </div>
-                        </Form>
+                    <Col md={4} sm={6} xs={12}>
+                        <AddressEdit ref="address" model={this.model.get('addressData')} customerId={this.employeeId}/>
+                    </Col>
+                    <Col md={4} sm={6} xs={12}>
+                        <PersonalEdit ref="personal" model={this.model.get('personalData')} customerId={this.employeeId}/>
+                    </Col>
+                    <Col md={4} sm={6} xs={12}>
+                        <ContactEdit ref="contact" model={this.model.get('contactData')} customerId={this.employeeId}/>
+                        {/*tym moze sie roznic od customera?*/}
+                        <FormGroup>
+                            <h5> Doświadczenie zawodowe </h5>
+                            <Input form = {this} type="textarea" name="experience" id="employeeExperience" placeholder="Doświadczenie zawodowe pracownika"/>
+                        </FormGroup>
                     </Col>
                 </Row>
+                <div>
+                    <hr/>
+                    <Button outline type="button" className="mr-1"
+                            onClick={this.onFormClear.bind(this)}>Wyczyść formularz</Button>
+                    <Button outline color="primary" type="button"
+                            onClick={this.onFormSave.bind(this)}>Zapisz pracownika</Button>
+                </div>
             </Container>
         );
     }
