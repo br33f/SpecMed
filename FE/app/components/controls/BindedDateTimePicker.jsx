@@ -27,8 +27,8 @@ export class BindedDateTimePicker extends Component {
                   id={this.props.id}
                   name={this.props.name}
                   placeholder={this.props.placeholder}
-                  defaultValue={this.props.value || new Date(this.Form.state.model.get(this.props.name))}
-                  dropUp={this.props.value || true}
+                  value={this.props.value || new Date(this.Form.state.model.get(this.props.name))}
+                  dropUp={this.props.dropUp || true}
                   onChange={this.props.onChange || this.bindDateToModel.bind(this)}
                   time={this.props.time}
                   step={this.props.step || 15}
