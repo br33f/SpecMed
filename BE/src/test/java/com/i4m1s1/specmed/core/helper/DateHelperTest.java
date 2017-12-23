@@ -9,11 +9,11 @@ import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Tobiasz Fortaszewski t.fortaszewski@gmail.com
  */
-//@Ignore
 @RunWith(MockitoJUnitRunner.class)
 public class DateHelperTest {
 
@@ -41,5 +41,19 @@ public class DateHelperTest {
 
         //then
         assertEquals(expected, result);
+    }
+
+    @Test
+    public void shouldGetCurrentDateAsLongRetunsCurrentDate() throws Exception {
+        //given
+        String dataAsString = "20171224"; //wigilia :)
+//        Date expected = new SimpleDateFormat(format).parse(dataAsString);
+        Date expected = new Date();
+
+        //when
+        long result = DateHelper.getCurrentDateAsLong();
+
+        //then
+        assertEquals(expected.toString(), new Date(result).toString());
     }
 }

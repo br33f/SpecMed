@@ -9,7 +9,10 @@ public enum WarningMsg {
     AUTH_ERROR(2, "Błąd autoryzacji"),
     DB_NO_RESULTS(3, "Brak wynikow zapytania"),
     DICTIONARY_NOT_FOUND(4, "Brak slownika!"),
-    VISIT_FOR_OPINION_NOT_FOUND(5,"Brak wizyty o podanym ID. Nie można dodać wizyty!");
+    VISIT_FOR_OPINION_NOT_FOUND(5, "Brak wizyty o podanym ID. Nie można dodać wizyty!"),
+    CANT_BIND_WRONG_PASSWORD(6, "Podano złe hasło"),
+    CANT_BIND_WRONG_DATA(7, "Podane złe dane"),
+    GENERIC_VALIDATE(8, "Błąd walidacji żądania");
 
     private final int id;
     private final String message;

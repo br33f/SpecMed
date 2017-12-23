@@ -5,4 +5,8 @@ package com.i4m1s1.specmed.core.helper;
  */
 public class CommonHelper {
 
+    public static boolean checkNotNull(Object arg) {
+        return arg != null;
+    }
+
 }

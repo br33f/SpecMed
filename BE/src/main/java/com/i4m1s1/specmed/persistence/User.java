@@ -1,13 +1,9 @@
 package com.i4m1s1.specmed.persistence;
 
-import com.i4m1s1.specmed.core.AddressData;
-import com.i4m1s1.specmed.core.ContactData;
-import com.i4m1s1.specmed.core.PersonalData;
 import com.i4m1s1.specmed.core.dict.Permission;
 import org.springframework.data.annotation.Id;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Encja reprezentujaca użytkownika
@@ -17,9 +13,9 @@ public class User {
 
     @Id
     private String id;
-
     private String email;
     private String password;
+    private String entityId;
     private ArrayList<Permission> permissions;
 
     public String getId() {
@@ -52,5 +48,13 @@ public class User {
 
     public void setPermissions(ArrayList<Permission> permissions) {
         this.permissions = permissions;
+    }
+
+    public String getEntityId() {
+        return entityId;
+    }
+
+    public void setEntityId(String entityId) {
+        this.entityId = entityId;
     }
 }

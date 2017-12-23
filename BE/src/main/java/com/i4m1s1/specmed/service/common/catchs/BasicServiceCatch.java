@@ -8,6 +8,7 @@ import com.i4m1s1.specmed.service.common.response.BasicResponse;
  */
 public abstract class BasicServiceCatch<ReqContent, ResContent> extends ServiceCatch<BasicRequest<ReqContent>, BasicResponse<ResContent>> {
 
+    //TODO tutaj dodac walidacje!!!
     @Override
     protected BasicResponse<ResContent> createStubResponse() {
         return new BasicResponse<>();

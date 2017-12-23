@@ -21,6 +21,8 @@ import {MedicalEmployeeEdit} from "./modules/medical-employee/MedEdit.jsx";
 
 // Unit
 import {UnitEdit} from "./modules/unit/Edit.jsx";
+import {UnitList} from "./modules/unit/List.jsx";
+
 
 // Opinion
 import {OpinionAdd} from "./modules/opinion/Add.jsx";
@@ -41,6 +43,7 @@ import {CommunicationWithDoctor} from "./modules/communication-with-doctor/Add.j
 import {Register} from "./modules/user/Register.jsx";
 import {Login} from "./modules/user/Login.jsx";
 import {Logout} from "./modules/user/Logout.jsx";
+import {BindAccount} from "./modules/user/BindAccount.jsx";
 
 export class Routes extends Component {
     render() {
@@ -104,6 +107,7 @@ export class Routes extends Component {
             <Switch>
                 <Route exact path='/unit/new' component={UnitEdit}/>
                 <Route exact path='/unit/edit/:unitId' component={UnitEdit}/>
+                <Route exact path='/unit/list' component={UnitList}/>
             </Switch>
         );
     }
@@ -150,6 +154,7 @@ export class Routes extends Component {
                 <Route exact path='/register' component={Register}/>
                 <Route exact path='/login' component={Login}/>
                 <Route exact path='/logout' component={Logout}/>
+                <Route exaxt path='/bind-account/:customerId' component={BindAccount}/>
             </Switch>
         );
     }
