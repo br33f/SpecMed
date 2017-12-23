@@ -29,7 +29,9 @@ public class ProviderSaveCustomerService extends BasicServiceCatch<Customer, Cus
         Customer customer = repository.save(request.getChunkData());
         BasicResponse<Customer> response = new BasicResponse<>();
         response.setContent(customer);
-        facade.sendRegisterEmailForCustomer(customer);
+        if(!request.getChunkData().getContactData().getEmail().contains("test")) {
+            facade.sendRegisterEmailForCustomer(customer);
+        }
         return response;
     }
 
