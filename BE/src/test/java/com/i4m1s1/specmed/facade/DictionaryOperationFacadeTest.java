@@ -1,7 +1,7 @@
-package com.i4m1s1.specmed.core.dict;
+package com.i4m1s1.specmed.facade;
 
+import com.i4m1s1.specmed.core.dict.DictionaryNames;
 import com.i4m1s1.specmed.core.dict.persistence.DictionarySM;
-import com.i4m1s1.specmed.facade.DictionaryOperationFacade;
 import com.i4m1s1.specmed.repository.DictionaryRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,8 +16,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
+
+/**
+ * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
+ */
 
 /**
  * @author Tobiasz Fortaszewski t.fortaszewski@gmail.com

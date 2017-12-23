@@ -47,7 +47,7 @@ public class PrivateMessageOperationsFacade {
      */
     public PrivateMessage saveMessageFromMedicalEmployee(String customerId, String medicalEmployeeId, String content) throws SMException {
         PrivateMessage pm = preparePrivateMessage(customerId, medicalEmployeeId, content);
-        pm.setCustomerSender(true);
+        pm.setCustomerSender(false);
         messageRepository.save(pm);
         return pm;
     }

@@ -56,4 +56,16 @@ public class DateHelperTest {
         //then
         assertEquals(expected.toString(), new Date(result).toString());
     }
+
+    @Test
+    public void getCurrentDateAsStringTest() throws Exception {
+        //given
+        String pattern = "dd-MM-yyyy";
+
+        //when
+        String result = DateHelper.getCurrentDateAsString(pattern);
+
+        //then
+        assertEquals(pattern.length(), result.length());
+    }
 }

@@ -1,6 +1,5 @@
 package com.i4m1s1.specmed.facade;
 
-import com.google.common.collect.Lists;
 import com.i4m1s1.specmed.core.SMException;
 import com.i4m1s1.specmed.core.dict.Permission;
 import com.i4m1s1.specmed.core.dict.WarningMsg;
@@ -13,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 
 /**
  * @author Tobiasz Fortaszewski <t.fortaszewski@gmail.com>
@@ -33,11 +30,8 @@ public class BindingUserAccOperationFacade {
                                         String providedCustomerId) throws SMException {
         User user = prepareUserToBind(userEmail, userPasswd);
         Customer customer = prepareCustomerToBind(providedCustomerId, providedPesel);
-        if (user != null && customer != null) {
-            bindAcc(user, customer);
-            return customer;
-        }
-        return null;
+        bindAcc(user, customer);
+        return customer;
     }
 
     private void bindAcc(User user, Customer customer) {
