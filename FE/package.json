@@ -1,11 +1,12 @@
 {
   "name": "specmed",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --open"
+    "build": "webpack --config webpack.config.js",
+    "start": "npm run build && node server.js",
+    "dev": "webpack-dev-server"
   },
   "author": "br33f",
   "license": "MIT",
@@ -25,9 +26,7 @@
     "react-widgets-moment": "^4.0.4",
     "reactstrap": "^4.8.0",
     "tether": "^1.4.3",
-    "validator": "^9.2.0"
-  },
-  "devDependencies": {
+    "validator": "^9.2.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-class-properties": "^6.24.1",
@@ -43,7 +42,9 @@
     "sass-loader": "^6.0.6",
     "style-loader": "^0.19.1",
     "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.9.7",
     "webpack-merge": "^4.1.1"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "^2.9.7"
   }
 }

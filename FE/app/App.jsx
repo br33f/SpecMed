@@ -33,7 +33,7 @@ export class App extends Component {
    }
 
    configureAxis() {
-       axios.defaults.baseURL = 'http://localhost:8080';
+       axios.defaults.baseURL = 'https://specmed-be.herokuapp.com';
        Utils.setAuthorizationHeader();
    }
 

@@ -6,7 +6,7 @@ const webpackCommon = {
     entry: './app/index.js',
     output: {
         filename: 'app.js',
-        path: path.join(__dirname, './public'),
+        path: path.join(__dirname, '/public'),
         publicPath: '/'
     },
     module: {
@@ -72,7 +72,6 @@ const webpackCommon = {
 };
 
 switch (process.env.npm_lifecycle_event) {
-    case 'start':
     case 'dev':
         module.exports = merge(webpackCommon, {
             devtool: '#inline-source-map',
