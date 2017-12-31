@@ -97,15 +97,18 @@
     "children": [
       {
         "uri": "/register",
-        "label": "Rejestracja"
+        "label": "Rejestracja",
+        "permitWith": ["NOT_LOGGED"]
       },
       {
         "uri": "/login",
-        "label": "Zaloguj się"
+        "label": "Zaloguj się",
+        "permitWith": ["NOT_LOGGED"]
       },
       {
         "uri": "/logout",
-        "label": "Wyloguj się"
+        "label": "Wyloguj się",
+        "permitWith": ["LOGGED"]
       }
     ]
   }

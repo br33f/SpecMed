@@ -1,4 +1,8 @@
+const LOGGED = "LOGGED";
+const NOT_LOGGED = "NOT_LOGGED";
+
 export default {
+
     getData: function () {
         let authToken = localStorage.getItem("authToken");
         if (!authToken) return null;
@@ -23,12 +27,25 @@ export default {
         }
     },
 
+    isLogged: function () {
+        return this.getData();
+    },
+
     isPermitted: function (permitWith) {
         if (!permitWith)
             return true;
-        if (!this.getPermissions())
-            return false;
 
-        return this.getPermissions().find(authPermission => permitWith.includes(authPermission));
+        let permissionsToCheck = [];
+        if (this.getPermissions()) {
+            permissionsToCheck = [...permissionsToCheck, ...this.getPermissions()];
+        }
+
+        if (this.isLogged()) {
+            permissionsToCheck = [...permissionsToCheck, LOGGED];
+        } else {
+            permissionsToCheck = [...permissionsToCheck, NOT_LOGGED];
+        }
+
+        return permissionsToCheck.find(authPermission => permitWith.includes(authPermission));
     }
 }
