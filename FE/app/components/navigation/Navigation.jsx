@@ -52,14 +52,16 @@ export class Navigation extends React.Component {
     }
 
     generateMenuItem(menuItem) {
+        if (!SM.Auth.isPermitted(menuItem.permitWith)) return;
         if (menuItem.children) {
+            let childrenMenuItems = menuItem.children.filter(item => SM.Auth.isPermitted(item.permitWith));
             return (
                 <UncontrolledDropdown key={this.menuIdx++}>
                     <DropdownToggle nav caret>
                         {menuItem.label}
                     </DropdownToggle>
                     <DropdownMenu right={true}>
-                        {menuItem.children.map(childItem =>
+                        {childrenMenuItems.map(childItem =>
                             <DropdownItem tag={Link} to={childItem.uri} key={this.menuIdx++}>
                                 {childItem.label}
                             </DropdownItem>

@@ -6,6 +6,7 @@ import {Jumbo} from './components/jumbo/Jumbo.jsx';
 
 import Utils from './components/helpers/Utils';
 import DictionaryManager from './components/helpers/DictionaryManager';
+import Auth from './components/helpers/Auth';
 
 import Moment from 'moment'
 import momentLocalizer from 'react-widgets-moment';
@@ -28,12 +29,18 @@ export class App extends Component {
    addGlobalFunctions() {
        window.SM = {
            Utils: Utils,
-           DictionaryManager: DictionaryManager
+           DictionaryManager: DictionaryManager,
+           Auth: Auth
        };
    }
 
    configureAxis() {
-       axios.defaults.baseURL = 'https://specmed-be.herokuapp.com';
+       // REMOTE
+       // axios.defaults.baseURL = 'https://specmed-be.herokuapp.com';
+
+       // LOCAL
+       axios.defaults.baseURL = 'http://localhost:8080';
+
        Utils.setAuthorizationHeader();
    }
 

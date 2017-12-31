@@ -5,6 +5,7 @@
   },
   {
     "label": "Pacjent",
+    "permitWith": ["CUSTOMER"],
     "children": [
       {
         "uri": "/customer/list",
@@ -22,6 +23,7 @@
   },
   {
     "label": "Pracownik",
+    "permitWith": ["EMPLOYEE"],
     "children": [
       {
         "uri": "/employee/list",
@@ -50,13 +52,15 @@
       },
       {
         "uri": "/insurance/new",
-        "label": "Dodaj ubezpieczenia"
+        "label": "Dodaj ubezpieczenia",
+        "permitWith": ["INSURANCE_ADD"]
       }
     ]
   },
   {
     "uri": "/unit/new",
-    "label": "Nowa placówka"
+    "label": "Nowa placówka",
+    "permitWith": ["UNIT_ADD"]
   },
   {
     "label": "Wizyta",

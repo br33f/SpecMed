@@ -6,14 +6,18 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.i4m1s1.specmed.core.SMException;
 import com.i4m1s1.specmed.core.dict.Permission;
 import com.i4m1s1.specmed.persistence.User;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.Date;
+import java.util.List;
 
 import static com.i4m1s1.specmed.core.dict.WarningMsg.AUTH_ERROR;
 
@@ -24,8 +28,8 @@ import static com.i4m1s1.specmed.core.dict.WarningMsg.AUTH_ERROR;
  */
 public class AuthHelper {
 
-    public static final String JWT_HEADER = "JWTH";
-    private static final String SPECMED = "specmed";
+    public static final String JWT_HEADER = "Authorization";
+    private static final String SECRET = "specmed";
     private static final long ONE_SECOND = 1000;
     private static final long ONE_MINUTE = 60 * ONE_SECOND;
     private static final long ONE_HOUR = 60 * ONE_MINUTE;
@@ -68,7 +72,7 @@ public class AuthHelper {
         String jwtSerializedPermissions = jwt.getClaim("permissions").asString();
         ArrayList<Permission> jwtPermissions = null;
         try {
-            jwtPermissions = (ArrayList<Permission>) deserializeObject(jwtSerializedPermissions);
+            jwtPermissions = (ArrayList<Permission>) deserializeList(jwtSerializedPermissions);
         } catch (Exception e) {
             throw new SMException("53454356354346", AUTH_ERROR, e.getMessage());
         }
@@ -83,7 +87,7 @@ public class AuthHelper {
     private static Algorithm generateAlgorithm() throws SMException {
         Algorithm algorithm = null;
         try {
-            algorithm = Algorithm.HMAC512(SPECMED);
+            algorithm = Algorithm.HMAC512(SECRET);
         } catch (UnsupportedEncodingException e) {
             throw new SMException("124214124444", AUTH_ERROR, e.getMessage());
         }
@@ -91,19 +95,18 @@ public class AuthHelper {
     }
 
 
-    private static Object deserializeObject(String s) throws IOException, ClassNotFoundException {
-        byte[] data = Base64.getDecoder().decode(s);
-        ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(data));
-        Object o = ois.readObject();
-        ois.close();
-        return o;
+    private static List deserializeList(String s) throws IOException, ClassNotFoundException {
+        final ObjectMapper mapper = new ObjectMapper();
+
+        return mapper.readValue(s, List.class);
     }
 
     private static String serializeObject(Serializable o) throws IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ObjectOutputStream oos = new ObjectOutputStream(baos);
-        oos.writeObject(o);
-        oos.close();
-        return Base64.getEncoder().encodeToString(baos.toByteArray());
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final ObjectMapper mapper = new ObjectMapper();
+
+        mapper.writeValue(out, o);
+
+        return out.toString();
     }
 }
