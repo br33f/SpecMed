@@ -24,6 +24,18 @@ export class CustomerList extends Component {
             <Link to={editUrl}>
                 <i className="fa fa-pencil-square fa-lg" aria-hidden="true"></i>
             </Link>
+
+
+        );
+    }
+    generatePrescriptionLink(customerId) {
+        let editUrl = `/prescription/new/${customerId}`;
+        return (
+            <Link to={editUrl}>
+                <i className="fa fa-book fa-lg" aria-hidden="true"></i>
+            </Link>
+
+
         );
     }
 
@@ -40,7 +52,8 @@ export class CustomerList extends Component {
             {key: 'personalData.birthday', label: 'Urodziny', format: 'date'},
             {key: 'personalData.gender', label: 'Płeć', format: {type: 'dictionary', dictionaryName: "GENDER"}},
             {key: 'addressData.cityName', label: 'Miejscowość', sortable: true},
-            {key: 'id', label: 'Edycja', format: {type: 'custom', fn: this.generateEditLink}}
+            {key: 'id', label: 'Edycja', format: {type: 'custom', fn: this.generateEditLink}},
+            {key: 'id', label: 'Recepta', format: {type: 'custom', fn: this.generatePrescriptionLink}}
         ];
     }
 

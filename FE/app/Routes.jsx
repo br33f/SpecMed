@@ -45,6 +45,9 @@ import {Login} from "./modules/user/Login.jsx";
 import {Logout} from "./modules/user/Logout.jsx";
 import {BindAccount} from "./modules/user/BindAccount.jsx";
 
+// Prescription
+import {Prescription} from "./modules/prescription/Edit.jsx";
+
 export class Routes extends Component {
     render() {
         return (
@@ -59,6 +62,7 @@ export class Routes extends Component {
                 {this.visitRoutes()}
                 {this.messageRoutes()}
                 {this.userRoutes()}
+                {this.prescriptionRoutes()}
             </div>
         );
     }
@@ -154,7 +158,15 @@ export class Routes extends Component {
                 <Route exact path='/register' component={Register}/>
                 <Route exact path='/login' component={Login}/>
                 <Route exact path='/logout' component={Logout}/>
-                <Route exaxt path='/bind-account/:customerId' component={BindAccount}/>
+                <Route exact path='/bind-account/:customerId' component={BindAccount}/>
+            </Switch>
+        );
+    }
+
+    prescriptionRoutes() {
+        return (
+            <Switch>
+                <Route exact path='/prescription/new/:customerId' component={Prescription}/>
             </Switch>
         );
     }
