@@ -23,15 +23,16 @@
   },
   {
     "label": "Pracownik",
-    "permitWith": ["EMPLOYEE"],
     "children": [
       {
         "uri": "/employee/list",
-        "label": "Lista pracowników"
+        "label": "Lista pracowników",
+        "permitWith": ["EMPLOYEE"]
       },
       {
         "uri": "/employee/new",
-        "label": "Dodaj nowego pracownika"
+        "label": "Dodaj nowego pracownika",
+        "permitWith": ["EMPLOYEE"]
       },
       {
         "uri": "/medical-employee/list",
@@ -39,7 +40,8 @@
       },
       {
         "uri": "/medical-employee/new",
-        "label": "Dodaj nowego pracownika medycznego"
+        "label": "Dodaj nowego pracownika medycznego",
+        "permitWith": ["EMPLOYEE"]
       }
     ]
   },

@@ -73,7 +73,7 @@ export class Login extends FormComponent {
         return (
             <Container fluid={true}>
                 <p className="contentTitle">
-                    <i className="fa fa-sign-in text-primary mr-1" aria-hidden="true"></i>
+                    <i className="fa fa-sign-in mr-1" aria-hidden="true"></i>
                     Logowanie
                     <Loader isEnabled={this.state.isLoading}/>
                 </p>

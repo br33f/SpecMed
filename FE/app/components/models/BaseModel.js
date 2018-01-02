@@ -49,6 +49,8 @@ BaseModel.prototype.set = function () {
         });
     } else if (arguments[0] instanceof String || typeof arguments[0] === 'string') {
         _.set(this.attributes, arguments[0], arguments[1]);
+    } else if (!arguments[0]) {
+        _.set(this.attributes, arguments[0], null);
     } else {
         throw "Unknown set function prototype";
     }
@@ -69,6 +71,7 @@ BaseModel.prototype.fetch = function (options) {
 
     return axios.get(this.fetchUrl, options).then(response => {
         this.set(response.data.content);
+        return response;
     });
 };
 

@@ -6,151 +6,156 @@ import {Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import {FormComponent} from "components/form-component/FormComponent.jsx";
 import {Loader} from "components/controls/Loader.jsx";
 
+import {AddressEdit} from '../address/Edit.jsx';
+import {PersonalEdit} from '../personal/Edit.jsx';
+import {ContactEdit} from '../contact/Edit.jsx';
+import {BindedInput} from 'components/controls/BindedInput.jsx';
+
 const BaseModelConfigured = BaseModel.extend({
     defaults: {
-        personalData: {
-            name: "",
-            surname: "",
-            pesel: "",
-            birthday: Date.now(),
-            gender: "1"
-        }
+        // w głownym modelu znajdują się oddzielne modele dla każdej sekcji
+        // przekazywane są przez props do widoku child jako referencja, zatem zawsze mamy aktualne dane!
+        addressData: new BaseModel(),
+        personalData: new BaseModel(),
+        contactData: new BaseModel(),
+        specializationList: ""
     },
-    saveUrl: 'employee/save'
+    saveUrl: '/medical-employee/save'
 });
 
-/**
- * Klasa odpowiedzialna za edycke proacownikow medycznych
- * @augments FormComponent
- */
 export class MedicalEmployeeEdit extends FormComponent {
-    /**
-     * @constructor tworzenie edycji pracownika medycznego, ktory jest pozniej przekazywany do swojego rodzica
-     * @param props parametry wejsciowe dla kontruktoera
-     */
     constructor(props) {
-        // Utworz model i przekaż go w konstruktorze do rodzica
-        let localModel = new BaseModelConfigured();
-        super(props, localModel);
+        let customerModel = new BaseModelConfigured();
+        super(props, customerModel);
 
-        // jeżeli przekazano employeeId w url
-        this.employeeId = props.match.params.employeeId;
-        localModel.fetchUrl = "/employee/get/" + this.employeeId;
+        this.componentRefresh(props);
 
         this.state = {
-            genderDictionary: [],
             model: this.model,
+            specializationDictionary: [],
             isLoading: false,
             isSaved: false
         };
     }
 
-    /**
-     * Funkcja odpowiedzialna za inicjalizacje danych przed utowrzeniem obiektu
-     */
-    componentDidMount() {
-        this.employeeId && this.model.fetch();
+    componentWillReceiveProps(newProps) {
+        // metoda jest wywoływana tuż przed otrzymaniem parametów z routera
+        // np. gdy zmieniamy ekran z /customer/edit na /customer/new
+        // newProps zawiera nowe parametry
+        this.componentRefresh(newProps);
+    }
+
+    componentRefresh(props) {
+        this.getRoutingData(props);
+        this.fetchSpecialization();
         this.fetchDictionaries();
     }
 
-    /**
-     * Metoda wywoływana po inicjalizacji obiektu. odpowiedzialna ze pobranie płci ze słownika
-     */
+    getRoutingData(props) {
+        this.employeeId = props.match.params.employeeId;
+        this.model.set('id', this.employeeId);
+    }
+
+    fetchSpecialization() {
+        if (this.employeeId) {
+            let specializationModel = new BaseModel();
+            specializationModel.fetchUrl = `/medical-employee/get/${this.employeeId}/specialization`;
+            specializationModel.fetch().then(res => {
+                this.model.set('specializationList', res.data.content);
+            });
+        }
+    }
+
     fetchDictionaries() {
-        SM.DictionaryManager.getDictAsArray("GENDER").then(dict => {
+        SM.DictionaryManager.getDictAsArray("SPECIALIZATION").then(dict => {
             this.setState({
-                genderDictionary: dict
+                specializationDictionary: dict
             });
         });
     }
 
-    /**
-     * Funkcja odpowiedzialna ze wykonanie akcji zapisu elementow po edycji
-     */
     onFormSave() {
-        this.setState({
-            isLoading: true
-        });
-        this.model.save().then(() => {
+        this.validateChildren();
+
+        if (!this.hasErrors()) {
             this.setState({
-                isLoading: false,
-                isSaved: true
+                isLoading: true
             });
-        });
+
+            this.model.save().then(() => {
+                this.setState({
+                    isLoading: false,
+                    isSaved: true
+                });
+            });
+        }
+
+        this.forceUpdate();
     }
 
-    /**
-     * Funkcja odpowiedzialna obsługę kliknięcia przycisku czyszczenia formularza
-     */
+    validateChildren() {
+        this.refs.address.validate();
+        this.refs.personal.validate();
+        this.refs.contact.validate();
+
+        this.errors = Object.assign({}, this.refs.address.errors, this.refs.personal.errors, this.refs.contact.errors);
+    }
+
     onFormClear() {
-        console.log("Clear!");
-        this.model.clear();
+        this.clearChildrenModels();
+        delete this.employeeId;
     }
 
-    /**
-     * Funckja odpowiedzialna za wyświetlanie formularza edycji pracownika medycznego
-     * @returns {XML}
-     */
+    clearChildrenModels() {
+        this.model.get('addressData').clear();
+        this.model.get('personalData').clear();
+        this.model.get('contactData').clear();
+    }
+
     render() {
-        console.log("render");
         return (
             <Container fluid={true}>
                 <p className="contentTitle">
-                    {this.employeeId ? 'Edycja' : 'Dodawanie'} nowego pracownika medycznego
+                    {this.employeeId ? 'Edycja' : 'Dodawanie nowego'} pracownika medycznego
                     <Loader isEnabled={this.state.isLoading}/>
                 </p>
+                <div className="alert alert-success" hidden={!this.state.isSaved} role="alert">
+                    {this.employeeId ? 'Pomyślnie zapisano pracownika medycznego.' : 'Pomyślnie dodano pracownika medycznego.'}
+                </div>
                 <Row>
-                    <Col md={6}>
-                        <div className="alert alert-success" hidden={!this.state.isSaved} role="alert">
-                            Pomyślnie zapisano pracownika.
-                        </div>
-                        <Form>
-                            <FormGroup>
-                                <Label for="employeeName">Imię</Label>
-                                <Input type="text" name="personalData.name" id="employeeName" placeholder="Imię"
-                                       value={this.state.model.get('personalData.name')}
-                                       onChange={this.bindValueToModel}/>
-                            </FormGroup>
-                            <FormGroup>
-                                <Label for="employeeSurname">Nazwisko</Label>
-                                <Input type="text" name="personalData.surname" id="employeeSurname"
-                                       placeholder="Nazwisko" value={this.state.model.get('personalData.surname')}
-                                       onChange={this.bindValueToModel}/>
-                            </FormGroup>
-                            <FormGroup>
-                                <Label for="employeePesel">Numer PESEL</Label>
-                                <Input type="number" name="personalData.pesel" id="employeePesel" placeholder="PESEL"
-                                       value={this.state.model.get('personalData.pesel')}
-                                       onChange={this.bindValueToModel}/>
-                            </FormGroup>
-                            <FormGroup>
-                                <Label for="employeeBirthday">Data urodzenia</Label>
-                                <Input type="date" name="personalData.birthday" id="employeeBirthday"
-                                       placeholder="Data urodzenia"
-                                       value={this.state.model.get('personalData.birthday') && SM.Utils.customFormat(this.state.model.get('personalData.birthday'), "yyyy-mm-dd")}
-                                       onChange={this.bindValueToModel}/>
-                            </FormGroup>
-                            <FormGroup>
-                                <Label for="employeeGender">Płeć</Label>
-                                <Input type="select" name="personalData.gender" id="employeeGender" value={this.state.model.get('personalData.gender')}
-                                       onChange={this.bindValueToModel}>
-                                    {this.state.genderDictionary.map(genderObj =>
-                                        <option
-                                            key={genderObj.id}
-                                            value={genderObj.id}>
-                                            {genderObj.label}
-                                        </option>)}
-                                </Input>
-                            </FormGroup>
-                            <div className="pull-right">
-                                <Button outline type="button" className="mr-1"
-                                        onClick={this.onFormClear.bind(this)}>Wyczyść formularz</Button>
-                                <Button outline color="primary" type="button"
-                                        onClick={this.onFormSave.bind(this)}>Zapisz pracownika</Button>
-                            </div>
-                        </Form>
+                    <Col md={4} sm={6} xs={12}>
+                        <AddressEdit ref="address" model={this.model.get('addressData')} medicalEmployeeId={this.employeeId}/>
+                    </Col>
+                    <Col md={4} sm={6} xs={12}>
+                        <PersonalEdit ref="personal" model={this.model.get('personalData')} medicalEmployeeId={this.employeeId}/>
+                    </Col>
+                    <Col md={4} sm={6} xs={12}>
+                        <ContactEdit ref="contact" model={this.model.get('contactData')} medicalEmployeeId={this.employeeId}/>
+                        <FormGroup>
+                            <Label for="specialization">Specjalizacja</Label>
+                            <BindedInput form={this} type="select" name="specializationList" id="specialization" multiple >
+                                <option
+                                    key="PLACEHOLDER_ITEM"
+                                    value="">
+                                    Wybierz specjalizację z listy
+                                </option>
+                                {this.state.specializationDictionary.map(specObj =>
+                                    <option
+                                        key={specObj.id}
+                                        value={specObj.id}>
+                                        {specObj.label}
+                                    </option>)}
+                            </BindedInput>
+                        </FormGroup>
                     </Col>
                 </Row>
+                <div>
+                    <hr/>
+                    <Button outline type="button" className="mr-1"
+                            onClick={this.onFormClear.bind(this)}>Wyczyść formularz</Button>
+                    <Button outline color="primary" type="button"
+                            onClick={this.onFormSave.bind(this)}>Zapisz pracownika</Button>
+                </div>
             </Container>
         );
     }

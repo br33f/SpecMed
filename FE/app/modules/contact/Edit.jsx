@@ -30,6 +30,8 @@ export class ContactEdit extends FormComponent {
             isSaved: false
         };
 
+        this.isFetched = false;
+
         this.addValidators();
     }
 
@@ -49,6 +51,8 @@ export class ContactEdit extends FormComponent {
     }
 
     handleFetch(props) {
+        if (this.isFetched) return;
+
         if (props.customerId) {
             this.model.fetchUrl = `/customer/get/${props.customerId}/contact`;
             this.model.fetch();
@@ -61,6 +65,14 @@ export class ContactEdit extends FormComponent {
         } else {
             this.model.clear();
         }
+        if (props.medicalEmployeeId) {
+            this.model.fetchUrl = `/medical-employee/get/${props.medicalEmployeeId}/contact`;
+            this.model.fetch();
+        } else {
+            this.model.clear();
+        }
+
+        this.isFetched = true;
     }
 
     render() {

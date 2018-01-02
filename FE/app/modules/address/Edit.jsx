@@ -27,6 +27,8 @@ export class AddressEdit extends FormComponent {
             isSaved: false
         };
 
+        this.isFetched = false;
+
         this.addValidators();
     }
 
@@ -49,6 +51,8 @@ export class AddressEdit extends FormComponent {
     }
 
     handleFetch(props) {
+        if (this.isFetched) return;
+
         if (props.customerId) {
             this.model.fetchUrl = `/customer/get/${props.customerId}/address`;
             this.model.fetch();
@@ -61,6 +65,14 @@ export class AddressEdit extends FormComponent {
         } else {
             this.model.clear();
         }
+        if (props.medicalEmployeeId) {
+            this.model.fetchUrl = `/medical-employee/get/${props.medicalEmployeeId}/address`;
+            this.model.fetch();
+        } else {
+            this.model.clear();
+        }
+
+        this.isFetched = true;
     }
 
     render() {

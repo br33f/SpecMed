@@ -32,6 +32,8 @@ export class PersonalEdit extends FormComponent {
             isSaved: false
         };
 
+        this.isFetched = false;
+
         this.addValidators();
     }
 
@@ -65,6 +67,8 @@ export class PersonalEdit extends FormComponent {
     }
 
     handleFetch(props) {
+        if (this.isFetched) return;
+
         if (props.customerId) {
             this.model.fetchUrl = `/customer/get/${props.customerId}/personal`;
             this.model.fetch();
@@ -77,6 +81,14 @@ export class PersonalEdit extends FormComponent {
         } else {
             this.model.clear();
         }
+        if (props.medicalEmployeeId) {
+            this.model.fetchUrl = `/medical-employee/get/${props.medicalEmployeeId}/personal`;
+            this.model.fetch();
+        } else {
+            this.model.clear();
+        }
+
+        this.isFetched = true;
     }
 
     /**
