@@ -24,21 +24,17 @@ export class CustomerList extends Component {
             <Link to={editUrl}>
                 <i className="fa fa-pencil-square fa-lg" aria-hidden="true"></i>
             </Link>
-
-
         );
     }
+
     generatePrescriptionLink(customerId) {
         let editUrl = `/prescription/new/${customerId}`;
         return (
             <Link to={editUrl}>
                 <i className="fa fa-book fa-lg" aria-hidden="true"></i>
             </Link>
-
-
         );
     }
-
 
     /**
      * funkcja odpowiedzialna za generowanie nagłówka

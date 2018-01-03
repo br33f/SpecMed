@@ -66,6 +66,15 @@ export class CustomerSearch extends FormComponent {
         );
     }
 
+    generatePrescriptionLink(customerId) {
+        let editUrl = `/prescription/new/${customerId}`;
+        return (
+            <Link to={editUrl}>
+                <i className="fa fa-book fa-lg" aria-hidden="true"></i>
+            </Link>
+        );
+    }
+
 
     /**
      * funkcja odpowiedzialna za generowanie nagłówka
@@ -79,7 +88,8 @@ export class CustomerSearch extends FormComponent {
             {key: 'contactData.telephoneNumber', label: 'Numer telefonu'},
             {key: 'contactData.email', label: 'Adres e-mail'},
             {key: 'addressData.cityName', label: 'Miejscowość', sortable: true},
-            {key: 'id', label: 'Historia', format: {type: 'custom', fn: this.generateMedicalHistoryLink}}
+            {key: 'id', label: 'Historia', format: {type: 'custom', fn: this.generateMedicalHistoryLink}},
+            {key: 'id', label: 'Recepta', format: {type: 'custom', fn: this.generatePrescriptionLink}}
         ];
     }
 
