@@ -25,4 +25,5 @@ public interface VisitRepository extends MongoRepository<Visit, String> {
     List<Visit> findAllByMedicalEmployee(MedicalEmployee medicalEmployee);
 
     List<Visit> findAllByMedicalEmployeeId(String id);
+    List<Visit> findAllByCustomerId(String id);
 }

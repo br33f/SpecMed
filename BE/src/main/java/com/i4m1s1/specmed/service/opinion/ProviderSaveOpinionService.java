@@ -21,9 +21,7 @@ public class ProviderSaveOpinionService extends BasicServiceCatch<NewOpinionDTO,
     @Autowired
     private VisitRepository repository;
 
-    /** DODAWANIE OPINIII POPRZEZ DTO! */
     @Override
-    /** DODAWANIE OPINIII POPRZEZ DTO! */
     protected BasicResponse<Opinion> provide(BasicRequest<NewOpinionDTO> request) throws SMException {
         NewOpinionDTO dto = request.getChunkData();
         Visit visit = repository.findById(dto.getVisitId());

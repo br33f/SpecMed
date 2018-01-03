@@ -4,6 +4,7 @@ import com.i4m1s1.specmed.dto.VisitBasicDataDTO;
 import com.i4m1s1.specmed.dto.VisitDTO;
 import com.i4m1s1.specmed.dto.VisitSelectedByCustomerDTO;
 import com.i4m1s1.specmed.persistence.Visit;
+import com.i4m1s1.specmed.service.ProviderGetMyVisitsTargetService;
 import com.i4m1s1.specmed.service.visit.ProviderGetFreeVisitService;
 import com.i4m1s1.specmed.service.visit.ProviderMakeAppointmentService;
 import com.i4m1s1.specmed.service.visit.ProviderSaveVisitService;
@@ -39,6 +40,9 @@ public class VisitController {
 
     @Autowired
     private ProviderMakeAppointmentService providerMakeAppointmentService;
+
+    @Autowired
+    private ProviderGetMyVisitsTargetService providerGetMyVisitsTargetService;
     /**
      * Metoda udostępniająca wyszukanie listy danych wizyt
      * @param request żądanie zawierające listę danych wizyt
@@ -48,6 +52,12 @@ public class VisitController {
     @RequestMapping(method = RequestMethod.POST, path = "/list")
     public ListResponse<VisitBasicDataDTO> getVisitByDoctor(@RequestBody ListRequest<Visit> request) {
         return providerVisitsByDoctorService.serve(request);
+    }
+
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.POST, path = "/list/mine")
+    public BasicResponse<List<VisitDTO>> getMyVisits(@RequestBody BasicRequest<Object> request) {
+        return providerGetMyVisitsTargetService.serve(request);
     }
 
     /**

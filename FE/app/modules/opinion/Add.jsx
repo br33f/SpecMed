@@ -5,17 +5,18 @@ import BaseModel from 'components/models/BaseModel';
 import {Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import {FormComponent} from "components/form-component/FormComponent.jsx";
 import {Loader} from "components/controls/Loader.jsx";
+import ReactStars from 'react-stars';
+import {BindedInput} from "components/controls/BindedInput.jsx";
+import axios from 'axios';
+
 
 const BaseModelConfigured = BaseModel.extend({
     defaults: {
-        price: "",
-        place: "",
-        date: Date.now(),
-        hour: "",
-        status: "1",
-        doctor: ""
+        comment: "",
+        stars: "",
+        visitId: ""
     },
-    saveUrl: 'employee/save'
+    saveUrl: 'opinion/save'
 
 });
 
@@ -26,39 +27,48 @@ export class OpinionAdd extends FormComponent {
         let localModel = new BaseModelConfigured();
         super(props, localModel);
 
-        // rozdział na edycje i dodawanie jest bo 16 nie damy rady zrobic
-        // albo cos
-
         this.state = {
-            genderDictionary: [],
+            freeVisitsList: [],
             model: this.model,
             isLoading: false,
             isSaved: false
         };
     }
 
-    getSample() {
-        return ['Adam Abacki', 'Marcin Babacki'];
+    fetchMyVisits() {
+        axios.post('/visit/list/mine', {}).then(response => {
+            if (response.data.content) {
+                this.setState({
+                    freeVisitsList: response.data.content
+                })
+            }
+        });
     }
 
     componentDidMount() {
         this.employeeId && this.model.fetch();
-        this.fetchDictionaries();
+        this.fetchMyVisits();
     }
 
-    fetchDictionaries() {
-        SM.DictionaryManager.getDictAsArray("VISIT_STATUS").then(dict => {
-            this.setState({
-                genderDictionary: dict
-            });
+    sendOpinionRequest() {
+        let SaveModel = BaseModel.extend({
+            saveUrl: '/opinion/save'
         });
+
+        let saveModel = new SaveModel();
+        saveModel.set('visitId', this.model.get('visitId'));
+        saveModel.set('comment', this.model.get('comment'));
+        saveModel.set('stars', this.model.stars);
+
+        return saveModel.save();
     }
 
     onFormSave() {
         this.setState({
             isLoading: true
         });
-        this.model.save().then(() => {
+        this.sendOpinionRequest().then(() => {
+
             this.setState({
                 isLoading: false,
                 isSaved: true
@@ -70,6 +80,10 @@ export class OpinionAdd extends FormComponent {
         console.log("Clear!");
         this.model.clear();
     }
+
+    ratingChanged = (newRating) => {
+        this.model.stars =  newRating;
+    };
 
     render() {
         return (
@@ -86,24 +100,30 @@ export class OpinionAdd extends FormComponent {
                         </div>
                         <Form>
                             <FormGroup>
+                                <Label for="visit">Wybierz wizytę</Label>
+                                <BindedInput form={this} type="select" name="visitId" id="visit">
+                                    <option
+                                        key="PLACEHOLDER_ITEM"
+                                        value="">
+                                        Wybierz wizytę z listy
+                                    </option>
+                                    {this.state.freeVisitsList.map(visitObj =>
+                                        <option
+                                            key={visitObj.id}
+                                            value={visitObj.id}>
+                                            {visitObj.place + " - Od " + SM.Utils.formatDateTime(visitObj.dateStart) + " Do " + SM.Utils.formatDateTime(visitObj.dateEnd) + " - Cena: " + visitObj.price + "zł"}
+                                        </option>)}
+                                </BindedInput>
+                            </FormGroup>
+                            <FormGroup>
                                 <Label for="description">Ocena wizyty:</Label>
                                 <br/>
-                                <textarea rows="5" cols="60" type="text" name="description" id="description"
-                                       placeholder="Twoja opinia..."/>
+                                <textarea rows="5" cols="60" type="text" name="comment" id="comment"
+                                          placeholder="Twoja opinia..."
+                                          value={this.state.model.get('comment')}
+                                          onChange={this.bindValueToModel}/>
                             </FormGroup>
-                            {/*dobry hardcode*/}
-                            <div className="row">
-                                <div className="col-md-12">
-                                    <div className="star-rating">
-                                        <span className="fa fa-star" data-rating="1"></span>
-                                        <span className="fa fa-star" data-rating="2"></span>
-                                        <span className="fa fa-star" data-rating="3"></span>
-                                        <span className="fa fa-star-half-empty" data-rating="4"></span>
-                                        <span className="fa fa-star-o" onClick={(e)=>this.setGold(e)} data-rating="5"></span>
-                                        <input type="hidden" name="whatever1" className="rating-value" value="2.56"/>
-                                    </div>
-                                </div>
-                            </div>
+                            <ReactStars count={5} onChange={this.ratingChanged} size={24} color2={'#ffd700'}/>
                             <div className="pull-left">
                                 <hr/>
                                 <Button outline color="primary" type="button"
@@ -114,6 +134,6 @@ export class OpinionAdd extends FormComponent {
                 </Row>
             </Container>
         );
-        console.log("render");
+        console.log("render https://www.npmjs.com/package/react-stars");
     }
 }
