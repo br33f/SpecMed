@@ -11,7 +11,8 @@ import axios from 'axios';
 const BaseModelConfigured = BaseModel.extend({
     defaults: {
         NFZunit: "",
-        employee: "",
+        medicalEmployee: Object,
+        rows: [],
         creationDate: Date.now(),
         validDate: Date.now(),
         customer: "",
@@ -27,17 +28,20 @@ export class Prescription extends FormComponent {
 
         this.getRoutingData(props);
         this.fetchCustomer();
+
         // personalModel.setDefaults(modelDefaults);
         // personalModel.set(modelDefaults);
 
         this.state = {
-            customerdata: [],
+            customerdata: "",
             NFZDictionary: [],
             medicalEmployeeList: [],
             model: this.model,
             isLoading: false,
             isSaved: false
         };
+
+
 
         this.addValidators();
 
@@ -48,7 +52,7 @@ export class Prescription extends FormComponent {
     addValidators() {
         this.rules = {
             "NFZunit": {validator: "required"},
-            "employee": {validator: "required"},
+            "medicalEmployee": {validator: "required"},
             "creationDate": {validator: "required"},
             "validDate": {validator: "required"},
             "discount": {validator: "required"}
@@ -60,6 +64,7 @@ export class Prescription extends FormComponent {
         this.handleFetch(this.props);
         this.fetchDictionaries();
         this.fetchMedicalEmployees();
+
     }
 
     componentWillReceiveProps(newProps) {
@@ -93,7 +98,7 @@ export class Prescription extends FormComponent {
 
     }
     fetchMedicalEmployees() {
-        axios.post('/medical-employee/list/basic', {
+        axios.get('/medical-employee/list/full', {
         }).then(response => {
             if (response.data.content) {
                 this.setState({
@@ -109,7 +114,7 @@ export class Prescription extends FormComponent {
     }
 
     fetchCustomer() {
-        axios.post('/customer/get/'+this.customerId, {
+        axios.get('/customer/get/'+this.customerId, {
         }).then(response => {
             if (response.data.content) {
                 this.setState({
@@ -125,6 +130,7 @@ export class Prescription extends FormComponent {
 
     onFormSave() {
 
+        this.model.set('customer',this.state.customerdata);
         if (!this.hasErrors()) {
             this.setState({
                 isLoading: true
@@ -145,24 +151,10 @@ export class Prescription extends FormComponent {
     render() {
         return (
             <Form>
-                <FormGroup>
-                <Label for="customer">Recepta dla pacjenta:</Label>
-                <BindedInput form={this} type="select" name="customer" id="customer">
 
-                    {this.state.customerdata.map(cusObj =>
-                        <option
-                            key={cusObj.id}
-                            value={cusObj.id}>
-                            {cusObj.name + ' ' + cusObj.surname}
-                        </option>)}
-
-
-
-                </BindedInput>
-                </FormGroup>
                 <FormGroup>
                 <Label for="employee">Wybierz pracownika</Label>
-                <BindedInput form={this} type="select" name="medicalEmployeeId" id="employee">
+                <BindedInput form={this} type="select" name="medicalEmployee" id="medicalEmployee">
                     <option
                         key="PLACEHOLDER_ITEM"
                         value="">
@@ -197,7 +189,7 @@ export class Prescription extends FormComponent {
                 </FormGroup>
                 <FormGroup>
                     <Label for="prescriptionrow">Lista leków</Label>  {/*TODO: dodać prawdziwą listę leków*/}
-                    <BindedInput form={this} type="textarea" name="prescriptionrow" id="prescriptionrow" placeholder="Lista leków"/>
+                    <BindedInput form={this} type="textarea" name="rows" id="rows" placeholder="Lista leków"/>
                 </FormGroup>
                 <FormGroup>
                     <Label for="creationDate">Data wystawienia</Label>
