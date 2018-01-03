@@ -22,6 +22,7 @@
     "react-dom": "^16.2.0",
     "react-popper": "^0.7.4",
     "react-router-dom": "^4.2.2",
+    "react-stars": "^2.2.5",
     "react-widgets": "^4.1.1",
     "react-widgets-moment": "^4.0.4",
     "reactstrap": "^4.8.0",
