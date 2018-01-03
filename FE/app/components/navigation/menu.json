@@ -69,7 +69,8 @@
     "children": [
       {
         "uri": "/visit/add",
-        "label": "Dodaj nową wizytę"
+        "label": "Dodaj nową wizytę",
+        "permitWith": ["VISIT_ADD"]
       },
       {
         "uri": "/visit/rate",
