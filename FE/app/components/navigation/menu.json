@@ -5,7 +5,7 @@
   },
   {
     "label": "Pacjent",
-    "permitWith": ["CUSTOMER"],
+    "permitWith": ["EMPLOYEE", "MEDICAL_EMPLOYEE", "DIRECTOR"],
     "children": [
       {
         "uri": "/customer/list",
@@ -23,15 +23,16 @@
   },
   {
     "label": "Pracownik",
-    "permitWith": ["EMPLOYEE"],
     "children": [
       {
         "uri": "/employee/list",
-        "label": "Lista pracowników"
+        "label": "Lista pracowników",
+        "permitWith": ["DIRECTOR"]
       },
       {
         "uri": "/employee/new",
-        "label": "Dodaj nowego pracownika"
+        "label": "Dodaj nowego pracownika",
+        "permitWith": ["EMPLOYEE", "DIRECTOR"]
       },
       {
         "uri": "/medical-employee/list",
@@ -39,7 +40,8 @@
       },
       {
         "uri": "/medical-employee/new",
-        "label": "Dodaj nowego pracownika medycznego"
+        "label": "Dodaj nowego pracownika medycznego",
+        "permitWith": ["EMPLOYEE", "DIRECTOR"]
       }
     ]
   },
@@ -53,34 +55,48 @@
       {
         "uri": "/insurance/new",
         "label": "Dodaj ubezpieczenia",
-        "permitWith": ["INSURANCE_ADD"]
+        "permitWith": ["EMPLOYEE", "MEDICAL_EMPLOYEE", "DIRECTOR"]
       }
     ]
   },
   {
-    "uri": "/unit/new",
-    "label": "Nowa placówka",
-    "permitWith": ["UNIT_ADD"]
+    "label": "Placówki",
+    "children": [
+      {
+        "uri": "/unit/list",
+        "label": "Lista placówek"
+      },
+      {
+        "uri": "/unit/new",
+        "label": "Nowa placówka",
+        "permitWith": ["EMPLOYEE", "DIRECTOR"]
+      }
+    ]
   },
   {
     "label": "Wizyta",
+    "permitWith": ["EMPLOYEE", "DIRECTOR", "CUSTOMER"],
     "children": [
       {
         "uri": "/visit/add",
-        "label": "Dodaj nową wizytę"
+        "label": "Dodaj nową wizytę",
+        "permitWith": ["EMPLOYEE", "DIRECTOR"]
       },
       {
         "uri": "/visit/rate",
-        "label": "Oceń wizytę"
+        "label": "Oceń wizytę",
+        "permitWith": ["CUSTOMER"]
       },
       {
         "uri": "/visit/appoint",
-        "label": "Umów się na wizytę"
+        "label": "Umów się na wizytę",
+        "permitWith": ["CUSTOMER"]
       }
     ]
   },
   {
     "label": "Wiadomości",
+    "permitWith": ["LOGGED"],
     "children": [
       {
         "uri": "/contact/send",

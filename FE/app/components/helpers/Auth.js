@@ -1,6 +1,8 @@
 const LOGGED = "LOGGED";
 const NOT_LOGGED = "NOT_LOGGED";
 
+const LOGIN_URL = "/login";
+
 export default {
 
     getData: function () {
@@ -11,6 +13,16 @@ export default {
         let decodedPayload = atob(payload);
 
         return JSON.parse(decodedPayload);
+    },
+
+    getId: function () {
+        let data = this.getData();
+        return data ? data.id : null;
+    },
+
+    getEntityId: function () {
+        let data = this.getData();
+        return data ? data.entityId : null;
     },
 
     getEmail: function () {
@@ -29,6 +41,10 @@ export default {
 
     isLogged: function () {
         return this.getData();
+    },
+
+    getLoginUrl: function () {
+      return LOGIN_URL;
     },
 
     isPermitted: function (permitWith) {

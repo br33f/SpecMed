@@ -20,6 +20,7 @@ export class BindedInput extends Component {
                      value={this.props.value || this.Form.state.model.get(this.props.name)}
                      className={this.Form.isValid(this.props.name) ? '' : 'is-invalid'}
                      onChange={this.props.onChange || this.Form.bindValueToModel}
+                     multiple={this.props.multiple}
               >
                   {this.props.children}
               </Input>

@@ -54,6 +54,10 @@ export class UnitEdit extends FormComponent {
      * @public
      */
     componentDidMount() {
+        if (!SM.Auth.isLogged()) {
+            props.history.push(SM.Auth.getLoginUrl());
+        }
+
         this.unitId && this.model.fetch();
         this.fetchDictionaries();
     }

@@ -1,4 +1,4 @@
-package com.i4m1s1.specmed.service;
+package com.i4m1s1.specmed.service.communication;
 
 import com.i4m1s1.specmed.core.SMException;
 import com.i4m1s1.specmed.dto.NewPrivateMessageDTO;

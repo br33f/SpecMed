@@ -1,5 +1,9 @@
 package com.i4m1s1.specmed.controller;
 
+import com.i4m1s1.specmed.core.AddressData;
+import com.i4m1s1.specmed.core.ContactData;
+import com.i4m1s1.specmed.core.PersonalData;
+import com.i4m1s1.specmed.core.dict.DictionaryNames;
 import com.i4m1s1.specmed.dto.DoctorBasicDataDTO;
 import com.i4m1s1.specmed.dto.ScheduleDTO;
 import com.i4m1s1.specmed.persistence.MedicalEmployee;
@@ -8,6 +12,9 @@ import com.i4m1s1.specmed.service.common.request.ListRequest;
 import com.i4m1s1.specmed.service.common.response.BasicResponse;
 import com.i4m1s1.specmed.service.common.response.ListResponse;
 import com.i4m1s1.specmed.service.doctor.*;
+import com.i4m1s1.specmed.service.employee.ProviderGetEmployeeAddressDataService;
+import com.i4m1s1.specmed.service.employee.ProviderGetEmployeeContactDataService;
+import com.i4m1s1.specmed.service.employee.ProviderGetEmployeePersonalDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +34,9 @@ public class MedicalEmployeeController {
     private ProviderGetAllDoctorBasicDataService serviceAll;
 
     @Autowired
+    private ProviderMedicalEmployeeDataService serviceAllPost;
+
+    @Autowired
     private ProviderSaveMedicalEmployeeService serviceSave;
 
     @Autowired
@@ -34,6 +44,18 @@ public class MedicalEmployeeController {
 
     @Autowired
     private ProviderGetDoctorBasicDataBySpecializationService providerGetDoctorBasicDataBySpecializationService;
+
+    @Autowired
+    private ProviderGetDoctorAddressDataService providerGetDoctorAddressDataService;
+
+    @Autowired
+    private ProviderGetDoctorContactDataService providerGetDoctorContactDataService;
+
+    @Autowired
+    private ProviderGetDoctorPersonalDataService providerGetDoctorPersonalDataService;
+
+    @Autowired
+    private ProviderGetDoctorSpecializationService providerGetDoctorSpecializationService;
 
     /**
      * Metoda udostępniająca wyszukania konkretnych pracowników medycznych
@@ -62,6 +84,12 @@ public class MedicalEmployeeController {
         return serviceAll.serve(null);
     }
 
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.POST, path = "/list/full")
+    public ListResponse<MedicalEmployee> getPostFullList(@RequestBody ListRequest<MedicalEmployee> request) {
+        return serviceAllPost.serve(request);
+    }
+
     /**
      *
      * @param request
@@ -82,6 +110,38 @@ public class MedicalEmployeeController {
     @RequestMapping(method = RequestMethod.POST, path = "/schedule")
     public BasicResponse<List<ScheduleDTO>> getDictByName(@RequestBody BasicRequest<String> request) {
         return serviceSchedule.serve(request);
+    }
+
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.GET, path = "/get/{employeeId}/address")
+    public BasicResponse<AddressData> getDoctorAddressData(@PathVariable("employeeId") String employeeId) {
+        BasicRequest<String> getEmployeeRequest = new BasicRequest<>();
+        getEmployeeRequest.setChunkData(employeeId);
+        return providerGetDoctorAddressDataService.serve(getEmployeeRequest);
+    }
+
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.GET, path = "/get/{employeeId}/contact")
+    public BasicResponse<ContactData> getDoctorContactData(@PathVariable("employeeId") String employeeId) {
+        BasicRequest<String> getEmployeeRequest = new BasicRequest<>();
+        getEmployeeRequest.setChunkData(employeeId);
+        return providerGetDoctorContactDataService.serve(getEmployeeRequest);
+    }
+
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.GET, path = "/get/{employeeId}/personal")
+    public BasicResponse<PersonalData> getDoctorPersonalData(@PathVariable("employeeId") String employeeId) {
+        BasicRequest<String> getEmployeeRequest = new BasicRequest<>();
+        getEmployeeRequest.setChunkData(employeeId);
+        return providerGetDoctorPersonalDataService.serve(getEmployeeRequest);
+    }
+
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.GET, path = "/get/{employeeId}/specialization")
+    public BasicResponse<List<String>> getDoctorSpecializationData(@PathVariable("employeeId") String employeeId) {
+        BasicRequest<String> getEmployeeRequest = new BasicRequest<>();
+        getEmployeeRequest.setChunkData(employeeId);
+        return providerGetDoctorSpecializationService.serve(getEmployeeRequest);
     }
 
 }

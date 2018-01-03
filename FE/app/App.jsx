@@ -3,6 +3,7 @@ import axios from 'axios';
 import {Component} from 'react';
 import {Navigation} from './components/navigation/Navigation.jsx';
 import {Jumbo} from './components/jumbo/Jumbo.jsx';
+import {Footer} from './components/footer/Footer.jsx';
 
 import Utils from './components/helpers/Utils';
 import DictionaryManager from './components/helpers/DictionaryManager';
@@ -50,7 +51,7 @@ export class App extends Component {
                 <Navigation appTitle={this.appTitle}/>
                 <Jumbo appTitle={this.appTitle} />
                 <Routes />
-                <br />
+                <Footer />
             </div>
         );
     }
