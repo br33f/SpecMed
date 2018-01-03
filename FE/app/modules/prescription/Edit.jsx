@@ -3,19 +3,22 @@ import {Component} from 'react';
 import BaseModel from 'components/models/BaseModel';
 import {BindedInput} from 'components/controls/BindedInput.jsx';
 import {BindedDateTimePicker} from 'components/controls/BindedDateTimePicker.jsx';
-import {Button, Form, FormGroup, Label} from 'reactstrap';
+import {Container, Button, Form, FormGroup, Label, Row, Col} from 'reactstrap';
 import {FormComponent} from "components/form-component/FormComponent.jsx";
 import {Loader} from "components/controls/Loader.jsx";
-import axios from 'axios';
+import FontAwesome from 'react-fontawesome';
+
+const ONE_MONTH = 30 * 24 * 60 * 60 * 1000;
 
 const BaseModelConfigured = BaseModel.extend({
     defaults: {
-        NFZunit: "",
-        medicalEmployee: Object,
-        rows: [],
+        customerId: "",
+        nfzunit: "",
+        rows: [
+            {medicineName: "", dose: ""}
+        ],
         creationDate: Date.now(),
-        validDate: Date.now(),
-        customer: "",
+        validDate: Date.now() + ONE_MONTH,
         discount: ""
     },
     saveUrl: "/prescription/save"
@@ -27,63 +30,29 @@ export class Prescription extends FormComponent {
         super(props, personalModel);
 
         this.getRoutingData(props);
-        this.fetchCustomer();
-
-        // personalModel.setDefaults(modelDefaults);
-        // personalModel.set(modelDefaults);
 
         this.state = {
-            customerdata: "",
             NFZDictionary: [],
-            medicalEmployeeList: [],
             model: this.model,
             isLoading: false,
             isSaved: false
         };
 
-
-
         this.addValidators();
-
     }
-
-
 
     addValidators() {
         this.rules = {
-            "NFZunit": {validator: "required"},
-            "medicalEmployee": {validator: "required"},
+            "nfzunit": {validator: "required"},
             "creationDate": {validator: "required"},
+            "rows": {validator: "required"},
             "validDate": {validator: "required"},
             "discount": {validator: "required"}
         };
     }
 
-
     componentDidMount() {
-        this.handleFetch(this.props);
         this.fetchDictionaries();
-        this.fetchMedicalEmployees();
-
-    }
-
-    componentWillReceiveProps(newProps) {
-        this.handleFetch(newProps);
-    }
-
-    handleFetch(props) {
-        if (props.customerId) {
-            this.model.fetchUrl = `/customer/get/${props.customerId}/personal`;
-            this.model.fetch();
-        } else {
-            this.model.clear();
-        }
-        if (props.employeeId) {
-            this.model.fetchUrl = `/employee/get/${props.employeeId}/personal`;
-            this.model.fetch();
-        } else {
-            this.model.clear();
-        }
     }
 
     /**
@@ -97,31 +66,15 @@ export class Prescription extends FormComponent {
         });
 
     }
-    fetchMedicalEmployees() {
-        axios.get('/medical-employee/list/full', {
-        }).then(response => {
-            if (response.data.content) {
-                this.setState({
-                    medicalEmployeeList: response.data.content
-                });
-            }
-        });
-    }
 
     getRoutingData(props) {
         this.customerId = props.match.params.customerId;
 
-    }
+        if (!this.customerId) {
+            this.props.history.push('/login');
+        }
 
-    fetchCustomer() {
-        axios.get('/customer/get/'+this.customerId, {
-        }).then(response => {
-            if (response.data.content) {
-                this.setState({
-                    customerdata: response.data.content
-                });
-            }
-        });
+        this.model.set('customerId', this.customerId);
     }
 
     onFormClear() {
@@ -129,8 +82,9 @@ export class Prescription extends FormComponent {
     }
 
     onFormSave() {
+        this.clearEmptyPrescriptionRows();
+        this.validate();
 
-        this.model.set('customer',this.state.customerdata);
         if (!this.hasErrors()) {
             this.setState({
                 isLoading: true
@@ -141,77 +95,111 @@ export class Prescription extends FormComponent {
                     isLoading: false,
                     isSaved: true
                 });
-
+                this.model.clear();
             });
         }
 
         this.forceUpdate();
     }
 
+    clearEmptyPrescriptionRows() {
+        let rows = this.model.get('rows');
+        let notEmptyRows = rows.filter(row => row.medicineName || row.dose);
+        this.model.set('rows', notEmptyRows);
+
+        if (notEmptyRows.length === 0) {
+            this.addRow();
+        }
+    }
+
+    addRow() {
+        let rows = this.model.get('rows');
+        rows.push({medicineName: '', dose: ''});
+
+        this.model.set('rows', rows);
+    }
+
+    formatPrescriptionRow(idx) {
+        let medicineName = `rows[${idx}].medicineName`;
+        let doseName = `rows[${idx}].dose`;
+        let medicineId = `row-medicine-${idx}`;
+        let doseId = `row-dose-${idx}`;
+
+        return (
+            <FormGroup>
+                <Row>
+                    <Col sm={7}>
+                        <BindedInput form={this} type="text" name={medicineName} id={medicineId}
+                                     placeholder="Nazwa leku"/>
+                    </Col>
+                    <Col sm={5}>
+                        <BindedInput form={this} type="text" name={doseName} id={doseId} placeholder="Dawka"/>
+                    </Col>
+                </Row>
+            </FormGroup>
+        );
+    }
+
     render() {
         return (
-            <Form>
-
-                <FormGroup>
-                <Label for="employee">Wybierz pracownika</Label>
-                <BindedInput form={this} type="select" name="medicalEmployee" id="medicalEmployee">
-                    <option
-                        key="PLACEHOLDER_ITEM"
-                        value="">
-                        Wybierz pracownika z listy
-                    </option>
-                    {this.state.medicalEmployeeList.map(meObj =>
-                        <option
-                            key={meObj.id}
-                            value={meObj.id}>
-                            {meObj.name + ' ' + meObj.surname}
-                        </option>)}
-
-
-
-                </BindedInput>
-                </FormGroup>
-                <FormGroup>
-                    <Label for="NFZunit">Oddział NFZ</Label>
-                    <BindedInput form={this} type="select" name="NFZunit" id="NFZunit">
-                        <option
-                            key="PLACEHOLDER_VAR"
-                            value="">
-                            Wybierz oddział NFZ
-                        </option>)
-                        {this.state.NFZDictionary.map(NFZObj =>
-                            <option
-                                key={NFZObj.id}
-                                value={NFZObj.id}>
-                                {NFZObj.label}
-                            </option>)}
-                    </BindedInput>
-                </FormGroup>
-                <FormGroup>
-                    <Label for="prescriptionrow">Lista leków</Label>  {/*TODO: dodać prawdziwą listę leków*/}
-                    <BindedInput form={this} type="textarea" name="rows" id="rows" placeholder="Lista leków"/>
-                </FormGroup>
-                <FormGroup>
-                    <Label for="creationDate">Data wystawienia</Label>
-                    <BindedDateTimePicker form={this} id="creationDate" name="creationDate" time={false}
-                                          placeholder="Wybierz datę wystawienia"/>
-                </FormGroup>
-                <FormGroup>
-                    <Label for="validDate">Data ważności</Label>
-                    <BindedDateTimePicker form={this} id="validDate" name="validDate" time={false}
-                                          placeholder="Wybierz datę ważności"/>
-                </FormGroup>
-                <FormGroup>
-                    <Label for="discount">Zniżka</Label>
-                    <BindedInput form={this} type="text" name="discount" id="discount" placeholder="Zniżka"/>
-                </FormGroup>
-                <div className="pull-right">
-                    <Button outline type="button" className="mr-1"
-                            onClick={this.onFormClear.bind(this)}>Wyczyść formularz</Button>
-                    <Button outline color="primary" type="button"
-                            onClick={this.onFormSave.bind(this)}>Wystaw receptę</Button>
+            <Container fluid={true}>
+                <p className="contentTitle">
+                    Wystawianie recepty
+                    <Loader isEnabled={this.state.isLoading}/>
+                </p>
+                <div className="alert alert-success" hidden={!this.state.isSaved} role="alert">
+                    Pomyślnie wystawiono receptę
                 </div>
-            </Form>
+                <Form>
+                    <FormGroup>
+                        <Label for="NFZunit">Oddział NFZ</Label>
+                        <BindedInput form={this} type="select" name="nfzunit" id="NFZunit">
+                            <option
+                                key="PLACEHOLDER_VAR"
+                                value="">
+                                Wybierz oddział NFZ
+                            </option>
+                            )
+                            {this.state.NFZDictionary.map(NFZObj =>
+                                <option
+                                    key={NFZObj.id}
+                                    value={NFZObj.id}>
+                                    {NFZObj.label}
+                                </option>)}
+                        </BindedInput>
+                    </FormGroup>
+                    <FormGroup className="mb-0">
+                        <Label>Lista leków</Label>
+                    </FormGroup>
+                    {this.model.get('rows').map((row, idx) => this.formatPrescriptionRow(idx))}
+                    <FormGroup>
+                        <Button outline type="button" onClick={this.addRow.bind(this)}>
+                            <FontAwesome name="plus-circle" size="lg"/> Kolejny lek
+                        </Button>
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="creationDate">Data wystawienia</Label>
+                        <BindedDateTimePicker form={this} id="creationDate" name="creationDate" time={false}
+                                              placeholder="Wybierz datę wystawienia"/>
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="validDate">Data ważności</Label>
+                        <BindedDateTimePicker form={this} id="validDate" name="validDate" time={false}
+                                              placeholder="Wybierz datę ważności"/>
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="discount">Zniżka</Label>
+                        <BindedInput form={this} type="text" name="discount" id="discount" placeholder="Zniżka"/>
+                    </FormGroup>
+                    <div className="text-right">
+                        <hr/>
+                        <Button outline type="button" className="mr-1"
+                                onClick={this.onFormClear.bind(this)}>Wyczyść formularz</Button>
+                        <Button outline color="primary" type="button"
+                                onClick={this.onFormSave.bind(this)}>Wystaw receptę</Button>
+                    </div>
+                </Form>
+            </Container>
         );
     }
 }
