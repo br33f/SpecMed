@@ -45,6 +45,10 @@ export class EmployeeEdit extends FormComponent {
     }
 
     getRoutingData(props) {
+        if (!SM.Auth.isLogged()) {
+            props.history.push(SM.Auth.getLoginUrl());
+        }
+
         this.employeeId = props.match.params.employeeId;
         this.model.set('id', this.employeeId);
     }

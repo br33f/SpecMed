@@ -38,6 +38,8 @@ import {VisitAppoint} from "./modules/visit/Appoint.jsx";
 
 // Communication
 import {CommunicationWithDoctor} from "./modules/communication-with-doctor/Add.jsx";
+import {Conversations} from "./modules/communication-with-doctor/Conversations.jsx";
+import {Conversation} from "./modules/communication-with-doctor/Conversation.jsx";
 
 // User
 import {Register} from "./modules/user/Register.jsx";
@@ -144,6 +146,8 @@ export class Routes extends Component {
         return (
             <Switch>
                 <Route exact path='/contact/send' component={CommunicationWithDoctor}/>
+                <Route exact path='/contact/list' component={Conversations}/>
+                <Route exact path='/contact/conversation/:doctorId' component={Conversation}/>
             </Switch>
         )
     }

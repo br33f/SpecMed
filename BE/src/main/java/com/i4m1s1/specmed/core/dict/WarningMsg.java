@@ -12,7 +12,9 @@ public enum WarningMsg {
     VISIT_FOR_OPINION_NOT_FOUND(5, "Brak wizyty o podanym ID. Nie można dodać wizyty!"),
     CANT_BIND_WRONG_PASSWORD(6, "Podano złe hasło"),
     CANT_BIND_WRONG_DATA(7, "Podane złe dane"),
-    GENERIC_VALIDATE(8, "Błąd walidacji żądania");
+    GENERIC_VALIDATE(8, "Błąd walidacji żądania"),
+    MUST_LOGGED(9, "Wymagany zalogowany użytkownik"),
+    NOT_ENOUGH_PARAMS(10, "Nie przekazano wystarczających parametrów");
 
     private final int id;
     private final String message;

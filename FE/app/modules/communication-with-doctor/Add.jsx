@@ -14,7 +14,7 @@ const BaseModelConfigured = BaseModel.extend({
         medicalEmployeeId: "",
         customerId: "" /* To powinnismy brac w aplikacji z ApplicationContext.getCurentUser() - cos takiego */
     },
-    saveUrl: 'communication/save'
+    saveUrl: '/communication/save'
 });
 
 export class CommunicationWithDoctor extends FormComponent {
@@ -116,7 +116,7 @@ export class CommunicationWithDoctor extends FormComponent {
         let saveModel = new SaveModel();
         saveModel.set('medicalEmployeeId', this.model.get('medicalEmployeeId'));
         saveModel.set("content", this.model.get('content'));
-        saveModel.set('customerId', "5a2be56facd24749a0563f48"); // TODO: podstawić prawdziwego klienta lub nie :)
+        saveModel.set('customerId', SM.Auth.getEntityId());
 
         return saveModel.save();
     }

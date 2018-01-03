@@ -43,6 +43,10 @@ export class CustomerEdit extends FormComponent {
     }
 
     getRoutingData(props) {
+        if (!SM.Auth.isLogged()) {
+            props.history.push(SM.Auth.getLoginUrl());
+        }
+
         this.customerId = props.match.params.customerId;
         this.model.set('id', this.customerId);
     }

@@ -1,0 +1,14 @@
+
+@import "~bootstrap/scss/bootstrap.scss";
+
+.footerJumbo {
+  margin-top: 20px;
+  margin-bottom: 0 !important;
+  padding: 10px !important;
+  border-radius: 0;
+  text-align: center;
+
+  span {
+    color: #222;
+  }
+}

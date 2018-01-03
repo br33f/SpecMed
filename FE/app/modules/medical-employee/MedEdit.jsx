@@ -46,6 +46,10 @@ export class MedicalEmployeeEdit extends FormComponent {
     }
 
     componentRefresh(props) {
+        if (!SM.Auth.isLogged()) {
+            props.history.push(SM.Auth.getLoginUrl());
+        }
+
         this.getRoutingData(props);
         this.fetchSpecialization();
         this.fetchDictionaries();
