@@ -3,7 +3,9 @@ const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const webpackCommon = {
-    entry: './app/index.js',
+    entry: {
+        app: ['babel-polyfill', './app/index.js']
+    },
     output: {
         filename: 'app.js',
         path: path.join(__dirname, '/public'),

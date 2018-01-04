@@ -46,12 +46,18 @@ public class AuthHelper {
         } catch (IOException e) {
             throw new SMException("545664578888", AUTH_ERROR, e.getMessage());
         }
+
+        String entityId = user.getEntityId();
+        if (entityId == null) {
+            entityId = "";
+        }
+
         JWTCreator.Builder tokenBuilder = JWT.create()
                 .withIssuedAt(issuedAt)
                 .withExpiresAt(expiresAt)
                 .withClaim("id", user.getId())
                 .withClaim("email", user.getEmail())
-                .withClaim("entityId", user.getEntityId())
+                .withClaim("entityId", entityId)
                 .withClaim("permissions", serializedPermissions); // TODO: zastanowić się czy da się to zrobić jakoś fajniej - bez serializacji listy uprawnien?
 
         return tokenBuilder.sign(algorithm);

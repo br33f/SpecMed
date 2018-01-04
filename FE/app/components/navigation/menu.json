@@ -100,7 +100,8 @@
     "children": [
       {
         "uri": "/contact/send",
-        "label": "Wyślij wiadomość do lekarza"
+        "label": "Wyślij wiadomość do lekarza",
+        "permitWith": ["CUSTOMER"]
       },
       {
         "uri": "/contact/list",

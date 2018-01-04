@@ -181,7 +181,7 @@ export class CommunicationWithDoctor extends FormComponent {
                                 <Label for="contentId">Twoja wiadomość:</Label>
                                 <br/>
                                 <textarea rows="5" cols="60" type="text" name="content" id="contentId"
-                                          placeholder="pytaj o co chcesz..."
+                                          placeholder="Treść wiadomości..."
                                           value={this.state.model.get('content')}
                                           onChange={this.bindValueToModel}/>
                             </FormGroup>

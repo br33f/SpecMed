@@ -31,7 +31,7 @@ public class MailSendingFacade {
             "\t<li>wziąć ze sobą dowód osobisty aby potwierdzić tożsamość</li>\n" +
             "\t</ul>\n" +
             "</div>";
-    private static final String HOST_PATH = "http://localhost:9000";
+    private static final String HOST_PATH = "https://specmed-fe.herokuapp.com";
     private static final String UNITS_LIST_PATH = HOST_PATH + "/unit/list";
 
     @Autowired
